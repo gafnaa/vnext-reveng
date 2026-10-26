@@ -30,7 +30,7 @@ Berkas diperoleh dari [halaman unduh APKPure](https://apkpure.net/simaster-stude
 
 - JADX 1.5.6 memproses 10.477 unit dan menulis 14.647 file Java serta 797 file resource. Proses melaporkan **164 error** dan exit code 3; hasil disertakan sebagai output parsial, bukan decompile bersih.
 - Blutter ([commit `4a60ac648bf448c5a7596437243bcd0b9376fdf0`](https://github.com/worawit/blutter/tree/4a60ac648bf448c5a7596437243bcd0b9376fdf0)) menulis 2.312 file assembly dan 418 file khusus paket `simaster_ugm`; terdapat satu assertion error pada alamat `0xcab944`, tetapi dump object pool/assembly tetap selesai.
-- Ghidra 12.1.4 memetakan ELF ARM64 dan melihat 75 string terdefinisi, tetapi tidak menemukan fungsi pada `libapp.so`. Tabel simbol ELF hanya mengekspos object snapshot Dart; Ghidra tidak menghasilkan pseudocode fungsi untuk library ini. Ini batas analisis Ghidra tersebut, bukan bukti library tidak memiliki kode.
+- Ghidra 12.1.4 memetakan ELF ARM64 dan melihat 75 string terdefinisi. Auto-analysis standar tidak menemukan fungsi; ELF stripped dan entry point-nya bernilai 0. Setelah lima entry point AOT dan ukuran byte dari label Blutter dipakai sebagai seed, analisis headless menghitung 2.052 fungsi dan menghasilkan pseudocode untuk login, refresh OAuth, pemeriksaan sesi, presensi QR, dan `BaseNetworking.post`. Metode, alamat, tabel hubungan, dan keterbatasan Ghidra ada di [`GHIDRA-ANALYSIS.md`](GHIDRA-ANALYSIS.md); pseudocode ada di [`GHIDRA-AOT-SELECTED.md`](GHIDRA-AOT-SELECTED.md). Ini bukan source Dart asli dan bukan bukti eksekusi.
 - Pool string Dart dari REA bersifat parsial (maksimum 500 URI paket dan 2.000 token seperti kelas). Metode dan string yang hilang tidak boleh dianggap tidak ada.
 
 ### Percobaan runtime
