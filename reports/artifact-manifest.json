@@ -1,0 +1,166 @@
+{
+  "application": {
+    "package_name": "id.ac.ugm.student.vnext.simaster",
+    "version_name": "1.11.1",
+    "version_code": "65",
+    "min_sdk": "24",
+    "target_sdk": "36",
+    "class_count": 14749,
+    "resource_count": 776,
+    "permissions": [
+      "android.permission.INTERNET",
+      "android.permission.ACCESS_COARSE_LOCATION",
+      "android.permission.ACCESS_FINE_LOCATION",
+      "android.permission.CAMERA",
+      "android.permission.WRITE_EXTERNAL_STORAGE",
+      "android.permission.READ_MEDIA_DOCUMENTS",
+      "android.permission.READ_MEDIA_AUDIO",
+      "android.permission.ACCESS_NETWORK_STATE",
+      "android.permission.WAKE_LOCK",
+      "android.permission.POST_NOTIFICATIONS",
+      "android.permission.FOREGROUND_SERVICE",
+      "android.permission.RECEIVE_BOOT_COMPLETED",
+      "android.permission.VIBRATE",
+      "com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE",
+      "com.google.android.c2dm.permission.RECEIVE",
+      "com.google.android.gms.permission.AD_ID",
+      "android.permission.ACCESS_ADSERVICES_ATTRIBUTION",
+      "android.permission.ACCESS_ADSERVICES_AD_ID",
+      "id.ac.ugm.student.vnext.simaster.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+    ],
+    "component_counts": {
+      "activity": 7,
+      "provider": 8,
+      "service": 19,
+      "receiver": 16
+    }
+  },
+  "input_artifacts": [
+    {
+      "file": "Simaster_UGM_Student_vNEXT_1.11.1.xapk",
+      "bytes": 86973230,
+      "sha256": "b0adf4964f8b985713915f4f4461ee137ad0c897197ff4d5156b47d25150661d"
+    },
+    {
+      "file": "Simaster_UGM_Student_vNEXT_1.11.1_base.apk",
+      "bytes": 47275512,
+      "sha256": "68dd03aea2796fdfd9467d8382ab4f8a991c53c091330e40b60d236028c2e809"
+    },
+    {
+      "file": "config.arm64_v8a.apk",
+      "bytes": 39118116,
+      "sha256": "4cfee9ab21c0f3b1f7a197849af1abfc632cd6a9b0db180ea4175ca88b2513b5"
+    },
+    {
+      "file": "libapp.so",
+      "bytes": 20972432,
+      "sha256": "3d199b5d6983eb7f4f3865c32c1c4e017beecb167e2f7ddac37056bb07ee6290"
+    }
+  ],
+  "flutter": {
+    "dart_version": "3.12.2",
+    "snapshot_hash": "ace654289f5abc240509fc941453ebc5",
+    "libapp_sha256": "3d199b5d6983eb7f4f3865c32c1c4e017beecb167e2f7ddac37056bb07ee6290",
+    "abi": "arm64-v8a",
+    "feature_module_count": 43,
+    "feature_modules": [
+      "achievement",
+      "attedence",
+      "auth",
+      "bimbingan",
+      "checkpoint",
+      "course",
+      "course_information",
+      "course_information_detail",
+      "course_schedule",
+      "crisis_center",
+      "dashboard",
+      "e_ktm",
+      "e_service",
+      "exam_schedule",
+      "history_registration",
+      "history_scholarship",
+      "home",
+      "home_information_detail_service_clinic",
+      "landing",
+      "lapor",
+      "my_gate",
+      "my_gate_form",
+      "my_gate_vehicle",
+      "my_gate_vehicle_details",
+      "news",
+      "notification",
+      "organizer_attendance",
+      "oss",
+      "oss_v2",
+      "other_menus",
+      "parent",
+      "profile",
+      "reusable_component",
+      "rsa",
+      "scholarship",
+      "setting",
+      "simaster_core",
+      "splash",
+      "study",
+      "study_result",
+      "testing",
+      "tos",
+      "transgama"
+    ]
+  },
+  "decompilation": {
+    "jadx_version": "1.5.6",
+    "dex_units_processed": 10477,
+    "java_files": 14647,
+    "resource_files": 797,
+    "reported_errors": 164,
+    "result": "partial output generated; CLI exited 3 after 164 errors",
+    "blutter_repository": "https://github.com/worawit/blutter",
+    "blutter_commit": "4a60ac648bf448c5a7596437243bcd0b9376fdf0",
+    "blutter_assembly_files": 2312,
+    "blutter_app_specific_files": 418,
+    "blutter_analysis_error_count": 1,
+    "blutter_analysis_error_address": "0xcab944",
+    "ghidra_version": "12.1.4",
+    "ghidra_defined_procedures": 0,
+    "ghidra_defined_strings": 75
+  },
+  "analysis_bundle": {
+    "file": "analysis-results.zip",
+    "bytes": 71703575,
+    "sha256": "d0d3fc5a66d88d9ec878a7c44f6bf137d911f311a8c546a470a023c7898f63ce",
+    "entries": 17761,
+    "redactions": {
+      "jwt_like_values": 5,
+      "google_api_key_values": 5,
+      "pem_private_key_blocks": 0
+    }
+  },
+  "evidence_ids": {
+    "android_package": "ev_fdc891b44e4014e6a41277dcee65ba7fda9cc718a6f056628a48379318d753c0",
+    "flutter_identification": "ev_3b8feb71641a7c5ff95b59ec8f233a429049b8c3e0d1ae02aabb75fce460b72c",
+    "dart_aot": "ev_98c8eb644c9d475e482d2b435218f07876b002b5986e51e73d7fdf1fda886aa7",
+    "ghidra_overview": "ev_d2aed4e9b500a12a043204359f1ef4c474b9260ac88be19d64bb0935cd4d0f64",
+    "ghidra_procedure_list": "ev_a80bb004c147bb8ab688513c012aa90f354df78c8cc8fff348ce42dc45bb244b",
+    "ghidra_string_list": "ev_539a600ac61b30511091aad0cd967f0b8c45ad48f897e51a0b1eba4f40fdc3d9"
+  },
+  "distribution": {
+    "raw_apk_committed": false,
+    "raw_native_libraries_committed": false,
+    "reason": "Input binaries stay in local artifacts; repo contains decompilation and static evidence."
+  },
+  "source_urls": {
+    "download_page": "https://apkpure.net/simaster-student-vnext/id.ac.ugm.student.vnext.simaster/download",
+    "official_play_store": "https://play.google.com/store/apps/details?id=id.ac.ugm.student.vnext.simaster&hl=id",
+    "download_source_note": "APKPure is a third-party mirror; UGM Play Store listing is the official distribution page."
+  },
+  "tools": {
+    "rea_cli": "6.8.0",
+    "jadx": "1.5.6",
+    "rea_jadx_bridge": "0.7.1",
+    "ghidra": "12.1.4",
+    "blutter_commit": "4a60ac648bf448c5a7596437243bcd0b9376fdf0",
+    "blutter_dart": "3.12.2"
+  }
+}
