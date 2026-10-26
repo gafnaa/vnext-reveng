@@ -1,7 +1,12 @@
 # Simaster UGM Student vNEXT — static reverse engineering
 
-Private reverse-engineering workspace for Android package `id.ac.ugm.student.vnext.simaster`, version 1.11.1 (code 65). The APK was not installed or executed.
+Repo privat untuk artefak decompile dan temuan statis aplikasi Android paket `id.ac.ugm.student.vnext.simaster` versi 1.11.1 (code 65). Aplikasi tidak dipasang atau dijalankan.
 
-`analysis-results.zip` contains the JADX and Blutter outputs. The Dart AOT reconstruction is annotated ARM64/object-pool output, not original Dart source. Some token-shaped and Firebase API-key values have been redacted from committed artifacts.
+## Isi
 
-The raw APK and native libraries are kept outside this repository; hashes and analysis details will be added in the report.
+- [`analysis-results.zip`](analysis-results.zip): output lengkap JADX dan Blutter; berkas berisi nilai token/API key yang tampak sensitif telah disamarkan.
+- [`reports/ANALYSIS.md`](reports/ANALYSIS.md): ringkasan arsitektur, izin, modul, host statis, hasil alat, keterbatasan, dan Evidence ID.
+- [`reports/`](reports/): manifest Android dan Evidence REA/Ghidra.
+- [`recovered/`](recovered/): beberapa file hasil rekonstruksi Dart dan wrapper Android untuk ditinjau langsung. Itu bukan source asli.
+
+XAPK/APK dan native library tidak dimasukkan ke repo. SHA-256 dan sumbernya dicatat dalam [`reports/artifact-manifest.json`](reports/artifact-manifest.json). Hasil decompile tidak lengkap: JADX melaporkan 164 error dan Blutter 1 assertion error; lihat analisis untuk batasan lengkap.

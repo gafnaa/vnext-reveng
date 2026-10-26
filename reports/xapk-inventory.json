@@ -1,0 +1,184 @@
+{
+  "xapk": "Simaster_UGM_Student_vNEXT_1.11.1.xapk",
+  "entries": [
+    {
+      "file": "id.ac.ugm.student.vnext.simaster.apk",
+      "bytes": 47275512,
+      "dex": [
+        "classes.dex",
+        "classes2.dex",
+        "classes3.dex",
+        "classes4.dex",
+        "classes5.dex"
+      ],
+      "native": [],
+      "resource_count": 270,
+      "asset_count": 361
+    },
+    {
+      "file": "config.ru.apk",
+      "bytes": 24985,
+      "dex": [],
+      "native": [],
+      "resource_count": 0,
+      "asset_count": 0
+    },
+    {
+      "file": "config.xxxhdpi.apk",
+      "bytes": 70951,
+      "dex": [],
+      "native": [],
+      "resource_count": 47,
+      "asset_count": 0
+    },
+    {
+      "file": "config.en.apk",
+      "bytes": 45465,
+      "dex": [],
+      "native": [],
+      "resource_count": 0,
+      "asset_count": 0
+    },
+    {
+      "file": "config.es.apk",
+      "bytes": 29081,
+      "dex": [],
+      "native": [],
+      "resource_count": 0,
+      "asset_count": 0
+    },
+    {
+      "file": "config.tr.apk",
+      "bytes": 24985,
+      "dex": [],
+      "native": [],
+      "resource_count": 0,
+      "asset_count": 0
+    },
+    {
+      "file": "config.fr.apk",
+      "bytes": 29081,
+      "dex": [],
+      "native": [],
+      "resource_count": 0,
+      "asset_count": 0
+    },
+    {
+      "file": "config.hi.apk",
+      "bytes": 29081,
+      "dex": [],
+      "native": [],
+      "resource_count": 0,
+      "asset_count": 0
+    },
+    {
+      "file": "config.in.apk",
+      "bytes": 24985,
+      "dex": [],
+      "native": [],
+      "resource_count": 0,
+      "asset_count": 0
+    },
+    {
+      "file": "config.it.apk",
+      "bytes": 24985,
+      "dex": [],
+      "native": [],
+      "resource_count": 0,
+      "asset_count": 0
+    },
+    {
+      "file": "config.ko.apk",
+      "bytes": 24985,
+      "dex": [],
+      "native": [],
+      "resource_count": 0,
+      "asset_count": 0
+    },
+    {
+      "file": "config.ar.apk",
+      "bytes": 24985,
+      "dex": [],
+      "native": [],
+      "resource_count": 0,
+      "asset_count": 0
+    },
+    {
+      "file": "config.arm64_v8a.apk",
+      "bytes": 39118116,
+      "dex": [],
+      "native": [
+        "lib/arm64-v8a/libapp.so",
+        "lib/arm64-v8a/libbarhopper_v3.so",
+        "lib/arm64-v8a/libcrashlytics-common.so",
+        "lib/arm64-v8a/libcrashlytics-handler.so",
+        "lib/arm64-v8a/libcrashlytics-trampoline.so",
+        "lib/arm64-v8a/libcrashlytics.so",
+        "lib/arm64-v8a/libdartjni.so",
+        "lib/arm64-v8a/libdatastore_shared_counter.so",
+        "lib/arm64-v8a/libflutter.so",
+        "lib/arm64-v8a/libimage_processing_util_jni.so",
+        "lib/arm64-v8a/libsurface_util_jni.so",
+        "lib/arm64-v8a/libtoolChecker.so"
+      ],
+      "resource_count": 0,
+      "asset_count": 0
+    },
+    {
+      "file": "config.de.apk",
+      "bytes": 24985,
+      "dex": [],
+      "native": [],
+      "resource_count": 0,
+      "asset_count": 0
+    },
+    {
+      "file": "config.pt.apk",
+      "bytes": 29081,
+      "dex": [],
+      "native": [],
+      "resource_count": 0,
+      "asset_count": 0
+    },
+    {
+      "file": "config.th.apk",
+      "bytes": 24985,
+      "dex": [],
+      "native": [],
+      "resource_count": 0,
+      "asset_count": 0
+    },
+    {
+      "file": "config.zh.apk",
+      "bytes": 29081,
+      "dex": [],
+      "native": [],
+      "resource_count": 0,
+      "asset_count": 0
+    },
+    {
+      "file": "config.ja.apk",
+      "bytes": 24985,
+      "dex": [],
+      "native": [],
+      "resource_count": 0,
+      "asset_count": 0
+    },
+    {
+      "file": "config.my.apk",
+      "bytes": 29081,
+      "dex": [],
+      "native": [],
+      "resource_count": 0,
+      "asset_count": 0
+    },
+    {
+      "file": "config.vi.apk",
+      "bytes": 24985,
+      "dex": [],
+      "native": [],
+      "resource_count": 0,
+      "asset_count": 0
+    }
+  ]
+}
