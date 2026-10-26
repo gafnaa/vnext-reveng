@@ -1,0 +1,6 @@
+*.apk
+*.xapk
+*.aab
+*.so
+/artifacts/
+/.idea/
