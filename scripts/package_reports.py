@@ -7,6 +7,8 @@ import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+# reports/SECURITY-FINDINGS.md is intentionally not part of the shareable
+# report bundle. It stays in the private repository pending disclosure review.
 ALLOWLIST = [
     "README.md",
     "docs/PRD-REVERSE-ENGINEERING.md",
