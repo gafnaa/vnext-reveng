@@ -34,6 +34,8 @@ Persentase keseluruhan tidak ditampilkan sebelum denominator per lapisan dapat d
 - [Temuan keamanan statis](reports/SECURITY-FINDINGS.md) — model kredensial presensi, rekonstruksi `_enc`, anomali panjang input, dan kandidat temuan lain; belum divalidasi runtime.
 - [OAuth deep dive](reports/OAUTH-DEEP-DIVE.md) — verifikasi `state`/PKCE/redirect, token exchange, Crashlytics, penyimpanan token, dan kandidat F-02; analisis statis, bukan eksploitasi.
 - [Rencana uji OAuth staging](reports/OAUTH-STAGING-TEST-PLAN.md) — prasyarat izin, matriks uji, pengumpulan evidence, kriteria pass/fail, dan stop conditions; hanya untuk staging berizin.
+- [API authorization deep dive](reports/API-AUTH-DEEP-DIVE.md) — reachability, envelope, dan kandidat otorisasi F-05/F-06; tidak mengklaim request atau dampak runtime.
+- [Rencana uji API staging](reports/API-AUTH-STAGING-TEST-PLAN.md) — matriks peran/token, uji identity tampering/replay, evidence, kriteria pass/fail, dan stop conditions; hanya untuk staging berizin.
 - [PoC offline model kredensial presensi](scripts/presensi_credential_model.py) — derivasi password dan transformasi `_enc` tanpa kode jaringan; contoh output ada di [`reports/presensi-credential-model.example.json`](reports/presensi-credential-model.example.json).
 - [Peta route dan service](reports/FEATURE-MAP.md) — route, pengecualian middleware sesi, modul, dan caller/service statis.
 - [Analisis Ghidra](reports/GHIDRA-ANALYSIS.md) — metode seeding, alamat, fungsi prioritas, dan keterbatasan.

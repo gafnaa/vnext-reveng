@@ -14,10 +14,10 @@
 | F-02 | OAuth | Client secret tertanam; tidak ada PKCE/`state`; redirect custom scheme dan validasi substring; payload sensitif ke Crashlytics saat error | Code interception/login CSRF, penyalahgunaan secret, kebocoran code/secret | Deep dive statis selesai; kandidat; uji staging belum |
 | F-03 | Penyimpanan token | Token disimpan di SharedPreferences tanpa enkripsi aplikasi | Token dapat dibaca pada perangkat yang di-root/backup | Kandidat; perlu validasi perangkat |
 | F-04 | Konfigurasi dev | Flavor dev memiliki scope tambahan dan redirect Postman | Permukaan serangan lebih luas bila build dev tersebar | Kandidat; belum ada build dev yang dianalisis runtime |
-| F-05 | RPC pre-auth | `staff/get_simaster_atribut_by_username` memakai username mentah | Enumerasi user/PII bila endpoint tidak membatasi akses | Kandidat; perlu uji otorisasi |
-| F-06 | Otorisasi | `v1/staff/micro/doscanent` dipanggil dari alur mahasiswa | Potensi BFLA/IDOR bila server tidak memeriksa peran | Kandidat; perlu uji peran |
+| F-05 | Otorisasi API / lookup akun | `/auth` memanggil lookup `staff/get_simaster_atribut_by_username` hanya dengan username dan nilai `"8"`; password divalidasi form tetapi tidak dikirim; route tidak punya pemanggil statis dan tidak allowlisted | Enumerasi/status akun bila route dapat dicapai dengan token valid | Deep dive statis selesai; **latent**, bukan pre-auth; uji A-02–A-05 |
+| F-06 | Otorisasi API | Alur mahasiswa dapat memilih `v1/staff/micro/doscanent`; body membawa identitas client; QR panjang selalu tampil gagal di UI | BFLA/cross-role dan identity/parameter tampering bila server tidak memeriksa peran/token | Deep dive statis selesai; kandidat; uji A-06–A-11 |
 
-Fokus laporan ini adalah **F-01** dan ringkasan **F-02**. F-02 dianalisis mendalam di [`OAUTH-DEEP-DIVE.md`](OAUTH-DEEP-DIVE.md) dengan rencana uji berizin di [`OAUTH-STAGING-TEST-PLAN.md`](OAUTH-STAGING-TEST-PLAN.md); F-03–F-06 tetap dicatat sebagai kandidat yang perlu deep dive terpisah. Tidak ada klaim eksploitasi.
+Fokus laporan ini adalah **F-01**, ringkasan **F-02**, dan ringkasan **F-05/F-06**. F-02 dianalisis mendalam di [`OAUTH-DEEP-DIVE.md`](OAUTH-DEEP-DIVE.md) dengan rencana uji berizin di [`OAUTH-STAGING-TEST-PLAN.md`](OAUTH-STAGING-TEST-PLAN.md). F-05/F-06 dianalisis di [`API-AUTH-DEEP-DIVE.md`](API-AUTH-DEEP-DIVE.md) dengan rencana uji di [`API-AUTH-STAGING-TEST-PLAN.md`](API-AUTH-STAGING-TEST-PLAN.md); F-03–F-04 tetap ringkas. Tidak ada klaim eksploitasi.
 
 ## Metode dan batasan
 
@@ -201,16 +201,29 @@ Bukti utama:
 
 Rincian alamat, bukti, dampak, dan batasan ada di [`OAUTH-DEEP-DIVE.md`](OAUTH-DEEP-DIVE.md). Langkah verifikasi berizin ada di [`OAUTH-STAGING-TEST-PLAN.md`](OAUTH-STAGING-TEST-PLAN.md). Jangan menguji produksi; semua uji memerlukan staging, akun uji, dan izin tertulis.
 
-## F-03–F-06 — Kandidat lain (ringkas)
+## F-03–F-04 — Kandidat lain (ringkas)
 
 | ID | Bukti statis | Mengapa perlu deep dive |
 |---|---|---|
 | F-03 | Token disimpan di SharedPreferences dengan key `access_token`, `refresh_token`, `access_token_expiration_unix`, `refresh_token_expiration_unix` | Backup/root dapat membaca token; perlu validasi pada perangkat uji dan kebijakan backup |
 | F-04 | `flavors.dart` memuat konfigurasi dev/prod; dev memakai redirect Postman dan scope tambahan (`staff`, `pegawai.all.read`, `tte`, `ldap`) | Build dev yang tersebar dapat memperluas permukaan serangan; perlu memastikan build produksi tidak memuat konfigurasi dev |
-| F-05 | `staff/get_simaster_atribut_by_username` memakai username mentah | Enumerasi user/PII bila endpoint dapat diakses tanpa sesi yang tepat; perlu uji otorisasi |
-| F-06 | `v1/staff/micro/doscanent` dipanggil dari alur mahasiswa; scope produksi tidak memuat `staff` | Potensi BFLA/IDOR bila server tidak memeriksa peran; perlu uji dengan beberapa peran |
 
-F-02 dianalisis di laporan terpisah; F-03–F-06 tidak dianalisis sedalam F-01/F-02 di laporan ini. Mereka dicatat agar tidak hilang, bukan sebagai klaim dampak.
+## F-05–F-06 — Otorisasi API (deep dive)
+
+Koreksi penting: **F-05 bukan pre-auth.** `/auth` terdaftar sebagai route, tetapi tidak ditemukan pemanggil statis ke sana dan `/auth` tidak ada di allowlist `SessionMiddleware`. Controller F-05 juga memakai Bearer dari `getValidAccessToken`. Dengan demikian statusnya **latent, session-gated**, bukan bypass login. F-05 adalah lookup akun, bukan autentikasi; password divalidasi di form tetapi tidak dikirim ke server.
+
+F-06 lebih kuat untuk reachability. Tab attendance di `LandingView` membangun `AttedenceView` langsung, dan kartu `participant_student` menavigasi ke `/qr-scanner`. Pemeriksaan yang terlihat adalah integritas perangkat/lokasi palsu, bukan peran. QR dengan panjang lebih dari 37 karakter memilih `v1/staff/micro/doscanent` dan mengirim identitas dari client. Ini adalah kandidat cross-role/BFLA dan identity tampering; belum ada bukti server menerima token mahasiswa atau memakai identitas body.
+
+| ID | Fakta statis | Status | Uji |
+|---|---|---|---|
+| F-05.1 | Lookup hanya username + `"8"`; respons memakai `res`, `is_active`, `user_tipe_nomor`; tidak menyimpan token | Latent; route tanpa pemanggil statis | A-02–A-04 |
+| F-05.2 | Request memakai `BaseNetworking`, Bearer, dan `UGMFWSERVICE: 1` | Kandidat role/scope | A-05 |
+| F-05.3 | Password divalidasi form tetapi tidak dibaca controller dan tidak ada di request | Observasi desain/legacy | Fungsional |
+| F-06.1 | UI mahasiswa dapat memilih endpoint `v1/staff/micro/doscanent`; scope production tidak memuat `staff` | Kandidat cross-role | A-06, A-07, A-10 |
+| F-06.2 | Body mengirim `identitasId`, `username`, `NamaLengkap`, `userTipeNomor` | Kandidat identity tampering | A-08 |
+| F-06.3 | Jalur QR panjang mengembalikan `null` → controller `false` → `alert_fail_scan` | Bug fungsional; risiko retry/duplikasi | A-11 |
+
+Rincian alamat, envelope, dan batas interpretasi ada di [`API-AUTH-DEEP-DIVE.md`](API-AUTH-DEEP-DIVE.md). Langkah uji berizin, matriks peran, evidence, dan stop condition ada di [`API-AUTH-STAGING-TEST-PLAN.md`](API-AUTH-STAGING-TEST-PLAN.md). Jangan menguji production; semua uji memerlukan staging, akun sintetis, dan izin tertulis.
 
 ## Rekomendasi
 
@@ -224,6 +237,8 @@ F-02 dianalisis di laporan terpisah; F-03–F-06 tidak dianalisis sedalam F-01/F
 6. Terapkan otorisasi per peran pada `doscanent` dan endpoint `micro`/`service`; uji dengan akun mahasiswa/staff.
 7. Tegakkan exact redirect URI dan PKCE S256 untuk client OAuth; tolak token exchange tanpa `code_verifier` yang cocok.
 8. Jangan mengandalkan client secret yang tertanam sebagai autentikasi client; rotasi/revoke secret yang terekspos dan batasi scope.
+9. Untuk F-05, batasi lookup username ke role staff atau pemilik token; jangan mengembalikan status/tipe akun untuk username lain.
+10. Untuk F-06, turunkan identitas peserta dari token/QR yang ditandatangani server; tambahkan idempotency, binding event, dan perlindungan replay.
 
 ### Client-side
 
@@ -236,6 +251,8 @@ F-02 dianalisis di laporan terpisah; F-03–F-06 tidak dianalisis sedalam F-01/F
 7. Verifikasi JWT (signature/issuer/audience) atau jangan gunakan klaim untuk keputusan lokal; server tetap harus memvalidasi token.
 8. Hapus/disable AppAuth activities yang tidak dipakai, set `usesCleartextTraffic=false`, dan pastikan log debug tidak mencetak code/token/secret.
 9. Jangan menurunkan password dari username/tanggal/salt statis; gunakan server-issued per-user credential.
+10. Hapus route `/auth` dan lookup yang tidak dipakai, atau hubungkan ke alur dengan kontrol otorisasi yang jelas; jangan meminta password bila tidak dikirim.
+11. Hentikan pengiriman identitas dari client dan perbaiki penanganan hasil `doscanent`: 2xx tidak boleh menampilkan `alert_fail_scan`.
 
 ### Proses
 
@@ -289,4 +306,8 @@ Contoh output lenient ada di [`presensi-credential-model.example.json`](presensi
 - [`FEATURE-MAP.md`](FEATURE-MAP.md) — route dan service statis.
 - [`GHIDRA-AOT-SELECTED.md`](GHIDRA-AOT-SELECTED.md) — metode decompile Ghidra.
 - [`GHIDRA-FULL-DECOMPILE.md`](GHIDRA-FULL-DECOMPILE.md) — cakupan dan caveat.
+- [`OAUTH-DEEP-DIVE.md`](OAUTH-DEEP-DIVE.md) — analisis OAuth F-02.
+- [`OAUTH-STAGING-TEST-PLAN.md`](OAUTH-STAGING-TEST-PLAN.md) — rencana uji OAuth O-01–O-13.
+- [`API-AUTH-DEEP-DIVE.md`](API-AUTH-DEEP-DIVE.md) — analisis otorisasi API F-05/F-06.
+- [`API-AUTH-STAGING-TEST-PLAN.md`](API-AUTH-STAGING-TEST-PLAN.md) — rencana uji API A-01–A-13.
 - [`analysis-results.zip`](../analysis-results.zip) — output Blutter/JADX tersanitasi; berisi asm dan `pp.txt`.
