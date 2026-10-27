@@ -37,6 +37,19 @@ Status `decompiled` berarti Ghidra menyelesaikan pemanggilan decompiler dan menu
 
 Dengan demikian, hasil ini menunjukkan **2.051 dari 2.051 code function candidate yang ditemukan berhasil diberi pseudocode**, dengan 50 caveat control-flow. Ini bukan 100% decompile seluruh `libapp.so`, seluruh APK/split, atau source Dart asli.
 
+## Audit cakupan setelah batch aplikasi
+
+Run lanjutan pada 2026-10-27 memakai 2.796 function header Blutter dari paket `simaster_ugm` sebagai denominator aplikasi. Hasilnya:
+
+- 2.796/2.796 function start aplikasi sekarang memiliki function Ghidra; 2.763 di antaranya menghasilkan pseudocode baru yang bersih, 0 gagal, 0 caveat baru.
+- Function Manager naik dari 2.052 menjadi 4.815 function.
+- Dari 29.989 header function Blutter untuk seluruh `libapp.so`, 3.862 (12,88%) memiliki function Ghidra; 27.193 function non-aplikasi baru 1.066 (3,92%) yang terwakili.
+- 953 function Ghidra tidak memiliki padanan header Blutter; 281 body-size aplikasi berbeda dari `size` Blutter; satu closure batas memerlukan koreksi overlap.
+- Cakupan body function Ghidra di `.text` adalah 2.288.353 byte dari 12.782.208 byte (17,90%).
+- Gap `_kDartVmSnapshotInstructions` dan 50 indirect jump table tetap terbuka.
+
+Artinya, **paket aplikasi sudah tercakup pada level function start**, tetapi seluruh binary belum. Rincian, batas, dan perintah reproduksi ada di [`GHIDRA-APP-DECOMPILE.md`](GHIDRA-APP-DECOMPILE.md).
+
 ## Reproduksi
 
 Gunakan project Ghidra tersimpan dengan seed Blutter yang sama. Pastikan SHA-256 input cocok dengan nilai di atas. Semua konfigurasi/cache/output tetap di `/smster`:
@@ -58,7 +71,8 @@ Langkah import dan seed pertama tersedia di [`analysis/ghidra/README.md`](../ana
 
 ## Langkah berikutnya
 
-1. Triase 50 indirect jump table dan tentukan apakah dapat dipulihkan melalui konfigurasi ARM64/Ghidra atau metadata Blutter.
-2. Petakan code/data di object `_kDartVmSnapshotInstructions` serta sisa executable segment ke status terminal.
-3. Cocokkan seluruh code range Blutter dengan byte/range Ghidra, termasuk overlap dan rentang tanpa fungsi.
-4. Pisahkan decompile hasil Ghidra dari klaim pemulihan source Dart; informasi yang dibuang compiler AOT tidak tersedia lagi.
+1. Seed dan klasifikasikan 27.193 function non-aplikasi, atau catat secara eksplisit bahwa fokus security dibatasi ke paket `simaster_ugm`.
+2. Triase 50 indirect jump table dan tentukan apakah dapat dipulihkan melalui konfigurasi ARM64/Ghidra atau metadata Blutter.
+3. Petakan code/data di object `_kDartVmSnapshotInstructions` serta sisa executable segment ke status terminal.
+4. Cocokkan seluruh code range Blutter dengan byte/range Ghidra, termasuk overlap, 953 function Ghidra-only, dan 281 body-size mismatch.
+5. Pisahkan decompile hasil Ghidra dari klaim pemulihan source Dart; informasi yang dibuang compiler AOT tidak tersedia lagi.

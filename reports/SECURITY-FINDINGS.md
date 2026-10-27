@@ -305,6 +305,7 @@ Contoh output lenient ada di [`presensi-credential-model.example.json`](presensi
 - [`ANALYSIS.md`](ANALYSIS.md) — identitas paket, izin, dan provenance.
 - [`FEATURE-MAP.md`](FEATURE-MAP.md) — route dan service statis.
 - [`GHIDRA-AOT-SELECTED.md`](GHIDRA-AOT-SELECTED.md) — metode decompile Ghidra.
+- [`GHIDRA-APP-DECOMPILE.md`](GHIDRA-APP-DECOMPILE.md) — cakupan function start paket aplikasi dan batas full binary.
 - [`GHIDRA-FULL-DECOMPILE.md`](GHIDRA-FULL-DECOMPILE.md) — cakupan dan caveat.
 - [`OAUTH-DEEP-DIVE.md`](OAUTH-DEEP-DIVE.md) — analisis OAuth F-02.
 - [`OAUTH-STAGING-TEST-PLAN.md`](OAUTH-STAGING-TEST-PLAN.md) — rencana uji OAuth O-01–O-13.
