@@ -7,7 +7,9 @@ Repo privat untuk artefak decompile dan temuan statis aplikasi Android paket `id
 - [`analysis-results.zip`](analysis-results.zip): output lengkap JADX dan Blutter; berkas berisi nilai token/API key yang tampak sensitif telah disamarkan.
 - [`reports/ANALYSIS.md`](reports/ANALYSIS.md): ringkasan arsitektur, izin, modul, host statis, hasil alat, keterbatasan, dan Evidence ID.
 - [`reports/FEATURE-MAP.md`](reports/FEATURE-MAP.md): route yang dipulihkan, daftar pemeriksaan sesi, dan pemetaan label service ke caller statis.
-- [`reports/`](reports/): manifest Android dan Evidence REA/Ghidra.
+- [`reports/GHIDRA-ANALYSIS.md`](reports/GHIDRA-ANALYSIS.md) dan [`reports/GHIDRA-AOT-SELECTED.md`](reports/GHIDRA-AOT-SELECTED.md): ringkasan dan pseudocode Ghidra untuk entry point AOT yang dipilih.
+- [`analysis/ghidra/`](analysis/ghidra/): script seed dan langkah reproduksi analisis headless.
+- [`reports/`](reports/): manifest Android dan Evidence REA/Ghidra, termasuk [`ghidra-seed-evidence.json`](reports/ghidra-seed-evidence.json) untuk verifikasi alamat fungsi yang disemai.
 - [`recovered/`](recovered/): beberapa file hasil rekonstruksi Dart dan wrapper Android untuk ditinjau langsung. Itu bukan source asli.
 
 XAPK/APK dan native library tidak dimasukkan ke repo. SHA-256 dan sumbernya dicatat dalam [`reports/artifact-manifest.json`](reports/artifact-manifest.json). Hasil decompile tidak lengkap: JADX melaporkan 164 error dan Blutter 1 assertion error; lihat analisis untuk batasan lengkap.
