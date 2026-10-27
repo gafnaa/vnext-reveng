@@ -22,6 +22,19 @@ ALLOWLIST = [
     "reports/GHIDRA-FULL-DECOMPILE.md",
     "reports/PROGRESS.md",
     "reports/DEX-DECOMPILATION.md",
+    "reports/FLUTTERDEC-APP-DECOMPILE.md",
+    "reports/flutterdec-quality.json",
+    "analysis/flutterdec/README.md",
+    "analysis/flutterdec/prepare_registry.py",
+    "analysis/flutterdec/blutter_bridge.sh",
+    "analysis/flutterdec/run_app.sh",
+    "recovered/flutterdec/README.md",
+    "recovered/flutterdec/simaster_ugm/20916__handleRedirectUri.dartpseudo",
+    "recovered/flutterdec/simaster_ugm/20890_exchangeCodeForToken.dartpseudo",
+    "recovered/flutterdec/simaster_ugm/20909__launchOAuth.dartpseudo",
+    "recovered/flutterdec/simaster_ugm/23360_configOauth.dartpseudo",
+    "recovered/flutterdec/simaster_ugm/20785_scanEntrant.dartpseudo",
+    "recovered/flutterdec/simaster_ugm/23478_BaseNetworking__internal.dartpseudo",
 ]
 
 

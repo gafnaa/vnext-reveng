@@ -1,0 +1,400 @@
+dynamic scanEntrant(dynamic slot0, dynamic slot1, dynamic slot2, dynamic slot3, dynamic slot4, dynamic slot5) {
+  dynamic tmp1;
+  dynamic resultTmp2;
+  dynamic resultTmp3;
+  dynamic resultTmp4;
+  dynamic resultTmp5;
+  dynamic tmp6;
+  dynamic resultTmp7;
+  dynamic tmp8;
+  dynamic tmp9;
+
+  // omitted complex paths: block 1, block 2, block 3, block 4, block 6, block 7, block 8, block 9, block 10, block 11, block 12, block 13, block 14, block 15, block 16, block 17, block 19, block 21, block 22, block 23, block 24, block 25, block 26, block 28, block 30, block 31, block 32, block 34, block 36, block 37, block 38, block 40, block 42, block 44, block 45, block 46, block 47, block 48, block 49, block 51, block 52, block 55, block 56, block 57, block 58, block 60, block 61, block 62, block 63, block 64, block 65, block 66, block 69, block 70, block 72, block 74, block 76, block 77, block 79, block 80, block 81, block 83, block 85, block 86, block 90, block 91, block 92, block 94, block 95, block 96, block 98, block 101, block 102, block 104, block 105, block 116, block 118, block 119, block 120, block 121, block 122, block 124, block 125, block 126, block 127, block 128, block 129, block 130
+  tmp8 = null;
+  resultTmp7 = slot0;
+  tmp6 = slot1;
+  final t87 = fn_0x7f5e44();
+  final t88 = fn_0x13df928(null, 4);
+  t88.f16 = poolOff[539872];
+  t88.f20 = tmp6;
+  ((reg15 - 0x170)).f0 = t88;
+  final t89 = fn_0x7e1b8c(tmp6);
+  if (thread.f120.f4704 != thread.f144) {
+    resultTmp4 = tmp6.f8;
+    resultTmp5 = tmp6.f8.f8;
+    if (smiUntag(tmp6.f8.f8) > 0x25) {
+      if (thread.f120.f4760 != thread.f144) {
+        resultTmp7 = reg0;
+        final t90 = baseUrl();
+        resultTmp5 = t90;
+        final t91 = fn_0xd51494(tmp6);
+        resultTmp4 = t91;
+        ((reg15 - 0x170)).f0 = resultTmp5;
+        final t92 = post();
+        resultTmp3 = t92;
+        final t93 = fn_0x7f5c00(t92);
+        resultTmp3 = t93;
+        final t94 = fn_0x13df928(null, 4);
+        t94.f16 = poolOff[540184];
+        t94.f20 = resultTmp3;
+        ((reg15 - 0x170)).f0 = t94;
+        final t95 = fn_0x7e1b8c(resultTmp3);
+        return tailCall_0x7f592c();
+      }
+      final t96 = fn_0x13dd9ec(tmp6, poolOff[101280], smiUntag(tmp6.f8.f8));
+      resultTmp7 = reg0;
+      final t97 = baseUrl();
+      resultTmp5 = t97;
+      final t98 = fn_0xd51494(tmp6);
+      resultTmp4 = t98;
+      ((reg15 - 0x170)).f0 = resultTmp5;
+      final t99 = post();
+      resultTmp3 = t99;
+      final t100 = fn_0x7f5c00(t99);
+      resultTmp3 = t100;
+      final t101 = fn_0x13df928(null, 4);
+      t101.f16 = poolOff[540184];
+      t101.f20 = resultTmp3;
+      ((reg15 - 0x170)).f0 = t101;
+      final t102 = fn_0x7e1b8c(resultTmp3);
+      return tailCall_0x7f592c();
+    }
+    final t103 = fn_0x9ec034(tmp6, tmp6.f8.f8, smiUntag(tmp6.f8.f8));
+    resultTmp3 = t103;
+    final t104 = fn_0x9e8854(t103);
+    resultTmp2 = t104;
+    final t105 = fn_0x7f5c00(t104);
+    resultTmp3 = reg3;
+    resultTmp2 = reg2;
+    tmp1 = reg0;
+    final t106 = getData(poolOff[102960]);
+    framePointer[-0x108] = t106;
+    final t107 = fn_0x7f5c00(t106);
+    if (t107 != null) {
+      framePointer[-0x108] = reg0;
+      ((reg15 - 0x170)).f0 = reg0;
+      final t108 = poolOff[539888](reg1, reg2, reg3, poolOff[539896]); // indirect via: dispatchTarget
+      framePointer[-0x110] = t108;
+      if (((t108 >> 0) & 1) == 0) {
+        if (reg4 == 0x3f) {
+          if (((framePointer[-0x110] >> 4) & 1) == 0) {
+            final t109 = fn_0x7d92a0();
+            resultTmp7 = t109;
+            t109.f12 = poolOff[540192];
+            final t110 = fn_0x13ddb2c(t109);
+            final t111 = fn_0x7d92a0();
+            resultTmp7 = t111;
+            t111.f12 = poolOff[540200];
+            final t112 = fn_0x13ddb2c(t111);
+            resultTmp7 = t112;
+            tmp6 = reg1;
+            final t113 = fn_0x13df928(null, 4, t112);
+            t113.f16 = poolOff[540208];
+            t113.f20 = resultTmp7;
+            ((framePointer - 0x170)).f0 = t113;
+            final t114 = fn_0x7e1b8c(resultTmp7);
+            final t115 = fn_0x13ddb00(tmp6);
+            resultTmp7 = t115;
+            tmp6 = reg1;
+            final t116 = fn_0x13df928(null, 4, t115);
+            t116.f16 = poolOff[540216];
+            t116.f20 = resultTmp7;
+            ((framePointer - 0x170)).f0 = t116;
+            final t117 = fn_0x7e1b8c(resultTmp7);
+            final t118 = fn_0x13ddb00(tmp6);
+            resultTmp7 = t118;
+            tmp6 = reg1;
+            return null;
+          }
+          final t119 = fn_0x8174b8();
+          framePointer[-0x110] = t119;
+          t119.f8 = false;
+          final t120 = fn_0x89fe10(t119);
+          if (((t120 >> 0) & 1) == 0) {
+            (framePointer[-0x110]).f12 = reg1;
+            final t121 = fn_0x13df928(null, 0xa);
+            framePointer[-0x118] = t121;
+            final t122 = fn_0x816b24(framePointer[-0x110]);
+            if (8 >= smiUntag(t122.f12)) {
+              final t191 = fn_0x13dff64();
+              final t192 = fn_0x13dff64();
+              final t193 = fn_0x13dff64();
+              return t193;
+            }
+            return null;
+          }
+        }
+        else {
+          final t123 = fn_0x13ee15c(reg1, reg2, poolOff[539904]);
+          if (((framePointer[-0x110] >> 4) & 1) == 0) {
+            final t124 = fn_0x7d92a0();
+            resultTmp7 = t124;
+            t124.f12 = poolOff[540192];
+            final t125 = fn_0x13ddb2c(t124);
+          }
+          else {
+            final t126 = fn_0x8174b8();
+            framePointer[-0x110] = t126;
+            t126.f8 = false;
+            final t127 = fn_0x89fe10(t126);
+            if (((t127 >> 0) & 1) == 0) {
+              return null;
+            }
+          }
+        }
+      }
+      else {
+        if (reg4 == 0x3f) {
+          if (((framePointer[-0x110] >> 4) & 1) == 0) {
+            final t128 = fn_0x7d92a0();
+            resultTmp7 = t128;
+            t128.f12 = poolOff[540192];
+            final t129 = fn_0x13ddb2c(t128);
+          }
+          else {
+            final t130 = fn_0x8174b8();
+            framePointer[-0x110] = t130;
+            t130.f8 = false;
+            final t131 = fn_0x89fe10(t130);
+            if (((t131 >> 0) & 1) == 0) {
+              return null;
+            }
+          }
+        }
+        else {
+          final t132 = fn_0x13ee15c(reg1, reg2, poolOff[539904]);
+          if (((framePointer[-0x110] >> 4) & 1) == 0) {
+            return null;
+          }
+        }
+      }
+    }
+    else {
+      framePointer[-0x108] = reg0;
+      ((reg15 - 0x170)).f0 = reg0;
+      final t133 = poolOff[539888](reg1, reg2, reg3, poolOff[539896]); // indirect via: dispatchTarget
+      framePointer[-0x110] = t133;
+      if (((t133 >> 0) & 1) == 0) {
+        if (reg4 == 0x3f) {
+          if (((framePointer[-0x110] >> 4) & 1) == 0) {
+            final t134 = fn_0x7d92a0();
+            resultTmp7 = t134;
+            t134.f12 = poolOff[540192];
+            final t135 = fn_0x13ddb2c(t134);
+            final t136 = fn_0x7d92a0();
+            resultTmp7 = t136;
+            t136.f12 = poolOff[540200];
+            final t137 = fn_0x13ddb2c(t136);
+            resultTmp7 = t137;
+            tmp6 = reg1;
+            final t138 = fn_0x13df928(null, 4, t137);
+            t138.f16 = poolOff[540208];
+            t138.f20 = resultTmp7;
+            ((framePointer - 0x170)).f0 = t138;
+            final t139 = fn_0x7e1b8c(resultTmp7);
+            final t140 = fn_0x13ddb00(tmp6);
+            resultTmp7 = t140;
+            tmp6 = reg1;
+            final t141 = fn_0x13df928(null, 4, t140);
+            t141.f16 = poolOff[540216];
+            t141.f20 = resultTmp7;
+            ((framePointer - 0x170)).f0 = t141;
+            final t142 = fn_0x7e1b8c(resultTmp7);
+            final t143 = fn_0x13ddb00(tmp6);
+            resultTmp7 = t143;
+            tmp6 = reg1;
+            return null;
+          }
+          final t144 = fn_0x8174b8();
+          framePointer[-0x110] = t144;
+          t144.f8 = false;
+          final t145 = fn_0x89fe10(t144);
+          if (((t145 >> 0) & 1) == 0) {
+            (framePointer[-0x110]).f12 = reg1;
+            final t146 = fn_0x13df928(null, 0xa);
+            framePointer[-0x118] = t146;
+            final t147 = fn_0x816b24(framePointer[-0x110]);
+            if (8 >= smiUntag(t147.f12)) {
+              final t191 = fn_0x13dff64();
+              final t192 = fn_0x13dff64();
+              final t193 = fn_0x13dff64();
+              return t193;
+            }
+            return null;
+          }
+        }
+        else {
+          final t148 = fn_0x13ee15c(reg1, reg2, poolOff[539904]);
+          if (((framePointer[-0x110] >> 4) & 1) == 0) {
+            final t149 = fn_0x7d92a0();
+            resultTmp7 = t149;
+            t149.f12 = poolOff[540192];
+            final t150 = fn_0x13ddb2c(t149);
+          }
+          else {
+            final t151 = fn_0x8174b8();
+            framePointer[-0x110] = t151;
+            t151.f8 = false;
+            final t152 = fn_0x89fe10(t151);
+            if (((t152 >> 0) & 1) == 0) {
+              return null;
+            }
+          }
+        }
+      }
+      else {
+        if (reg4 == 0x3f) {
+          if (((framePointer[-0x110] >> 4) & 1) == 0) {
+            final t153 = fn_0x7d92a0();
+            resultTmp7 = t153;
+            t153.f12 = poolOff[540192];
+            final t154 = fn_0x13ddb2c(t153);
+          }
+          else {
+            final t155 = fn_0x8174b8();
+            framePointer[-0x110] = t155;
+            t155.f8 = false;
+            final t156 = fn_0x89fe10(t155);
+            if (((t156 >> 0) & 1) == 0) {
+              return null;
+            }
+          }
+        }
+        else {
+          final t157 = fn_0x13ee15c(reg1, reg2, poolOff[539904]);
+          if (((framePointer[-0x110] >> 4) & 1) == 0) {
+            return null;
+          }
+        }
+      }
+    }
+  }
+  else {
+    final t158 = fn_0x13dd9ec(reg1, poolOff[31128]);
+    resultTmp4 = tmp6.f8;
+    resultTmp5 = tmp6.f8.f8;
+    if (smiUntag(tmp6.f8.f8) > 0x25) {
+      if (thread.f120.f4760 != thread.f144) {
+        resultTmp7 = reg0;
+        final t159 = baseUrl();
+        resultTmp5 = t159;
+        final t160 = fn_0xd51494(tmp6);
+        resultTmp4 = t160;
+        ((reg15 - 0x170)).f0 = resultTmp5;
+        final t161 = post();
+        resultTmp3 = t161;
+        final t162 = fn_0x7f5c00(t161);
+        resultTmp3 = t162;
+        final t163 = fn_0x13df928(null, 4);
+        t163.f16 = poolOff[540184];
+        t163.f20 = resultTmp3;
+        ((reg15 - 0x170)).f0 = t163;
+        final t164 = fn_0x7e1b8c(resultTmp3);
+        return tailCall_0x7f592c();
+      }
+      final t165 = fn_0x13dd9ec(tmp6, poolOff[101280], smiUntag(tmp6.f8.f8));
+      resultTmp7 = reg0;
+      final t166 = baseUrl();
+      resultTmp5 = t166;
+      final t167 = fn_0xd51494(tmp6);
+      resultTmp4 = t167;
+      ((reg15 - 0x170)).f0 = resultTmp5;
+      final t168 = post();
+      resultTmp3 = t168;
+      final t169 = fn_0x7f5c00(t168);
+      resultTmp3 = t169;
+      final t170 = fn_0x13df928(null, 4);
+      t170.f16 = poolOff[540184];
+      t170.f20 = resultTmp3;
+      ((reg15 - 0x170)).f0 = t170;
+      final t171 = fn_0x7e1b8c(resultTmp3);
+      return tailCall_0x7f592c();
+    }
+    final t172 = fn_0x9ec034(tmp6, tmp6.f8.f8, smiUntag(tmp6.f8.f8));
+    resultTmp3 = t172;
+    final t173 = fn_0x9e8854(t172);
+    resultTmp2 = t173;
+    final t174 = fn_0x7f5c00(t173);
+    resultTmp3 = reg3;
+    resultTmp2 = reg2;
+    tmp1 = reg0;
+    final t175 = getData(poolOff[102960]);
+    framePointer[-0x108] = t175;
+    final t176 = fn_0x7f5c00(t175);
+    if (t176 != null) {
+      framePointer[-0x108] = reg0;
+      ((reg15 - 0x170)).f0 = reg0;
+      final t177 = poolOff[539888](reg1, reg2, reg3, poolOff[539896]); // indirect via: dispatchTarget
+      framePointer[-0x110] = t177;
+      if (((t177 >> 0) & 1) == 0) {
+        if (reg4 == 0x3f) {
+          if (((framePointer[-0x110] >> 4) & 1) == 0) {
+            final t178 = fn_0x7d92a0();
+            resultTmp7 = t178;
+            t178.f12 = poolOff[540192];
+            final t179 = fn_0x13ddb2c(t178);
+          }
+          else {
+            final t180 = fn_0x8174b8();
+            framePointer[-0x110] = t180;
+            t180.f8 = false;
+            final t181 = fn_0x89fe10(t180);
+            if (((t181 >> 0) & 1) == 0) {
+              return null;
+            }
+          }
+        }
+        else {
+          final t182 = fn_0x13ee15c(reg1, reg2, poolOff[539904]);
+          if (((framePointer[-0x110] >> 4) & 1) == 0) {
+            return null;
+          }
+        }
+      }
+      else {
+        if ((reg4 == 0x3f) && (((framePointer[-0x110] >> 4) & 1) == 0)) {
+          return null;
+        }
+        final t183 = fn_0x13ee15c(reg1, reg2, poolOff[539904]);
+      }
+    }
+    else {
+      framePointer[-0x108] = reg0;
+      ((reg15 - 0x170)).f0 = reg0;
+      final t184 = poolOff[539888](reg1, reg2, reg3, poolOff[539896]); // indirect via: dispatchTarget
+      framePointer[-0x110] = t184;
+      if (((t184 >> 0) & 1) == 0) {
+        if (reg4 == 0x3f) {
+          if (((framePointer[-0x110] >> 4) & 1) == 0) {
+            final t185 = fn_0x7d92a0();
+            resultTmp7 = t185;
+            t185.f12 = poolOff[540192];
+            final t186 = fn_0x13ddb2c(t185);
+          }
+          else {
+            final t187 = fn_0x8174b8();
+            framePointer[-0x110] = t187;
+            t187.f8 = false;
+            final t188 = fn_0x89fe10(t187);
+            if (((t188 >> 0) & 1) == 0) {
+              return null;
+            }
+          }
+        }
+        else {
+          final t189 = fn_0x13ee15c(reg1, reg2, poolOff[539904]);
+          if (((framePointer[-0x110] >> 4) & 1) == 0) {
+            return null;
+          }
+        }
+      }
+      else {
+        if ((reg4 == 0x3f) && (((framePointer[-0x110] >> 4) & 1) == 0)) {
+          return null;
+        }
+        final t190 = fn_0x13ee15c(reg1, reg2, poolOff[539904]);
+      }
+    }
+  }
+  break;
+}

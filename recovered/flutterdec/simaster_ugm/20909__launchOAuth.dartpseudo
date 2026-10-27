@@ -1,0 +1,104 @@
+dynamic _launchOAuth(dynamic slot0, dynamic slot1, dynamic slot2, dynamic slot3, dynamic slot4, dynamic slot5) {
+  dynamic resultTmp1;
+  dynamic resultTmp2;
+  dynamic resultTmp3;
+  dynamic resultTmp4;
+  dynamic resultTmp5;
+  dynamic resultTmp6;
+  dynamic tmp7;
+  dynamic tmp8;
+
+  tmp8 = null;
+  tmp7 = slot0;
+  final t1 = fn_0x13de838(1);
+  resultTmp6 = t1;
+  t1.f16 = tmp7;
+  final t2 = fn_0x7f5e44(tmp7, t1);
+  if (tmp7.f16 != null) {
+    if (((tmp7.f36 >> 4) & 1) != 0) {
+      tmp7.f44 = (tmp7.f44 + 1);
+      final t3 = fn_0x8c146c(tmp7, (tmp7.f44 + 1));
+      resultTmp5 = t3;
+      final t4 = fn_0x13df928(null, 8);
+      t4.f16 = poolOff[537072];
+      if (!(tmp7.f44 == (smiTag(tmp7.f44) >> 1))) {
+        final t5 = fn_0x13dfbb4(reg1, t4, tmp7);
+        t5.f8 = reg4;
+      }
+      reg2.f20 = reg0;
+      reg2.f24 = poolOff[537080];
+      reg2.f28 = reg0;
+      ((reg15 - 0xc0)).f0 = reg2;
+      final t6 = fn_0x7e1b8c();
+      final t7 = fn_0x8c061c(resultTmp5, t6);
+      final t8 = fn_0x13dec0c(poolOff[537104], resultTmp6);
+      final t9 = fn_0x82938c(tmp7, t8);
+      if (!(tmp7.f28 == null)) {
+        final t10 = fn_0x7f29dc(tmp7.f28);
+      }
+      final t11 = fn_0x13dec0c(poolOff[537112], resultTmp6);
+      final t12 = fn_0x7eed74(null, poolOff[537120], t11);
+      tmp7.f28 = t12;
+      if (!(needsWriteBarrier((t12._tag & (tmp7._tag >>> 2))) == 0)) {
+        final t13 = fn_0x13ddf94(tmp7);
+      }
+      final t14 = configOauth();
+      resultTmp5 = t14;
+      if (t14 == null) {
+        final t15 = fn_0x13e0274();
+      }
+      else {
+        final t16 = fn_0x13d8564(t14, poolOff[95256]);
+        resultTmp5 = reg3;
+        if (!((reg4 - 0x5e) <= 1)) {
+          final t17 = fn_0x13ee320(reg1, reg2, poolOff[537128]);
+        }
+        final t18 = fn_0x7f6fc0(resultTmp5);
+        resultTmp5 = t18;
+        final t19 = fn_0x8bff88();
+        resultTmp4 = t19;
+        final t20 = fn_0x8bff7c();
+        t20.f8 = poolOff[76856];
+        resultTmp4.f20 = t20;
+        final t21 = fn_0x8bff70(t20);
+        resultTmp3 = t21;
+        t21.f8 = poolOff[537144];
+        final t22 = fn_0x8bff64(t21);
+        resultTmp2 = t22;
+        t22.f12 = resultTmp4;
+        t22.f16 = true;
+        t22.f20 = poolOff[537152];
+        t22.f24 = false;
+        t22.f44 = resultTmp3;
+        final t23 = fn_0x8bff58(t22, resultTmp3);
+        resultTmp4 = t23;
+        final t24 = fn_0x8bf428(resultTmp5, resultTmp2);
+        resultTmp1 = t24;
+        final t25 = fn_0x7f5c00(t24);
+        return tailCall_0x7f592c();
+      }
+    }
+    else {
+      final t26 = fn_0x8c146c(tmp7);
+      resultTmp5 = t26;
+      final t27 = fn_0x13df928(null, 6);
+      t27.f16 = poolOff[537056];
+      if ((tmp7.f44 + 1) != (smiTag((tmp7.f44 + 1)) >> 1)) {
+        final t28 = fn_0x13dfbb4(tmp7, t27, (tmp7.f44 + 1));
+        t28.f8 = reg3;
+      }
+      reg2.f20 = reg0;
+      reg2.f24 = poolOff[537064];
+      ((reg15 - 0xc0)).f0 = reg2;
+      final t29 = fn_0x7e1b8c();
+      final t30 = fn_0x8c061c(resultTmp5, t29);
+      if (!(thread.f120.f4704 != thread.f144)) {
+        final t31 = fn_0x13dd9ec(reg1, poolOff[31128]);
+      }
+      return tailCall_0x7f592c();
+    }
+  }
+  else {
+    return tailCall_0x7f592c();
+  }
+}

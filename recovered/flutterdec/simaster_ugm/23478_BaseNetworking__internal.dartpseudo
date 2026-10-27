@@ -1,0 +1,30 @@
+dynamic BaseNetworking__internal(dynamic slot0, dynamic slot1, dynamic slot2, dynamic slot3, dynamic slot4, dynamic slot5) {
+  dynamic resultTmp1;
+  dynamic resultTmp2;
+  dynamic resultTmp3;
+  dynamic tmp4;
+
+  tmp4 = slot0;
+  final t1 = fn_0x91f614(slot0, slot0);
+  resultTmp3 = t1;
+  final t2 = OnboardingController(t1);
+  tmp4.f8 = resultTmp3;
+  if (!(needsWriteBarrier((resultTmp3._tag & (tmp4._tag >>> 2))) == 0)) {
+    final t3 = fn_0x13ddfb4(reg1, tmp4);
+  }
+  if (!(thread.f120.f4728 != thread.f144)) {
+    final t4 = fn_0x13dd9ec(reg1, poolOff[89704]);
+  }
+  resultTmp3 = reg0 /* possible (non-exhaustive): thread.f120.f4728 */.f12;
+  final t5 = fn_0x13dec0c(poolOff[95352], tmp4, reg0 /* possible (non-exhaustive): thread.f120.f4728 */.f12);
+  resultTmp2 = t5;
+  final t6 = fn_0x912998();
+  resultTmp1 = t6;
+  t6.f8 = resultTmp2;
+  final t7 = fn_0x13dec0c(poolOff[95360], null, t6);
+  resultTmp1.f12 = t7;
+  final t8 = fn_0x13dec0c(poolOff[95368], tmp4);
+  resultTmp1.f16 = t8;
+  final t9 = fn_0x8d84a4(t8);
+  return null;
+}

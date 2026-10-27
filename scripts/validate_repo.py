@@ -17,7 +17,7 @@ FORBIDDEN_SUFFIXES = {
 }
 TEXT_SUFFIXES = {
     ".md", ".json", ".svg", ".java", ".xml", ".yaml", ".yml", ".txt",
-    ".dart", ".kt", ".c", ".h", ".smali", ".properties",
+    ".dart", ".dartpseudo", ".kt", ".c", ".h", ".smali", ".properties",
 }
 SECRET_PATTERNS = [
     (

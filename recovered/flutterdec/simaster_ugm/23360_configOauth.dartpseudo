@@ -1,0 +1,154 @@
+dynamic configOauth(dynamic slot0, dynamic slot1, dynamic slot2, dynamic slot3, dynamic slot4, dynamic slot5) {
+  dynamic resultTmp1;
+  dynamic resultTmp2;
+  dynamic resultTmp3;
+
+  final t1 = fn_0x13df928(poolOff[2256], 0x18);
+  resultTmp3 = t1;
+  t1.f16 = poolOff[95120];
+  t1.f20 = poolOff[95128];
+  t1.f24 = poolOff[95136];
+  t1.f28 = poolOff[95144];
+  t1.f32 = poolOff[95152];
+  t1.f36 = poolOff[95160];
+  t1.f40 = poolOff[95168];
+  t1.f44 = poolOff[95176];
+  t1.f48 = poolOff[95184];
+  t1.f52 = poolOff[95192];
+  t1.f56 = poolOff[95200];
+  t1.f60 = poolOff[95208];
+  final t2 = fn_0x13de7f8(poolOff[2256]);
+  resultTmp2 = t2;
+  t2.f16 = resultTmp3;
+  t2.f12 = 0x18;
+  if (thread.f120.f11408 != poolOff[80656]) {
+    if (thread.f120.f11408 != poolOff[80672]) {
+      if (thread.f120.f11408 != poolOff[80688]) {
+        if (thread.f120.f11408 != poolOff[80704]) {
+          if (thread.f120.f11408 != poolOff[30984]) {
+            final t3 = fn_0x13df928(null, 0x18, t2);
+            resultTmp3 = t3;
+            t3.f16 = poolOff[93096];
+            t3.f20 = poolOff[95216];
+            t3.f24 = poolOff[93104];
+            t3.f28 = poolOff[95224];
+            t3.f32 = poolOff[95232];
+            t3.f36 = poolOff[95240];
+            t3.f40 = poolOff[93152];
+            t3.f44 = poolOff[95248];
+            t3.f48 = poolOff[93336];
+            t3.f52 = resultTmp2;
+            t3.f56 = poolOff[95256];
+            final t4 = fn_0x13df928(null, 4, resultTmp2);
+            resultTmp1 = t4;
+            t4.f16 = poolOff[95336];
+            ((reg15 - 0x28)).f0 = poolOff[95328];
+            final t5 = fn_0xb99e34(resultTmp2);
+            ((resultTmp1 + 0x13)).f0 = t5;
+            if (((((t5 >> 0) & 1) != 0)) && (!(needsWriteBarrier((t5._tag & (resultTmp1._tag >>> 2))) == 0))) {
+              final t6 = fn_0x13ddb50(resultTmp1);
+            }
+            ((reg15 - 0x28)).f0 = resultTmp1;
+            final t7 = fn_0x7e1b8c();
+            ((resultTmp3 + 0x3b)).f0 = t7;
+            if (((((t7 >> 0) & 1) != 0)) && (!(needsWriteBarrier((t7._tag & (resultTmp3._tag >>> 2))) == 0))) {
+              final t8 = fn_0x13ddb50(resultTmp3);
+            }
+            final t9 = fn_0x7efee0();
+            return t9;
+          }
+          final t10 = fn_0x13df928(null, 0x18, t2);
+          resultTmp3 = t10;
+          t10.f16 = poolOff[93096];
+          t10.f20 = poolOff[95288];
+          t10.f24 = poolOff[93104];
+          t10.f28 = poolOff[95296];
+          t10.f32 = poolOff[95232];
+          t10.f36 = poolOff[95304];
+          t10.f40 = poolOff[93152];
+          t10.f44 = poolOff[95312];
+          t10.f48 = poolOff[93336];
+          t10.f52 = resultTmp2;
+          t10.f56 = poolOff[95256];
+          final t11 = fn_0x13df928(null, 4, resultTmp2);
+          resultTmp1 = t11;
+          t11.f16 = poolOff[95320];
+          ((reg15 - 0x28)).f0 = poolOff[95328];
+          final t12 = fn_0xb99e34(resultTmp2);
+          ((resultTmp1 + 0x13)).f0 = t12;
+          if (((((t12 >> 0) & 1) != 0)) && (!(needsWriteBarrier((t12._tag & (resultTmp1._tag >>> 2))) == 0))) {
+            final t13 = fn_0x13ddb50(resultTmp1);
+          }
+          ((reg15 - 0x28)).f0 = resultTmp1;
+          final t14 = fn_0x7e1b8c();
+          ((resultTmp3 + 0x3b)).f0 = t14;
+          if (((((t14 >> 0) & 1) != 0)) && (!(needsWriteBarrier((t14._tag & (resultTmp3._tag >>> 2))) == 0))) {
+            final t15 = fn_0x13ddb50(resultTmp3);
+          }
+          final t16 = fn_0x7efee0();
+          return t16;
+        }
+        final t17 = fn_0x13df928(null, 0x18, t2);
+        t17.f16 = poolOff[93096];
+        t17.f20 = poolOff[95216];
+        t17.f24 = poolOff[93104];
+        t17.f28 = poolOff[95224];
+        t17.f32 = poolOff[95232];
+        t17.f36 = poolOff[95240];
+        t17.f40 = poolOff[93152];
+        t17.f44 = poolOff[95248];
+        t17.f48 = poolOff[93336];
+        t17.f52 = resultTmp2;
+        t17.f56 = poolOff[95256];
+        t17.f60 = poolOff[95280];
+        final t18 = fn_0x7efee0(reg1, reg2, resultTmp2);
+        return t18;
+      }
+      final t19 = fn_0x13df928(null, 0x18, t2);
+      t19.f16 = poolOff[93096];
+      t19.f20 = poolOff[95216];
+      t19.f24 = poolOff[93104];
+      t19.f28 = poolOff[95224];
+      t19.f32 = poolOff[95232];
+      t19.f36 = poolOff[95240];
+      t19.f40 = poolOff[93152];
+      t19.f44 = poolOff[95248];
+      t19.f48 = poolOff[93336];
+      t19.f52 = resultTmp2;
+      t19.f56 = poolOff[95256];
+      t19.f60 = poolOff[95272];
+      final t20 = fn_0x7efee0(reg1, reg2, resultTmp2);
+      return t20;
+    }
+    final t21 = fn_0x13df928(null, 0x18, t2);
+    t21.f16 = poolOff[93096];
+    t21.f20 = poolOff[95216];
+    t21.f24 = poolOff[93104];
+    t21.f28 = poolOff[95224];
+    t21.f32 = poolOff[95232];
+    t21.f36 = poolOff[95240];
+    t21.f40 = poolOff[93152];
+    t21.f44 = poolOff[95248];
+    t21.f48 = poolOff[93336];
+    t21.f52 = resultTmp2;
+    t21.f56 = poolOff[95256];
+    t21.f60 = poolOff[95272];
+    final t22 = fn_0x7efee0(reg1, reg2, resultTmp2);
+    return t22;
+  }
+  final t23 = fn_0x13df928(null, 0x18, t2);
+  t23.f16 = poolOff[93096];
+  t23.f20 = poolOff[95216];
+  t23.f24 = poolOff[93104];
+  t23.f28 = poolOff[95224];
+  t23.f32 = poolOff[95232];
+  t23.f36 = poolOff[95240];
+  t23.f40 = poolOff[93152];
+  t23.f44 = poolOff[95248];
+  t23.f48 = poolOff[93336];
+  t23.f52 = resultTmp2;
+  t23.f56 = poolOff[95256];
+  t23.f60 = poolOff[95264];
+  final t24 = fn_0x7efee0(reg1, reg2, resultTmp2);
+  return t24;
+}
