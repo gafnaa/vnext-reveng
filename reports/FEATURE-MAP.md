@@ -91,7 +91,7 @@ Nama persis dipertahankan, termasuk kapitalisasi. Kehadiran nama di daftar ini t
 
 ## Pemanggilan API statis
 
-36 pasangan caller/method/service dipulihkan dari modul aplikasi, dengan 29 label service unik. Jalur literal `v1/student/micro/services` tampak pada pemanggilan student; pemanggilan profil staff menggunakan `v1/staff/micro/services`. `AuthNetworkImpl.signIn` membentuk micro `staff` dan label `get_simaster_atribut_by_username`, tetapi path gabungannya tidak tampak sebagai literal di fungsi tersebut.
+36 pasangan caller/method/service dipulihkan dari modul aplikasi, dengan 29 label service unik. Jalur literal `v1/student/micro/services` tampak pada pemanggilan student; pemanggilan profil staff menggunakan `v1/staff/micro/services`. `AuthNetworkImpl.signIn` membentuk micro `staff` dan label `get_simaster_atribut_by_username`, lalu memanggil `BaseNetworking.post` dengan path literal `staff`; path efektifnya adalah `baseAppUrl + "staff"` (production: `https://api.simaster.ugm.ac.id/staff`), bukan literal gabungan di fungsi tersebut.
 
 | Micro | Label service | Caller yang tampak di assembly |
 | --- | --- | --- |
@@ -126,6 +126,15 @@ Nama persis dipertahankan, termasuk kapitalisasi. Kehadiran nama di daftar ini t
 | student | `get_studi_max_sks` | `study_result_service.getStudiMaxSks` |
 
 Fungsi-fungsi ini memanggil `BaseNetworking::post` dan menyusun body dengan field `micro`, `service`, `query` atau `param`. Ini menjelaskan protokol yang terlihat di kode; format body lengkap dan respons tiap operasi perlu ditelusuri per fungsi/model. Tidak ada request yang direkam dari jaringan.
+
+### Panggilan yang relevan untuk otorisasi
+
+| Alur | Path efektif production | Metode/envelope | Catatan statis |
+|---|---|---|---|
+| F-05 lookup akun | `/staff` | `BaseNetworking.post`, `FormData` field `json1` + base64url `json`; Bearer + `UGMFWSERVICE: 1` | Route `/auth` tidak punya pemanggil statis dan tidak ada di allowlist middleware; lookup hanya memakai username + `"8"` |
+| F-06 scan entrant | `/v1/staff/micro/doscanent` | `BaseNetworkingV2.post`, `FormData` karena default `application/form-data`; Bearer tanpa `UGMFWSERVICE` | Dipilih untuk QR > 37 karakter dari `/qr-scanner`; body membawa identitas client; tidak ada cek peran di jalur UI yang terpulihkan |
+
+Detail envelope, respons, dan batas interpretasi ada di [`API-AUTH-DEEP-DIVE.md`](API-AUTH-DEEP-DIVE.md). Route `/auth`, `/attedence`, dan `/qr-scanner` tidak ada di allowlist middleware; tab attendance juga dibangun langsung dari `/landing` setelah sesi. Lihat juga [`SECURITY-FINDINGS.md`](SECURITY-FINDINGS.md).
 
 ## Session dan OAuth
 
