@@ -40,6 +40,18 @@ JADX pada semua run melaporkan 27.328 class dimuat, 170.057 method, dan 3.961.28
 
 CI memeriksa isi teks di dalam ZIP terhadap pola private key lengkap, JWT, bearer token, API key Google, dan credential literal. Pemindaian ini berfokus pada pola umum; ia tidak menggantikan review manual atau membuktikan seluruh metode telah dipetakan ke output.
 
+## Crosswalk awal class-level (2026-10-27)
+
+Pencocokan sederhana nama file top-level menghasilkan:
+
+- 27.317 class DEX; 14.463 nama top-level setelah class inner `$...` dilipat.
+- 14.749 file Java fallback; 14.749 nama top-level file.
+- **423** nama top-level DEX tidak memiliki file Java dengan nama yang sama.
+- **709** file Java tidak memiliki pasangan nama top-level DEX; banyak di antaranya adalah stub API Android/AndroidX atau class sintetis.
+- Selisih 11 class antara hitungan APK Analyzer dan JADX masih terbuka.
+
+Angka ini **bukan** klaim bahwa 423 class gagal didecompile. Inner class, synthetic class, nama yang dinormalisasi, dan stub API dapat menghasilkan selisih. Crosswalk method-level dan triase per unit tetap diperlukan sebelum status 100% dapat diberikan.
+
 ## Gap untuk cakupan penuh
 
 1. Hubungkan 170.057 method DEX ke output fallback dan class/file asal, termasuk method tanpa code item, abstract/native, synthetic, dan error-mode.

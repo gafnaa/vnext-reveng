@@ -42,3 +42,37 @@ TMPDIR=/smster/work/ghidra/tmp \
 ```
 
 Status `partial-control-flow` tetap menghasilkan pseudocode, tetapi menunjukkan jump table yang belum pulih. Symbol ELF `_kDartIsolateSnapshotInstructions` yang hanya muncul sebagai stub 1 byte diperlakukan sebagai kandidat non-code. Hasil run 2026-10-27 dan keterbatasan range AOT ada di [`reports/GHIDRA-FULL-DECOMPILE.md`](../../reports/GHIDRA-FULL-DECOMPILE.md).
+
+## Seed dan decompile seluruh paket aplikasi
+
+`extract_blutter_functions.py` membaca header `// ** addr: ...` dari output Blutter dan menghasilkan TSV. `SeedAndDecompileMissing.java` kemudian hanya menambah function yang belum ada, melakukan disassembly terbatas pada range yang diberikan, dan menulis pseudocode per function. `ExportFunctionInventory.java` mengekspor seluruh function entry untuk audit cakupan.
+
+```sh
+python3 analysis/ghidra/extract_blutter_functions.py \
+  dart-recovered/asm/simaster_ugm \
+  /tmp/app-functions.tsv
+
+JAVA_HOME=/smster/tools/rea-tools/jdk-21.0.13 \
+JAVA_TOOL_OPTIONS='-Duser.home=/smster/work/ghidra/home -Duser.name=smster -Djava.io.tmpdir=/smster/work/ghidra/tmp' \
+XDG_CONFIG_HOME=/smster/work/ghidra/home/.config \
+XDG_CACHE_HOME=/smster/work/ghidra/cache \
+TMPDIR=/smster/work/ghidra/tmp \
+/smster/tools/bin/analyzeHeadless /smster/work/ghidra/projects-app-2026-10-27 SimasterAOT \
+  -process libapp.so -noanalysis \
+  -scriptPath /smster/repo/analysis/ghidra \
+  -postScript SeedAndDecompileMissing.java \
+  /tmp/app-functions.tsv /smster/work/ghidra/decompiled-app-2026-10-27 5
+
+JAVA_HOME=/smster/tools/rea-tools/jdk-21.0.13 \
+JAVA_TOOL_OPTIONS='-Duser.home=/smster/work/ghidra/home -Duser.name=smster -Djava.io.tmpdir=/smster/work/ghidra/tmp' \
+XDG_CONFIG_HOME=/smster/work/ghidra/home/.config \
+XDG_CACHE_HOME=/smster/work/ghidra/cache \
+TMPDIR=/smster/work/ghidra/tmp \
+/smster/tools/bin/analyzeHeadless /smster/work/ghidra/projects-app-2026-10-27 SimasterAOT \
+  -process libapp.so -noanalysis \
+  -scriptPath /smster/repo/analysis/ghidra \
+  -postScript ExportFunctionInventory.java \
+  /smster/work/ghidra/function-inventory-app.tsv
+```
+
+Jangan menyalin project Ghidra atau pseudocode ke Git. Hash input harus cocok dengan `reports/artifact-manifest.json`; script tidak memverifikasi hash secara otomatis. Ringkasan hasil ada di [`reports/GHIDRA-APP-DECOMPILE.md`](../../reports/GHIDRA-APP-DECOMPILE.md).

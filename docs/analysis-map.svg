@@ -1,0 +1,199 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1000" viewBox="0 0 1440 1000" role="img" aria-labelledby="title desc">
+  <title id="title">Peta cakupan analisis Simaster UGM Student vNEXT</title>
+  <desc id="desc">Matriks visual per lapisan analisis: sumber dan denominator, alat, keluaran, serta status cakupan. Status dibedakan menjadi selesai, tercatat, parsial, dan kandidat. Angka per 27 Oktober 2026.</desc>
+  <defs>
+    <filter id="shadow" x="-8%" y="-8%" width="116%" height="120%">
+      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#0f172a" flood-opacity="0.05"/>
+    </filter>
+    <style>
+      text { font-family: Inter, "Segoe UI", Arial, sans-serif; fill: #0f172a; }
+      .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 1.6px; fill: #64748b; }
+      .title { font-size: 31px; font-weight: 750; letter-spacing: -0.6px; }
+      .subtitle { font-size: 14px; fill: #64748b; }
+      .header { font-size: 10px; font-weight: 700; letter-spacing: 1.2px; fill: #cbd5e1; }
+      .layer { font-size: 14px; font-weight: 700; }
+      .body { font-size: 12px; fill: #334155; }
+      .small { font-size: 10px; fill: #64748b; }
+      .tiny { font-size: 9px; fill: #64748b; }
+      .num { font-size: 10px; font-weight: 700; fill: #94a3b8; }
+      .pill { font-size: 9px; font-weight: 800; letter-spacing: 0.7px; }
+      .legend { font-size: 10px; fill: #475569; }
+      .divider { stroke: #e2e8f0; stroke-width: 1; }
+    </style>
+  </defs>
+
+  <rect width="1440" height="1000" fill="#f6f8fb"/>
+  <circle cx="1364" cy="50" r="160" fill="#e8f1fb" opacity="0.55"/>
+  <circle cx="80" cy="952" r="180" fill="#ecfdf5" opacity="0.55"/>
+
+  <text x="64" y="48" class="eyebrow">PROGRESS MAP / 2026-10-27</text>
+  <text x="64" y="84" class="title">Peta cakupan analisis</text>
+  <text x="64" y="108" class="subtitle">Setiap lapisan: sumber → alat → keluaran → status. Angka adalah unit dalam inventaris beku, bukan pemulihan source asli.</text>
+
+  <g transform="translate(944,38)">
+    <rect x="0" y="0" width="432" height="58" rx="12" fill="#ffffff" stroke="#dbe3ee" filter="url(#shadow)"/>
+    <circle cx="20" cy="22" r="5" fill="#059669"/>
+    <text x="32" y="26" class="legend">Selesai</text>
+    <circle cx="106" cy="22" r="5" fill="#2563eb"/>
+    <text x="118" y="26" class="legend">Tercatat</text>
+    <circle cx="206" cy="22" r="5" fill="#d97706"/>
+    <text x="218" y="26" class="legend">Parsial</text>
+    <circle cx="300" cy="22" r="5" fill="#e11d48"/>
+    <text x="312" y="26" class="legend">Kandidat</text>
+    <text x="20" y="45" class="tiny">Status operasional per snapshot; bukan skor keseluruhan.</text>
+  </g>
+
+  <line x1="64" y1="128" x2="1376" y2="128" class="divider"/>
+
+  <!-- table header -->
+  <rect x="64" y="148" width="1312" height="48" rx="10" fill="#0f172a"/>
+  <text x="80" y="177" class="header">LAPISAN</text>
+  <text x="346" y="177" class="header">SUMBER / DENOMINATOR</text>
+  <text x="612" y="177" class="header">ALAT</text>
+  <text x="808" y="177" class="header">KELUARAN</text>
+  <text x="1098" y="177" class="header">STATUS</text>
+
+  <!-- row 01 -->
+  <rect x="64" y="202" width="1312" height="76" fill="#ffffff" stroke="#e2e8f0"/>
+  <rect x="64" y="202" width="4" height="76" fill="#059669"/>
+  <text x="80" y="226" class="num">01</text>
+  <text x="80" y="246" class="layer">Kontainer</text>
+  <text x="80" y="264" class="small">XAPK/split inventory</text>
+  <text x="346" y="230" class="body">XAPK · 20 entri</text>
+  <text x="346" y="248" class="small">base + config + native split</text>
+  <text x="612" y="238" class="body">inventory / unzip</text>
+  <text x="808" y="230" class="body">20/20 entri APK/split</text>
+  <text x="808" y="248" class="small">hash dan ukuran tercatat</text>
+  <rect x="1098" y="218" width="86" height="22" rx="11" fill="#ecfdf5" stroke="#a7f3d0"/>
+  <text x="1157" y="233" text-anchor="middle" class="pill" fill="#047857">SELESAI</text>
+  <text x="1098" y="260" class="tiny">path internal per arsip belum lengkap</text>
+
+  <!-- row 02 -->
+  <rect x="64" y="278" width="1312" height="76" fill="#f8fafc" stroke="#e2e8f0"/>
+  <rect x="64" y="278" width="4" height="76" fill="#2563eb"/>
+  <text x="80" y="302" class="num">02</text>
+  <text x="80" y="322" class="layer">Identitas &amp; manifest</text>
+  <text x="80" y="340" class="small">paket dan komponen</text>
+  <text x="346" y="306" class="body">1 paket · 50 komponen</text>
+  <text x="346" y="324" class="small">manifest, izin, intent filter</text>
+  <text x="612" y="314" class="body">static read</text>
+  <text x="808" y="306" class="body">komponen, izin, deep link</text>
+  <text x="808" y="324" class="small">50 komponen terinventaris</text>
+  <rect x="1098" y="294" width="96" height="22" rx="11" fill="#eff6ff" stroke="#bfdbfe"/>
+  <text x="1162" y="309" text-anchor="middle" class="pill" fill="#1d4ed8">DIPERIKSA</text>
+  <text x="1098" y="336" class="tiny">bukan observasi runtime</text>
+
+  <!-- row 03 -->
+  <rect x="64" y="354" width="1312" height="76" fill="#ffffff" stroke="#e2e8f0"/>
+  <rect x="64" y="354" width="4" height="76" fill="#d97706"/>
+  <text x="80" y="378" class="num">03</text>
+  <text x="80" y="398" class="layer">DEX</text>
+  <text x="80" y="416" class="small">wrapper Java/Kotlin</text>
+  <text x="346" y="382" class="body">5 DEX · 27.317 class</text>
+  <text x="346" y="400" class="small">170.057 method · 79.957 field</text>
+  <text x="612" y="390" class="body">JADX 1.5.6</text>
+  <text x="808" y="382" class="body">14.749 file Java</text>
+  <text x="808" y="400" class="small">fallback: 0 CLI error</text>
+  <rect x="1098" y="370" width="82" height="22" rx="11" fill="#fffbeb" stroke="#fde68a"/>
+  <text x="1155" y="385" text-anchor="middle" class="pill" fill="#92400e">PARSIAL</text>
+  <text x="1098" y="412" class="tiny">67 error simple · 164 auto · crosswalk pending</text>
+
+  <!-- row 04 -->
+  <rect x="64" y="430" width="1312" height="76" fill="#f8fafc" stroke="#e2e8f0"/>
+  <rect x="64" y="430" width="4" height="76" fill="#d97706"/>
+  <text x="80" y="454" class="num">04</text>
+  <text x="80" y="474" class="layer">Resource &amp; assets</text>
+  <text x="80" y="492" class="small">resource base APK dan split</text>
+  <text x="346" y="458" class="body">XML, value, drawable, asset</text>
+  <text x="346" y="476" class="small">inventaris split tersedia</text>
+  <text x="612" y="466" class="body">JADX --no-res</text>
+  <text x="808" y="458" class="body">797 resource dari mode auto/simple</text>
+  <text x="808" y="476" class="small">fallback tidak menulis resource</text>
+  <rect x="1098" y="446" width="82" height="22" rx="11" fill="#fffbeb" stroke="#fde68a"/>
+  <text x="1155" y="461" text-anchor="middle" class="pill" fill="#92400e">PARSIAL</text>
+  <text x="1098" y="488" class="tiny">rekonsiliasi sumber belum selesai</text>
+
+  <!-- row 05 -->
+  <rect x="64" y="506" width="1312" height="76" fill="#ffffff" stroke="#e2e8f0"/>
+  <rect x="64" y="506" width="4" height="76" fill="#d97706"/>
+  <text x="80" y="530" class="num">05</text>
+  <text x="80" y="550" class="layer">Dart AOT / Blutter</text>
+  <text x="80" y="568" class="small">libapp.so</text>
+  <text x="346" y="534" class="body">29.989 header function</text>
+  <text x="346" y="552" class="small">418 file paket aplikasi</text>
+  <text x="612" y="542" class="body">Blutter</text>
+  <text x="808" y="534" class="body">2.312 file assembly</text>
+  <text x="808" y="552" class="small">2.796 header aplikasi</text>
+  <rect x="1098" y="522" width="82" height="22" rx="11" fill="#fffbeb" stroke="#fde68a"/>
+  <text x="1155" y="537" text-anchor="middle" class="pill" fill="#92400e">PARSIAL</text>
+  <text x="1098" y="564" class="tiny">1 assertion · denominator range pending</text>
+
+  <!-- row 06 -->
+  <rect x="64" y="582" width="1312" height="76" fill="#f8fafc" stroke="#e2e8f0"/>
+  <rect x="64" y="582" width="4" height="76" fill="#059669"/>
+  <text x="80" y="606" class="num">06</text>
+  <text x="80" y="626" class="layer">Ghidra app-level</text>
+  <text x="80" y="644" class="small">paket simaster_ugm</text>
+  <text x="346" y="610" class="body">2.796 function start</text>
+  <text x="346" y="628" class="small">33 existing + 2.763 baru</text>
+  <text x="612" y="618" class="body">Ghidra 12.1.4</text>
+  <text x="808" y="610" class="body">2.763 pseudocode baru</text>
+  <text x="808" y="628" class="small">0 gagal · 0 caveat baru</text>
+  <rect x="1098" y="598" width="86" height="22" rx="11" fill="#ecfdf5" stroke="#a7f3d0"/>
+  <text x="1157" y="613" text-anchor="middle" class="pill" fill="#047857">SELESAI</text>
+  <text x="1098" y="640" class="tiny">2.796/2.796 start aplikasi terwakili</text>
+  <rect x="1098" y="648" width="230" height="4" rx="2" fill="#d1fae5"/>
+  <rect x="1098" y="648" width="230" height="4" rx="2" fill="#059669"/>
+
+  <!-- row 07 -->
+  <rect x="64" y="658" width="1312" height="76" fill="#ffffff" stroke="#e2e8f0"/>
+  <rect x="64" y="658" width="4" height="76" fill="#d97706"/>
+  <text x="80" y="682" class="num">07</text>
+  <text x="80" y="702" class="layer">Ghidra full binary</text>
+  <text x="80" y="720" class="small">seluruh libapp.so</text>
+  <text x="346" y="686" class="body">29.989 header · 12,78 MB .text</text>
+  <text x="346" y="704" class="small">function + code range</text>
+  <text x="612" y="694" class="body">Ghidra 12.1.4</text>
+  <text x="808" y="686" class="body">4.815 functions</text>
+  <text x="808" y="704" class="small">3.862 matched · 953 Ghidra-only</text>
+  <rect x="1098" y="674" width="82" height="22" rx="11" fill="#fffbeb" stroke="#fde68a"/>
+  <text x="1155" y="689" text-anchor="middle" class="pill" fill="#92400e">PARSIAL</text>
+  <text x="1098" y="716" class="tiny">12,88% · 50 jump table · VM snapshot 92.768 B</text>
+  <rect x="1098" y="724" width="230" height="4" rx="2" fill="#fef3c7"/>
+  <rect x="1098" y="724" width="30" height="4" rx="2" fill="#d97706"/>
+
+  <!-- row 08 -->
+  <rect x="64" y="734" width="1312" height="76" fill="#f8fafc" stroke="#e2e8f0"/>
+  <rect x="64" y="734" width="4" height="76" fill="#2563eb"/>
+  <text x="80" y="758" class="num">08</text>
+  <text x="80" y="778" class="layer">Feature map</text>
+  <text x="80" y="796" class="small">modul, route, service</text>
+  <text x="346" y="762" class="body">43 modul · 49 route</text>
+  <text x="346" y="780" class="small">36 caller/service triples</text>
+  <text x="612" y="770" class="body">static extraction</text>
+  <text x="808" y="762" class="body">route dan service map</text>
+  <text x="808" y="780" class="small">29 label service unik</text>
+  <rect x="1098" y="750" width="90" height="22" rx="11" fill="#eff6ff" stroke="#bfdbfe"/>
+  <text x="1159" y="765" text-anchor="middle" class="pill" fill="#1d4ed8">TERCATAT</text>
+  <text x="1098" y="792" class="tiny">belum diuji runtime · binding /oss_v2 pending</text>
+
+  <!-- row 09 -->
+  <rect x="64" y="810" width="1312" height="76" fill="#ffffff" stroke="#e2e8f0"/>
+  <rect x="64" y="810" width="4" height="76" fill="#e11d48"/>
+  <text x="80" y="834" class="num">09</text>
+  <text x="80" y="854" class="layer">Security review</text>
+  <text x="80" y="872" class="small">OAuth dan API authorization</text>
+  <text x="346" y="838" class="body">F-01–F-06</text>
+  <text x="346" y="856" class="small">static deep dive + staging plan</text>
+  <text x="612" y="846" class="body">static analysis</text>
+  <text x="808" y="838" class="body">6 findings · 3 staging plans</text>
+  <text x="808" y="856" class="small">belum ada request/response</text>
+  <rect x="1098" y="826" width="88" height="22" rx="11" fill="#fff1f2" stroke="#fecdd3"/>
+  <text x="1158" y="841" text-anchor="middle" class="pill" fill="#be123c">KANDIDAT</text>
+  <text x="1098" y="868" class="tiny">validasi server/staging belum dilakukan</text>
+
+  <line x1="64" y1="910" x2="1376" y2="910" class="divider"/>
+  <text x="64" y="936" class="small">Status per 2026-10-27. “Selesai” berarti unit dalam inventaris sudah diproses, bukan source Dart asli pulih identik.</text>
+  <text x="64" y="954" class="small">Runtime tetap 0 sesi dan 0 request backend. Temuan keamanan tetap kandidat sampai diuji di staging berizin dengan akun sintetis.</text>
+  <text x="64" y="978" class="tiny">Sumber: PROGRESS.md, artifact-manifest.json, DEX-DECOMPILATION.md, GHIDRA-APP-DECOMPILE.md, FEATURE-MAP.md, SECURITY-FINDINGS.md.</text>
+</svg>

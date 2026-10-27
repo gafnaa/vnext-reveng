@@ -4,7 +4,7 @@
 **Pemilik:** gafnaa  
 **Target:** `id.ac.ugm.student.vnext.simaster`  
 **Baseline:** versi 1.11.1, version code 65  
-**Repo kerja:** `gafnaa/simaster-ugm-student-vnext-re`
+**Repo kerja:** `gafnaa/vnext-reveng`
 
 ## 1. Ringkasan
 

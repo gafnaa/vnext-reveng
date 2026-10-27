@@ -9,6 +9,8 @@
 - Pencocokan alamat diverifikasi pada fungsi login: byte di Ghidra `0x10da15c` diawali `fd79bfa9fd030faa`, sama dengan instruksi pertama pada alamat Blutter `0xfda15c`. Bukti baca byte REA `ev_12b16e4f367fc8814b802c1391b7d1312024b350f26535900110555466c960d0` ada di [`ghidra-seed-evidence.json`](ghidra-seed-evidence.json); evidence awal Ghidra ada di [`ghidra-evidence-bundle.json`](ghidra-evidence-bundle.json).
 - Setelah entry point di-seed dan analisis ulang, Function Manager Ghidra menghitung 2.052 fungsi. Angka ini adalah hasil analisis pada image ini; bukan klaim bahwa setiap fungsi Dart berhasil dipulihkan.
 
+> **Catatan batch lanjutan (2026-10-27):** audit header Blutter menemukan 29.989 alamat function unik. Batch aplikasi kemudian menambahkan 2.763 function sehingga Function Manager berisi 4.815 function; seluruh 2.796 function start paket `simaster_ugm` kini terwakili. Full binary tetap parsial: 3.862/29.989 function (12,88%). Rincian ada di [`GHIDRA-APP-DECOMPILE.md`](GHIDRA-APP-DECOMPILE.md).
+
 ## Fungsi yang didecompile
 
 | Fungsi berlabel Blutter | Alamat Ghidra | Ukuran Blutter | Byte body Ghidra | Hubungan yang tampak di pseudocode |

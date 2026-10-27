@@ -6,6 +6,8 @@ Blutter source addresses are ELF file-backed coordinates. Ghidra imported this E
 
 Ghidra function inventory after analysis and seeding: `2052`
 
+> Angka 2.052 di atas adalah baseline lima seed. Batch aplikasi 2026-10-27 menambahkan 2.763 function; Function Manager akhir berisi 4.815 function dan seluruh function start `simaster_ugm` terwakili. Lihat [`GHIDRA-APP-DECOMPILE.md`](GHIDRA-APP-DECOMPILE.md).
+
 ## AuthNetworkImpl_signIn
 
 - Blutter address: `0xfda15c`
