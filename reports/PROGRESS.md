@@ -21,6 +21,7 @@
 | Middleware sesi | 18 nama pengecualian ditemukan | 18/18 nama tercatat | Interpretasi berasal dari list statis dan tidak menunjukkan route mana yang benar-benar tercapai. |
 | Caller/API service | 36 caller/method/service triples, 29 label unik | 36/36 triples yang dipulihkan tercatat | Tidak membuktikan request terkirim. Path beberapa layanan dirakit saat runtime dan perlu ditelusuri. |
 | Perilaku runtime | 0 sesi aplikasi; 0 request backend diamati | Belum diketahui | Emulator x86_64 tidak mendukung split ARM64 target dalam konfigurasi yang dicoba; lihat `ANALYSIS.md`. |
+| Keamanan statis | 1 deep dive (F-01) + 5 kandidat | Kandidat; belum divalidasi runtime/server | [`SECURITY-FINDINGS.md`](SECURITY-FINDINGS.md); model presensi dan PoC offline, tanpa uji produksi. |
 
 ## Cara membaca cakupan
 
@@ -44,4 +45,5 @@
 - [Feature map](FEATURE-MAP.md)
 - [Analisis Ghidra](GHIDRA-ANALYSIS.md)
 - [Pseudocode Ghidra terpilih](GHIDRA-AOT-SELECTED.md)
+- [Temuan keamanan statis](SECURITY-FINDINGS.md)
 - [Manifest artifact dan tool](artifact-manifest.json)
