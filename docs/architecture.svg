@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Arsitektur statis Simaster UGM Student vNEXT</title>
+  <desc id="desc">XAPK berisi base APK dan split konfigurasi. Base APK memuat wrapper Android, lima DEX, resource dan assets. Split ARM64 memuat Flutter runtime dan Dart AOT libapp.so. Struktur AOT menunjukkan modul, route, autentikasi dan konfigurasi layanan eksternal. Semua hubungan berasal dari analisis statis dan belum diverifikasi saat runtime.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#52677c"/></marker>
+    <style>
+      text{font-family:Inter,Arial,sans-serif;fill:#102a43}.title{font-size:26px;font-weight:700}.sub{font-size:14px;fill:#486581}.head{font-size:18px;font-weight:700}.body{font-size:14px}.small{font-size:12px;fill:#486581}.node{stroke-width:2;rx:14}.edge{fill:none;stroke:#52677c;stroke-width:2;marker-end:url(#arrow)}.dashed{stroke-dasharray:7 6}
+    </style>
+  </defs>
+  <rect width="1200" height="760" fill="#f5f8fb"/>
+  <text x="42" y="48" class="title">Simaster Student vNEXT — peta arsitektur statis</text>
+  <text x="42" y="74" class="sub">Paket 1.11.1 (code 65) · XAPK/split · native ABI yang tersedia: arm64-v8a</text>
+
+  <rect x="42" y="120" width="245" height="120" class="node" fill="#e8f1fb" stroke="#3f78a8"/>
+  <text x="62" y="152" class="head">XAPK · 20 entri</text>
+  <text x="62" y="180" class="body">Base APK + split bahasa/density</text>
+  <text x="62" y="204" class="body">+ split native ARM64</text>
+  <text x="62" y="226" class="small">reports/xapk-inventory.json</text>
+
+  <rect x="355" y="105" width="330" height="170" class="node" fill="#eaf6ef" stroke="#3f9460"/>
+  <text x="378" y="137" class="head">Base APK · Android wrapper</text>
+  <text x="378" y="167" class="body">Manifest, MainActivity, plugin components</text>
+  <text x="378" y="192" class="body">5 DEX · 270 resource · 361 asset</text>
+  <text x="378" y="220" class="body">OAuth deep-link declaration</text>
+  <text x="378" y="251" class="small">JADX: output parsial, 164 error</text>
+
+  <rect x="355" y="335" width="330" height="155" class="node" fill="#fff4df" stroke="#d99a24"/>
+  <text x="378" y="368" class="head">Split ARM64 · native libraries</text>
+  <text x="378" y="398" class="body">12 library · termasuk libflutter.so</text>
+  <text x="378" y="423" class="body">libapp.so · Flutter/Dart AOT</text>
+  <text x="378" y="451" class="body">SHA-256 tercatat di artifact manifest</text>
+  <text x="378" y="475" class="small">Ghidra 12.1.4 · analisis seeded</text>
+
+  <rect x="760" y="102" width="385" height="175" class="node" fill="#f1ecfb" stroke="#7957a5"/>
+  <text x="784" y="136" class="head">Android + Flutter runtime</text>
+  <text x="784" y="168" class="body">Wrapper menginisialisasi Flutter/plugin</text>
+  <text x="784" y="194" class="body">Manifest menunjukkan komponen &amp; intent</text>
+  <text x="784" y="223" class="body">Belum diamati saat aplikasi berjalan</text>
+  <text x="784" y="252" class="small">Hubungan runtime masih hipotesis statis</text>
+
+  <rect x="760" y="335" width="385" height="195" class="node" fill="#fff0f0" stroke="#c95e5e"/>
+  <text x="784" y="369" class="head">Dart AOT · libapp.so</text>
+  <text x="784" y="399" class="body">43 direktori modul · 49 route</text>
+  <text x="784" y="425" class="body">36 caller/service pairs · 29 label</text>
+  <text x="784" y="451" class="body">OAuth/token logic &amp; API configuration</text>
+  <text x="784" y="481" class="body">Blutter labels → Ghidra functions/pseudocode</text>
+  <text x="784" y="510" class="small">Pseudocode tidak sama dengan source Dart asli</text>
+
+  <rect x="760" y="590" width="385" height="105" class="node" fill="#e9f5f7" stroke="#318596"/>
+  <text x="784" y="624" class="head">Batas layanan eksternal</text>
+  <text x="784" y="653" class="body">Host API / OAuth / Firebase dari konfigurasi statis</text>
+  <text x="784" y="678" class="small">Tidak ada request atau respons backend yang diamati</text>
+
+  <path d="M287 180H355" class="edge"/>
+  <text x="295" y="167" class="small">memuat</text>
+  <path d="M287 205C320 205 316 410 355 410" class="edge"/>
+  <text x="296" y="300" class="small">split ABI</text>
+  <path d="M685 180H760" class="edge"/>
+  <text x="690" y="167" class="small">deklarasi</text>
+  <path d="M685 410H760" class="edge"/>
+  <text x="695" y="397" class="small">memuat AOT</text>
+  <path d="M952 277V335" class="edge dashed"/>
+  <text x="964" y="312" class="small">dihubungkan oleh runtime*</text>
+  <path d="M952 530V590" class="edge dashed"/>
+  <text x="965" y="568" class="small">konfigurasi saja*</text>
+
+  <text x="42" y="730" class="small">* Panah ke runtime/layanan adalah interpretasi struktur statis; target APK belum dijalankan. Sumber: ANALYSIS.md, FEATURE-MAP.md, GHIDRA-ANALYSIS.md.</text>
+</svg>

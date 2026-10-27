@@ -1,15 +1,59 @@
-# Simaster UGM Student vNEXT — static reverse engineering
+# Simaster UGM Student vNEXT — reverse engineering
 
-Repo privat untuk artefak decompile dan temuan statis aplikasi Android paket `id.ac.ugm.student.vnext.simaster` versi 1.11.1 (code 65). Aplikasi tidak dipasang atau dijalankan.
+Repo privat untuk analisis statis paket Android `id.ac.ugm.student.vnext.simaster` versi **1.11.1 (code 65)**. Analisis berfokus pada inventaris split Android, DEX/resource, Flutter/Dart AOT, hasil Ghidra, dan pemetaan fitur.
 
-## Isi
+> **Status:** baseline analisis tersedia, cakupan belum 100%. APK belum dijalankan; semua route, layanan, dan endpoint di bawah berasal dari artefak statis kecuali bila laporan secara eksplisit menyatakan sebaliknya.
 
-- [`analysis-results.zip`](analysis-results.zip): output lengkap JADX dan Blutter; berkas berisi nilai token/API key yang tampak sensitif telah disamarkan.
-- [`reports/ANALYSIS.md`](reports/ANALYSIS.md): ringkasan arsitektur, izin, modul, host statis, hasil alat, keterbatasan, dan Evidence ID.
-- [`reports/FEATURE-MAP.md`](reports/FEATURE-MAP.md): route yang dipulihkan, daftar pemeriksaan sesi, dan pemetaan label service ke caller statis.
-- [`reports/GHIDRA-ANALYSIS.md`](reports/GHIDRA-ANALYSIS.md) dan [`reports/GHIDRA-AOT-SELECTED.md`](reports/GHIDRA-AOT-SELECTED.md): ringkasan dan pseudocode Ghidra untuk entry point AOT yang dipilih.
-- [`analysis/ghidra/`](analysis/ghidra/): script seed dan langkah reproduksi analisis headless.
-- [`reports/`](reports/): manifest Android dan Evidence REA/Ghidra, termasuk [`ghidra-seed-evidence.json`](reports/ghidra-seed-evidence.json) untuk verifikasi alamat fungsi yang disemai.
-- [`recovered/`](recovered/): beberapa file hasil rekonstruksi Dart dan wrapper Android untuk ditinjau langsung. Itu bukan source asli.
+## Arsitektur yang ditemukan
 
-XAPK/APK dan native library tidak dimasukkan ke repo. SHA-256 dan sumbernya dicatat dalam [`reports/artifact-manifest.json`](reports/artifact-manifest.json). Hasil decompile tidak lengkap: JADX melaporkan 164 error dan Blutter 1 assertion error; lihat analisis untuk batasan lengkap.
+![Diagram arsitektur statis Simaster Student vNEXT](docs/architecture.svg)
+
+Diagram merangkum jalur paket dan batas layanan yang terlihat dari manifest, inventaris split, string, dan output decompiler. Panah menunjukkan hubungan statis, bukan bukti alur runtime. Detail dan provenance ada di [laporan analisis](reports/ANALYSIS.md).
+
+## Progres analisis
+
+Snapshot baseline untuk target versi 1.11.1:
+
+| Area | Cakupan saat ini | Status |
+|---|---:|---|
+| Entri APK/split dalam XAPK | 20/20 terinventaris | Inventaris tersedia |
+| DEX base APK | 5 file ditemukan; JADX memproses 10.477 unit dan menghasilkan 14.647 file Java | Parsial; 164 error JADX belum ditriase per unit |
+| Resource JADX | 797 file keluaran | Perlu dicocokkan dengan inventaris resource sumber |
+| Flutter AOT / Blutter | 2.312 file assembly, 418 file khusus aplikasi | Parsial; satu assertion di `0xcab944` |
+| Fungsi Ghidra | 2.052 fungsi setelah seeding; 5 fungsi pilihan memiliki pseudocode | Parsial; denominator seluruh fungsi belum terbukti |
+| Modul | 43 direktori modul ditemukan | Peta nama modul tersedia |
+| Route | 49 path dan 49 konstruksi route ditemukan | Binding `/oss_v2` belum dipasangkan |
+| Caller/service | 36 pasangan, 29 label service unik | Pemetaan statis |
+| Runtime | Belum ada eksekusi aplikasi atau traffic | Belum terverifikasi |
+
+Persentase keseluruhan tidak ditampilkan sebelum denominator per lapisan dapat dibuktikan. Lihat [progress map](reports/PROGRESS.md) untuk status, rumus, bukti, dan langkah berikutnya. “100% inventaris statis” mengikuti [PRD](docs/PRD-REVERSE-ENGINEERING.md); itu tidak berarti source Dart asli pulih identik dari kompilasi AOT.
+
+## Temuan dan laporan
+
+- [Hasil static reverse engineering](reports/ANALYSIS.md) — identitas paket, izin, konfigurasi, metode, provenance, dan batasan.
+- [Peta route dan service](reports/FEATURE-MAP.md) — route, pengecualian middleware sesi, modul, dan caller/service statis.
+- [Analisis Ghidra](reports/GHIDRA-ANALYSIS.md) — metode seeding, alamat, fungsi hasil, pseudocode, dan keterbatasan.
+- [Pseudocode AOT terpilih](reports/GHIDRA-AOT-SELECTED.md) — lima fungsi yang didecompile dengan Ghidra.
+- [PRD reverse engineering](docs/PRD-REVERSE-ENGINEERING.md) — definisi cakupan, kriteria 100%, kebutuhan CI/CD, dan Definition of Done.
+- [`analysis/ghidra/`](analysis/ghidra/) — script seed dan langkah reproduksi Ghidra.
+- [`recovered/`](recovered/) — rekonstruksi dan wrapper yang dapat ditinjau; bukan source asli.
+- [`reports/`](reports/) — manifest inventaris, hash, dan bukti analisis.
+
+Output JADX/Blutter yang sudah disanitasi tersedia di [`analysis-results.zip`](analysis-results.zip). APK/XAPK mentah, DEX, library `.so`, serta database project Ghidra tidak dimasukkan ke repo. Hash dan identitas input dicatat di [`reports/artifact-manifest.json`](reports/artifact-manifest.json).
+
+## Reproduksi
+
+Analisis yang tercatat memakai REA, JADX 1.5.6, Blutter pada commit yang ditautkan di manifest, dan Ghidra 12.1.4. Ikuti instruksi di [README Ghidra](analysis/ghidra/README.md) untuk mengulang analisis headless. Sebelum membandingkan hasil, cocokkan SHA-256 input di manifest. APK tidak otomatis diunduh oleh CI.
+
+## Batas interpretasi
+
+- Hasil JADX parsial: 164 error dan exit code 3.
+- Blutter menyelesaikan dump utama tetapi berhenti pada satu assertion.
+- Ghidra perlu seed alamat dari output Blutter; angka 2.052 bukan bukti semua fungsi AOT ditemukan.
+- Kompilasi Flutter AOT menghilangkan sebagian informasi source. Pseudocode tidak mengembalikan komentar, nama variabel asli, dan seluruh struktur tipe Dart.
+- Modul, string, izin, route, dan descriptor API adalah temuan statis. Tanpa eksekusi kompatibel, layar, perilaku, request, dan respons backend tetap belum diketahui.
+- Nilai token/API key yang ditemukan pada hasil alat harus disamarkan sebelum perubahan masuk repo.
+
+## Kontribusi
+
+Setiap perubahan masuk lewat PR dengan satu Conventional Commit per PR, kemudian squash-merge ke `main`. Jalankan `git diff --check` sebelum push dan sertakan sumber/bukti serta dampak ke progress map. Detail kriteria CI/CD dan keamanan ada di PRD.
