@@ -11,11 +11,11 @@
 |---|---:|---|---|
 | Kontainer XAPK | 20 entri APK/split | Inventaris 20/20 | [`xapk-inventory.json`](xapk-inventory.json); belum ada daftar seluruh path internal tiap arsip di repo. |
 | Identitas dan manifest | 1 paket; manifest memuat 50 komponen | Diperiksa statis | [`ANALYSIS.md`](ANALYSIS.md), [`AndroidManifest.xml`](AndroidManifest.xml); bukan observasi runtime. |
-| DEX | 5 file; APK Analyzer: 27.317 class, 170.057 method, 79.957 field | Fallback JADX: 14.749 file, 9.707 unit diproses, 0 error CLI; auto 164 error, simple 67 error | Perbedaan 11 class JADX vs APK Analyzer belum direkonsiliasi; method-to-output crosswalk pending. Lihat [`DEX-DECOMPILATION.md`](DEX-DECOMPILATION.md). |
+| DEX | 5 file; APK Analyzer: 27.317 class, 170.057 method, 79.957 field | Fallback JADX: 14.749 file, 9.707 unit diproses, 0 error CLI; auto 164 error, simple 67 error | Perbedaan 11 class JADX vs APK Analyzer belum direkonsiliasi; crosswalk method-to-output pending. Pencocokan nama top-level awal: 423 class DEX tanpa file Java bernama sama dan 709 file Java tanpa pasangan top-level DEX, sehingga belum boleh disebut 100%. Lihat [`DEX-DECOMPILATION.md`](DEX-DECOMPILATION.md). |
 | Resource/assets | Inventaris split tersedia; JADX auto/simple masing-masing menulis 797 resource | Parsial | Fallback dijalankan dengan `--no-res`; rekonsiliasi semua resource/asset sumber ke output belum dilakukan. |
 | Native | Split ARM64 mencatat 12 `.so`, termasuk `libapp.so` dan `libflutter.so` | Inventaris ABI tersedia | Belum ada laporan decompile/fungsi per setiap library. Fokus Ghidra saat ini pada `libapp.so`. |
-| Dart AOT / Blutter | 2.312 file assembly; 418 file aplikasi | Parsial | Satu assertion pada `0xcab944`; denominator fungsi/range AOT belum dikonfirmasi secara independen. |
-| Ghidra `libapp.so` | 2.052 function entries; 1 kandidat data dikecualikan; 2.051 kandidat code | Pseudocode 2.051/2.051; 2.001 tanpa marker control-flow terdeteksi, 50 partial-control-flow, 0 gagal | Database awal menemukan 0 fungsi. 50 indirect jump table belum pulih; object Dart VM snapshot 92.768 byte belum dipetakan. Output lokal: `/smster/work/ghidra/decompiled-all/SimasterAOT-2026-10-27-audited`. Lihat [`GHIDRA-FULL-DECOMPILE.md`](GHIDRA-FULL-DECOMPILE.md). |
+| Dart AOT / Blutter | 2.312 file assembly; 418 file aplikasi; 29.989 alamat function unik | Parsial | Satu assertion pada `0xcab944`; denominator function/range AOT belum dikonfirmasi secara independen. |
+| Ghidra `libapp.so` | 4.815 function entries; 2.796/2.796 function start aplikasi terwakili; 2.763 pseudocode baru bersih; 0 gagal; 0 caveat baru | App-level selesai; full binary parsial | Full AOT: 3.862/29.989 function (12,88%); non-aplikasi 1.066/27.193 (3,92%); 953 function Ghidra-only; 281 body-size mismatch; 50 indirect jump table baseline; object VM snapshot 92.768 byte belum dipetakan. Output lokal: `/smster/work/ghidra/decompiled-app-2026-10-27`. Lihat [`GHIDRA-APP-DECOMPILE.md`](GHIDRA-APP-DECOMPILE.md). |
 | Modul aplikasi | 43 direktori modul teridentifikasi | Pemetaan nama tersedia | Belum ada pemetaan lengkap setiap class/function ke modul dan alur layar. |
 | Route | 49 literal path dan 49 konstruksi `GetPage` | 49/49 tercatat | Binding `/oss_v2` belum dipasangkan; belum diuji runtime. |
 | Middleware sesi | 18 nama pengecualian ditemukan | 18/18 nama tercatat | Interpretasi berasal dari list statis dan tidak menunjukkan route mana yang benar-benar tercapai. |
@@ -23,11 +23,17 @@
 | Perilaku runtime | 0 sesi aplikasi; 0 request backend diamati | Belum diketahui | Emulator x86_64 tidak mendukung split ARM64 target dalam konfigurasi yang dicoba; lihat `ANALYSIS.md`. |
 | Keamanan statis | 4 deep dive (F-01, F-02, F-05, F-06) + 2 kandidat ringkas (F-03–F-04) | Kandidat; belum divalidasi runtime/server | [`SECURITY-FINDINGS.md`](SECURITY-FINDINGS.md), [`OAUTH-DEEP-DIVE.md`](OAUTH-DEEP-DIVE.md), [`API-AUTH-DEEP-DIVE.md`](API-AUTH-DEEP-DIVE.md); model presensi/PoC offline dan rencana uji staging, tanpa uji produksi. |
 
+## Peta cakupan
+
+![Peta cakupan analisis per lapisan](../docs/analysis-map.svg)
+
+Diagram merangkum hubungan sumber, alat, keluaran, dan status untuk setiap lapisan. Warna status menunjukkan tingkat penyelesaian operasional, bukan skor keamanan atau kualitas source hasil rekonstruksi.
+
 ## Cara membaca cakupan
 
 - `N/N tercatat` hanya mengukur unit dalam daftar yang telah diekstrak. Itu belum membuktikan tidak ada unit yang terlewat oleh ekstraktor.
-- Persentase decompile DEX dan AOT belum ditampilkan karena denominator class/method dan rentang AOT belum dibekukan serta belum disejajarkan antaralat.
-- Lima fungsi Ghidra dengan pseudocode adalah sampel prioritas, bukan klaim 5 dari total 2.052 sudah selesai; angka 2.052 adalah fungsi yang ditemukan setelah seeding.
+- Persentase decompile DEX belum ditampilkan karena denominator class/method dan crosswalk antaralat belum dibekukan. Persentase AOT di atas memakai denominator 29.989 alamat function Blutter dan hanya mengukur function start yang punya padanan Ghidra, bukan seluruh byte atau semantik source.
+- Lima fungsi Ghidra dengan pseudocode adalah sampel prioritas, bukan klaim 5 dari total 2.052 sudah selesai; angka 2.052 adalah fungsi yang ditemukan setelah lima seed. Setelah batch aplikasi, Function Manager berisi 4.815 fungsi dan seluruh function start paket `simaster_ugm` sudah terwakili, tetapi function non-aplikasi dan code range lain belum selesai.
 - Target 100% yang diterima harus mengikuti kriteria dan status unit pada [PRD](../docs/PRD-REVERSE-ENGINEERING.md). Source Dart yang hilang akibat kompilasi AOT tetap menjadi batas teknis.
 
 ## Next actions
@@ -35,17 +41,19 @@
 1. Ekstrak inventaris per file XAPK/APK termasuk path internal, ukuran, hash, ABI, DEX, resource, dan assets.
 2. Buat crosswalk 170.057 method DEX ke hasil fallback, lalu triase 67 error simple dan 164 error auto per method.
 3. Bangun inventaris resource yang membedakan XML/value, drawable, asset binary, dan file yang tidak dapat didekode.
-4. Triase 50 indirect jump table Ghidra, lalu bandingkan seluruh output Blutter dengan code range executable, Function Manager, overlap, dan byte yang belum terklasifikasi.
-5. Petakan symbol `_kDartVmSnapshotInstructions` dan library native relevan lain, atau dokumentasikan alasan tidak dianalisis.
-6. Tambahkan provenance per temuan dan tandai status runtime hanya setelah ada eksekusi yang kompatibel dan berizin.
-7. Setelah izin UGM tersedia, jalankan [`OAUTH-STAGING-TEST-PLAN.md`](OAUTH-STAGING-TEST-PLAN.md) untuk memvalidasi F-02.1–F-02.8; jangan memakai produksi atau akun nyata.
-8. Setelah token staging dan audit server tersedia, jalankan [`API-AUTH-STAGING-TEST-PLAN.md`](API-AUTH-STAGING-TEST-PLAN.md) untuk F-05/F-06 (A-01–A-13); hentikan bila data nyata atau host production muncul.
+4. Seed/klasifikasikan 27.193 function non-aplikasi atau dokumentasikan batas fokus security; triase 953 function Ghidra-only dan 281 body-size mismatch.
+5. Triase 50 indirect jump table Ghidra, petakan `_kDartVmSnapshotInstructions`, lalu bandingkan seluruh output Blutter dengan code range executable dan byte yang belum terklasifikasi.
+6. Petakan library native relevan lain (12 `.so`) atau dokumentasikan alasan tidak dianalisis.
+7. Tambahkan provenance per temuan dan tandai status runtime hanya setelah ada eksekusi yang kompatibel dan berizin.
+8. Setelah izin UGM tersedia, jalankan [`OAUTH-STAGING-TEST-PLAN.md`](OAUTH-STAGING-TEST-PLAN.md) untuk memvalidasi F-02.1–F-02.8; jangan memakai produksi atau akun nyata.
+9. Setelah token staging dan audit server tersedia, jalankan [`API-AUTH-STAGING-TEST-PLAN.md`](API-AUTH-STAGING-TEST-PLAN.md) untuk F-05/F-06 (A-01–A-13); hentikan bila data nyata atau host production muncul.
 
 ## Referensi baseline
 
 - [Analisis umum](ANALYSIS.md)
 - [Feature map](FEATURE-MAP.md)
 - [Analisis Ghidra](GHIDRA-ANALYSIS.md)
+- [Decompile AOT paket aplikasi](GHIDRA-APP-DECOMPILE.md)
 - [Pseudocode Ghidra terpilih](GHIDRA-AOT-SELECTED.md)
 - [Temuan keamanan statis](SECURITY-FINDINGS.md)
 - [OAuth deep dive](OAUTH-DEEP-DIVE.md)

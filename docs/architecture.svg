@@ -1,68 +1,175 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="960" viewBox="0 0 1440 960" role="img" aria-labelledby="title desc">
   <title id="title">Arsitektur statis Simaster UGM Student vNEXT</title>
-  <desc id="desc">XAPK berisi base APK dan split konfigurasi. Base APK memuat wrapper Android, lima DEX, resource dan assets. Split ARM64 memuat Flutter runtime dan Dart AOT libapp.so. Struktur AOT menunjukkan modul, route, autentikasi dan konfigurasi layanan eksternal. Semua hubungan berasal dari analisis statis dan belum diverifikasi saat runtime.</desc>
+  <desc id="desc">Diagram berlapis yang memetakan XAPK dan split Android ke base APK, DEX, resource, native library, Flutter AOT libapp.so, output Blutter dan Ghidra, model route dan service, serta batas layanan eksternal. Semua hubungan adalah hasil analisis statis, bukan observasi runtime.</desc>
   <defs>
-    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#52677c"/></marker>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto">
+      <path d="M0 0L12 6L0 12z" fill="#64748b"/>
+    </marker>
+    <marker id="arrow-dashed" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto">
+      <path d="M0 0L12 6L0 12z" fill="#94a3b8"/>
+    </marker>
+    <filter id="shadow" x="-8%" y="-8%" width="116%" height="120%">
+      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#0f172a" flood-opacity="0.06"/>
+    </filter>
     <style>
-      text{font-family:Inter,Arial,sans-serif;fill:#102a43}.title{font-size:26px;font-weight:700}.sub{font-size:14px;fill:#486581}.head{font-size:18px;font-weight:700}.body{font-size:14px}.small{font-size:12px;fill:#486581}.node{stroke-width:2;rx:14}.edge{fill:none;stroke:#52677c;stroke-width:2;marker-end:url(#arrow)}.dashed{stroke-dasharray:7 6}
+      text { font-family: Inter, "Segoe UI", Arial, sans-serif; fill: #0f172a; }
+      .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 1.6px; fill: #64748b; }
+      .title { font-size: 31px; font-weight: 750; letter-spacing: -0.6px; }
+      .subtitle { font-size: 14px; fill: #64748b; }
+      .section { font-size: 11px; font-weight: 700; letter-spacing: 1.4px; fill: #64748b; }
+      .card-title { font-size: 18px; font-weight: 700; letter-spacing: -0.2px; }
+      .card-kicker { font-size: 11px; font-weight: 700; letter-spacing: 0.8px; fill: #64748b; }
+      .body { font-size: 13px; fill: #334155; }
+      .small { font-size: 11px; fill: #64748b; }
+      .tiny { font-size: 10px; fill: #64748b; }
+      .metric { font-size: 20px; font-weight: 750; letter-spacing: -0.3px; }
+      .pill { font-size: 10px; font-weight: 700; letter-spacing: 0.2px; }
+      .edge { fill: none; stroke: #64748b; stroke-width: 1.8; marker-end: url(#arrow); }
+      .edge-dashed { fill: none; stroke: #94a3b8; stroke-width: 1.6; stroke-dasharray: 6 6; marker-end: url(#arrow-dashed); }
+      .divider { stroke: #e2e8f0; stroke-width: 1; }
+      .accent { fill: #0f766e; }
     </style>
   </defs>
-  <rect width="1200" height="760" fill="#f5f8fb"/>
-  <text x="42" y="48" class="title">Simaster Student vNEXT — peta arsitektur statis</text>
-  <text x="42" y="74" class="sub">Paket 1.11.1 (code 65) · XAPK/split · native ABI yang tersedia: arm64-v8a</text>
 
-  <rect x="42" y="120" width="245" height="120" class="node" fill="#e8f1fb" stroke="#3f78a8"/>
-  <text x="62" y="152" class="head">XAPK · 20 entri</text>
-  <text x="62" y="180" class="body">Base APK + split bahasa/density</text>
-  <text x="62" y="204" class="body">+ split native ARM64</text>
-  <text x="62" y="226" class="small">reports/xapk-inventory.json</text>
+  <rect width="1440" height="960" fill="#f6f8fb"/>
+  <circle cx="1360" cy="54" r="150" fill="#e8f1fb" opacity="0.55"/>
+  <circle cx="92" cy="910" r="190" fill="#ecfdf5" opacity="0.65"/>
 
-  <rect x="355" y="105" width="330" height="170" class="node" fill="#eaf6ef" stroke="#3f9460"/>
-  <text x="378" y="137" class="head">Base APK · Android wrapper</text>
-  <text x="378" y="167" class="body">Manifest, MainActivity, plugin components</text>
-  <text x="378" y="192" class="body">5 DEX · 270 resource · 361 asset</text>
-  <text x="378" y="220" class="body">OAuth deep-link declaration</text>
-  <text x="378" y="251" class="small">JADX: output parsial, 164 error</text>
+  <text x="64" y="48" class="eyebrow">STATIC ANALYSIS / 2026-10-27</text>
+  <text x="64" y="84" class="title">Simaster UGM Student vNEXT</text>
+  <text x="64" y="108" class="subtitle">Peta arsitektur statis · paket 1.11.1 (code 65) · native ABI arm64-v8a</text>
 
-  <rect x="355" y="335" width="330" height="155" class="node" fill="#fff4df" stroke="#d99a24"/>
-  <text x="378" y="368" class="head">Split ARM64 · native libraries</text>
-  <text x="378" y="398" class="body">12 library · termasuk libflutter.so</text>
-  <text x="378" y="423" class="body">libapp.so · Flutter/Dart AOT</text>
-  <text x="378" y="451" class="body">SHA-256 tercatat di artifact manifest</text>
-  <text x="378" y="475" class="small">Ghidra 12.1.4 · analisis seeded</text>
+  <g transform="translate(1014,38)">
+    <rect x="0" y="0" width="298" height="72" rx="12" fill="#ffffff" stroke="#dbe3ee" filter="url(#shadow)"/>
+    <text x="16" y="24" class="card-kicker">EVIDENCE MODE</text>
+    <text x="16" y="44" class="body">Static only · no runtime capture</text>
+    <text x="16" y="61" class="tiny">Solid = artifact mapping · dashed = configured</text>
+  </g>
 
-  <rect x="760" y="102" width="385" height="175" class="node" fill="#f1ecfb" stroke="#7957a5"/>
-  <text x="784" y="136" class="head">Android + Flutter runtime</text>
-  <text x="784" y="168" class="body">Wrapper menginisialisasi Flutter/plugin</text>
-  <text x="784" y="194" class="body">Manifest menunjukkan komponen &amp; intent</text>
-  <text x="784" y="223" class="body">Belum diamati saat aplikasi berjalan</text>
-  <text x="784" y="252" class="small">Hubungan runtime masih hipotesis statis</text>
+  <line x1="64" y1="128" x2="1376" y2="128" class="divider"/>
 
-  <rect x="760" y="335" width="385" height="195" class="node" fill="#fff0f0" stroke="#c95e5e"/>
-  <text x="784" y="369" class="head">Dart AOT · libapp.so</text>
-  <text x="784" y="399" class="body">43 direktori modul · 49 route</text>
-  <text x="784" y="425" class="body">36 caller/service pairs · 29 label</text>
-  <text x="784" y="451" class="body">OAuth/token logic &amp; API configuration</text>
-  <text x="784" y="481" class="body">Blutter labels → Ghidra functions/pseudocode</text>
-  <text x="784" y="510" class="small">Pseudocode tidak sama dengan source Dart asli</text>
+  <!-- 01 input -->
+  <rect x="64" y="152" width="1312" height="154" rx="16" fill="#ffffff" stroke="#dbe3ee" filter="url(#shadow)"/>
+  <text x="88" y="178" class="section">01 · ARTIFACT INPUT</text>
+  <text x="1320" y="178" text-anchor="end" class="tiny">XAPK/split inventory · 20 entries</text>
 
-  <rect x="760" y="590" width="385" height="105" class="node" fill="#e9f5f7" stroke="#318596"/>
-  <text x="784" y="624" class="head">Batas layanan eksternal</text>
-  <text x="784" y="653" class="body">Host API / OAuth / Firebase dari konfigurasi statis</text>
-  <text x="784" y="678" class="small">Tidak ada request atau respons backend yang diamati</text>
+  <rect x="88" y="194" width="220" height="88" rx="11" fill="#eff6ff" stroke="#bfdbfe"/>
+  <rect x="88" y="194" width="4" height="88" rx="2" fill="#2563eb"/>
+  <text x="108" y="220" class="card-title">XAPK</text>
+  <text x="108" y="242" class="body">20 APK/split entries</text>
+  <text x="108" y="260" class="small">base + config + native</text>
 
-  <path d="M287 180H355" class="edge"/>
-  <text x="295" y="167" class="small">memuat</text>
-  <path d="M287 205C320 205 316 410 355 410" class="edge"/>
-  <text x="296" y="300" class="small">split ABI</text>
-  <path d="M685 180H760" class="edge"/>
-  <text x="690" y="167" class="small">deklarasi</text>
-  <path d="M685 410H760" class="edge"/>
-  <text x="695" y="397" class="small">memuat AOT</text>
-  <path d="M952 277V335" class="edge dashed"/>
-  <text x="964" y="312" class="small">dihubungkan oleh runtime*</text>
-  <path d="M952 530V590" class="edge dashed"/>
-  <text x="965" y="568" class="small">konfigurasi saja*</text>
+  <rect x="340" y="194" width="400" height="88" rx="11" fill="#ffffff" stroke="#dbe3ee"/>
+  <text x="360" y="220" class="card-title">Base APK</text>
+  <text x="360" y="242" class="body">Manifest · 5 DEX · resources/assets</text>
+  <text x="360" y="260" class="small">27.317 class · 170.057 method</text>
 
-  <text x="42" y="730" class="small">* Panah ke runtime/layanan adalah interpretasi struktur statis; target APK belum dijalankan. Sumber: ANALYSIS.md, FEATURE-MAP.md, GHIDRA-ANALYSIS.md.</text>
+  <rect x="772" y="194" width="560" height="88" rx="11" fill="#fff7ed" stroke="#fed7aa"/>
+  <text x="792" y="220" class="card-title">Native split · arm64-v8a</text>
+  <text x="792" y="242" class="body">12 shared libraries · libflutter.so · libapp.so</text>
+  <text x="792" y="260" class="small">libapp.so SHA-256 3d199b5d…6290</text>
+
+  <path d="M308 238H328" class="edge"/>
+  <text x="314" y="230" class="tiny">contains</text>
+  <path d="M740 238H760" class="edge"/>
+  <text x="744" y="230" class="tiny">split</text>
+
+  <path d="M720 306V330" class="edge"/>
+  <text x="732" y="322" class="tiny">decompose</text>
+
+  <!-- 02 android -->
+  <rect x="64" y="330" width="400" height="300" rx="16" fill="#ffffff" stroke="#dbe3ee" filter="url(#shadow)"/>
+  <rect x="64" y="330" width="400" height="5" rx="2.5" fill="#2563eb"/>
+  <text x="88" y="362" class="section">02 · ANDROID SHELL</text>
+  <text x="88" y="392" class="card-title">Manifest → Java/Kotlin</text>
+  <text x="88" y="416" class="body">MainActivity · 50 components</text>
+  <text x="88" y="438" class="body">Exported oauth2 custom-scheme intent</text>
+  <text x="88" y="460" class="body">5 DEX · 27.317 classes</text>
+  <text x="88" y="482" class="body">JADX fallback · 14.749 Java files</text>
+
+  <rect x="88" y="506" width="170" height="26" rx="13" fill="#eff6ff" stroke="#bfdbfe"/>
+  <text x="173" y="523" text-anchor="middle" class="pill" fill="#1d4ed8">JADX · PARTIAL</text>
+  <rect x="268" y="506" width="172" height="26" rx="13" fill="#f8fafc" stroke="#e2e8f0"/>
+  <text x="354" y="523" text-anchor="middle" class="pill" fill="#475569">CROSSWALK PENDING</text>
+
+  <text x="88" y="566" class="small">Fungsi: wrapper Android, deep link OAuth,</text>
+  <text x="88" y="584" class="small">konfigurasi plugin, dan entry point Flutter.</text>
+  <text x="88" y="612" class="tiny">Bukti: AndroidManifest.xml · DEX-DECOMPILATION.md</text>
+
+  <!-- 03 AOT -->
+  <rect x="500" y="330" width="420" height="300" rx="16" fill="#ffffff" stroke="#dbe3ee" filter="url(#shadow)"/>
+  <rect x="500" y="330" width="420" height="5" rx="2.5" fill="#b45309"/>
+  <text x="524" y="362" class="section">03 · FLUTTER / DART AOT</text>
+  <text x="524" y="392" class="card-title">libapp.so</text>
+  <text x="524" y="416" class="body">Blutter · 2.312 asm files</text>
+  <text x="524" y="438" class="body">29.989 function headers · 418 app files</text>
+  <text x="524" y="460" class="body">Ghidra 12.1.4 · 4.815 functions</text>
+  <text x="524" y="482" class="body">App-level: 2.796 / 2.796 starts</text>
+
+  <text x="524" y="516" class="small">Full binary match</text>
+  <rect x="524" y="526" width="330" height="8" rx="4" fill="#f1f5f9"/>
+  <rect x="524" y="526" width="42" height="8" rx="4" fill="#b45309"/>
+  <text x="864" y="534" text-anchor="end" class="tiny">12,88%</text>
+
+  <rect x="524" y="552" width="164" height="26" rx="13" fill="#ecfdf5" stroke="#a7f3d0"/>
+  <text x="606" y="569" text-anchor="middle" class="pill" fill="#047857">APP-LEVEL DONE</text>
+  <rect x="698" y="552" width="174" height="26" rx="13" fill="#fffbeb" stroke="#fde68a"/>
+  <text x="785" y="569" text-anchor="middle" class="pill" fill="#92400e">FULL BINARY PARTIAL</text>
+
+  <text x="524" y="604" class="tiny">Bukti: GHIDRA-APP-DECOMPILE.md · GHIDRA-FULL-DECOMPILE.md</text>
+
+  <!-- 04 model -->
+  <rect x="956" y="330" width="420" height="300" rx="16" fill="#ffffff" stroke="#dbe3ee" filter="url(#shadow)"/>
+  <rect x="956" y="330" width="420" height="5" rx="2.5" fill="#6d28d9"/>
+  <text x="980" y="362" class="section">04 · RECOVERED STATIC MODEL</text>
+  <text x="980" y="392" class="card-title">Struktur aplikasi</text>
+  <text x="980" y="416" class="body">43 modul · 49 route · 36 caller/service</text>
+  <text x="980" y="438" class="body">OAuth · token · presensi · API paths</text>
+  <text x="980" y="460" class="body">SessionMiddleware · route allowlist</text>
+  <text x="980" y="482" class="body">F-01 · F-02 · F-05 · F-06</text>
+
+  <rect x="980" y="506" width="156" height="26" rx="13" fill="#f5f3ff" stroke="#ddd6fe"/>
+  <text x="1058" y="523" text-anchor="middle" class="pill" fill="#6d28d9">STATIC MODEL</text>
+  <rect x="1146" y="506" width="188" height="26" rx="13" fill="#fff1f2" stroke="#fecdd3"/>
+  <text x="1240" y="523" text-anchor="middle" class="pill" fill="#be123c">NO RUNTIME EVIDENCE</text>
+
+  <text x="980" y="566" class="small">Model route dan service adalah hasil ekstraksi</text>
+  <text x="980" y="584" class="small">statis; bukan bukti layar atau request runtime.</text>
+  <text x="980" y="612" class="tiny">Bukti: FEATURE-MAP.md · SECURITY-FINDINGS.md</text>
+
+  <path d="M464 480H500" class="edge"/>
+  <text x="466" y="470" class="tiny">loads AOT</text>
+  <path d="M920 480H956" class="edge"/>
+  <text x="922" y="470" class="tiny">symbols + pseudocode</text>
+
+  <!-- external -->
+  <rect x="64" y="682" width="1312" height="118" rx="16" fill="#ffffff" stroke="#dbe3ee" filter="url(#shadow)"/>
+  <text x="88" y="708" class="section">05 · EXTERNAL BOUNDARY</text>
+  <rect x="88" y="722" width="300" height="52" rx="10" fill="#f8fafc" stroke="#e2e8f0"/>
+  <text x="104" y="743" class="body">OAuth authorization / token</text>
+  <text x="104" y="760" class="tiny">oauth.simaster.ugm.ac.id</text>
+  <rect x="404" y="722" width="300" height="52" rx="10" fill="#f8fafc" stroke="#e2e8f0"/>
+  <text x="420" y="743" class="body">Simaster API</text>
+  <text x="420" y="760" class="tiny">api.simaster.ugm.ac.id</text>
+  <rect x="720" y="722" width="300" height="52" rx="10" fill="#f8fafc" stroke="#e2e8f0"/>
+  <text x="736" y="743" class="body">Firebase / Crashlytics</text>
+  <text x="736" y="760" class="tiny">error telemetry path</text>
+
+  <rect x="1040" y="722" width="312" height="52" rx="10" fill="#fff1f2" stroke="#fecdd3"/>
+  <text x="1056" y="743" class="pill" fill="#be123c">CONFIGURED ONLY</text>
+  <text x="1056" y="760" class="tiny">Tidak ada request/respons yang diamati</text>
+
+  <path d="M1146 630V682" class="edge-dashed"/>
+  <text x="1158" y="662" class="tiny">endpoint configuration</text>
+
+  <!-- footer -->
+  <line x1="64" y1="828" x2="1376" y2="828" class="divider"/>
+  <text x="64" y="854" class="section">CARA MEMBACA</text>
+  <line x1="64" y1="874" x2="112" y2="874" class="edge"/>
+  <text x="124" y="878" class="small">hubungan statis dari artefak</text>
+  <line x1="330" y1="874" x2="378" y2="874" class="edge-dashed"/>
+  <text x="390" y="878" class="small">hubungan konfigurasi, belum diverifikasi runtime</text>
+
+  <text x="64" y="912" class="tiny">Sumber: manifest, inventaris XAPK, JADX, Blutter, Ghidra, dan peta route. Angka per 2026-10-27; bukan klaim source Dart asli atau perilaku server.</text>
+  <text x="64" y="932" class="tiny">Temuan keamanan F-01–F-06 adalah kandidat statis. Validasi berikutnya memerlukan staging berizin, akun sintetis, dan audit log server.</text>
 </svg>
