@@ -21,7 +21,7 @@
 | Middleware sesi | 18 nama pengecualian ditemukan | 18/18 nama tercatat | Interpretasi berasal dari list statis dan tidak menunjukkan route mana yang benar-benar tercapai. |
 | Caller/API service | 36 caller/method/service triples, 29 label unik | 36/36 triples yang dipulihkan tercatat | Tidak membuktikan request terkirim. Path beberapa layanan dirakit saat runtime dan perlu ditelusuri. |
 | Perilaku runtime | 0 sesi aplikasi; 0 request backend diamati | Belum diketahui | Emulator x86_64 tidak mendukung split ARM64 target dalam konfigurasi yang dicoba; lihat `ANALYSIS.md`. |
-| Keamanan statis | 1 deep dive (F-01) + 5 kandidat | Kandidat; belum divalidasi runtime/server | [`SECURITY-FINDINGS.md`](SECURITY-FINDINGS.md); model presensi dan PoC offline, tanpa uji produksi. |
+| Keamanan statis | 2 deep dive (F-01, F-02) + 4 kandidat (F-03–F-06) | Kandidat; belum divalidasi runtime/server | [`SECURITY-FINDINGS.md`](SECURITY-FINDINGS.md), [`OAUTH-DEEP-DIVE.md`](OAUTH-DEEP-DIVE.md); model presensi/PoC offline dan rencana uji OAuth staging, tanpa uji produksi. |
 
 ## Cara membaca cakupan
 
@@ -38,6 +38,7 @@
 4. Triase 50 indirect jump table Ghidra, lalu bandingkan seluruh output Blutter dengan code range executable, Function Manager, overlap, dan byte yang belum terklasifikasi.
 5. Petakan symbol `_kDartVmSnapshotInstructions` dan library native relevan lain, atau dokumentasikan alasan tidak dianalisis.
 6. Tambahkan provenance per temuan dan tandai status runtime hanya setelah ada eksekusi yang kompatibel dan berizin.
+7. Setelah izin UGM tersedia, jalankan [`OAUTH-STAGING-TEST-PLAN.md`](OAUTH-STAGING-TEST-PLAN.md) untuk memvalidasi F-02.1–F-02.8; jangan memakai produksi atau akun nyata.
 
 ## Referensi baseline
 
@@ -46,4 +47,6 @@
 - [Analisis Ghidra](GHIDRA-ANALYSIS.md)
 - [Pseudocode Ghidra terpilih](GHIDRA-AOT-SELECTED.md)
 - [Temuan keamanan statis](SECURITY-FINDINGS.md)
+- [OAuth deep dive](OAUTH-DEEP-DIVE.md)
+- [Rencana uji OAuth staging](OAUTH-STAGING-TEST-PLAN.md)
 - [Manifest artifact dan tool](artifact-manifest.json)
