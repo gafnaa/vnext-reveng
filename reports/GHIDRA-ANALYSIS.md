@@ -21,6 +21,10 @@
 
 Pseudocode lengkap dan metadata tiap fungsi ada di [`GHIDRA-AOT-SELECTED.md`](GHIDRA-AOT-SELECTED.md). Nama metode dan batas awal/ukuran di tabel berasal dari label Blutter, bukan simbol asli ELF. Ghidra menghasilkan instruksi dan pseudocode pada alamat tersebut; pemanggilan yang sudah dinamai muncul setelah fungsi seed diberi label di database Ghidra.
 
+## Batch decompile seluruh function entry
+
+Ghidra headless pada 2026-10-27 menghasilkan pseudocode untuk 2.051 dari 2.051 kandidat code function di database. Satu entry ELF `OBJECT` dengan body satu byte dikecualikan sebagai kandidat non-code; 50 output memiliki caveat indirect jump table; 0 fungsi gagal/timeout. Indeks dan batas per fungsi tersedia di mesin ini, sedangkan metode, caveat, dan lokasi output dicatat di [`GHIDRA-FULL-DECOMPILE.md`](GHIDRA-FULL-DECOMPILE.md). Angka tersebut mengukur fungsi yang ditemukan database Ghidra, bukan semua code range `libapp.so`.
+
 ## Temuan statis
 
 - Pseudocode Ghidra untuk `signIn` dan `getConfirmationQRStudent` berujung pada `BaseNetworking.post` yang sama. Assembly Blutter mengaitkan `signIn` dengan descriptor layanan `staff/get_simaster_atribut_by_username`; peta endpoint dan caller ada di [`FEATURE-MAP.md`](FEATURE-MAP.md). Ini hubungan statis di binary, bukan traffic yang diamati.
@@ -30,6 +34,6 @@ Pseudocode lengkap dan metadata tiap fungsi ada di [`GHIDRA-AOT-SELECTED.md`](GH
 ## Batas analisis
 
 - Ini analisis statis. APK tidak dijalankan; tidak ada request jaringan, respons backend, ataupun hasil login/QR runtime yang diamati.
-- Auto-analysis default sendiri menghasilkan 0 fungsi. ELF ini stripped dan entry point ELF bernilai 0. Hasil 2.052 fungsi membutuhkan seed alamat Blutter dan dapat mewarisi batas fungsi Blutter; ukuran body Ghidra yang lebih kecil untuk dua fungsi menunjukkan ada byte/range yang tidak menjadi bagian body Ghidra.
+- Auto-analysis default sendiri menghasilkan 0 fungsi. ELF ini stripped dan entry point ELF bernilai 0. Hasil 2.052 entry membutuhkan seed alamat Blutter dan dapat mewarisi batas fungsi Blutter; 50 pseudocode memiliki indirect jump table yang belum pulih. ELF juga memiliki object snapshot VM yang belum dipetakan ke fungsi; lihat [`GHIDRA-FULL-DECOMPILE.md`](GHIDRA-FULL-DECOMPILE.md).
 - Pseudocode Ghidra bukan source Dart atau source C asli. String dan objek heap Dart masih banyak tampil sebagai pointer/offset yang tidak terdekode.
-- Ghidra project lokal tersimpan di `/smster/work/ghidra/projects/SimasterAOT`; project/database tidak dimasukkan ke repo. Script seed ada di [`../analysis/ghidra/SeedBlutterFunctions.java`](../analysis/ghidra/SeedBlutterFunctions.java).
+- Ghidra project lokal tersimpan di `/smster/work/ghidra/projects/SimasterAOT`; project/database tidak dimasukkan ke repo. Script seed ada di [`../analysis/ghidra/SeedBlutterFunctions.java`](../analysis/ghidra/SeedBlutterFunctions.java), dan batch decompile ada di [`../analysis/ghidra/DecompileAllFunctions.java`](../analysis/ghidra/DecompileAllFunctions.java).

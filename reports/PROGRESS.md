@@ -15,7 +15,7 @@
 | Resource/assets | Inventaris split mencatat resource dan asset per paket; JADX menulis 797 resource | Parsial | Belum ada rekonsiliasi resource sumber terhadap hasil decompile; aset binary diklasifikasi per jenis belum lengkap. |
 | Native | Split ARM64 mencatat 12 `.so`, termasuk `libapp.so` dan `libflutter.so` | Inventaris ABI tersedia | Belum ada laporan decompile/fungsi per setiap library. Fokus Ghidra saat ini pada `libapp.so`. |
 | Dart AOT / Blutter | 2.312 file assembly; 418 file aplikasi | Parsial | Satu assertion pada `0xcab944`; denominator fungsi/range AOT belum dikonfirmasi secara independen. |
-| Ghidra `libapp.so` | 2.052 fungsi terdefinisi setelah seeding; 5 pseudocode pilihan | Parsial | Database standar awal menemukan 0 fungsi. Seed berasal dari label Blutter; semua fungsi belum ditinjau dan range belum direkonsiliasi penuh. |
+| Ghidra `libapp.so` | 2.052 function entries; 1 kandidat data dikecualikan; 2.051 kandidat code | Pseudocode 2.051/2.051; 2.001 tanpa marker control-flow terdeteksi, 50 partial-control-flow, 0 gagal | Database awal menemukan 0 fungsi. 50 indirect jump table belum pulih; object Dart VM snapshot 92.768 byte belum dipetakan. Output lokal: `/smster/work/ghidra/decompiled-all/SimasterAOT-2026-10-27-audited`. Lihat [`GHIDRA-FULL-DECOMPILE.md`](GHIDRA-FULL-DECOMPILE.md). |
 | Modul aplikasi | 43 direktori modul teridentifikasi | Pemetaan nama tersedia | Belum ada pemetaan lengkap setiap class/function ke modul dan alur layar. |
 | Route | 49 literal path dan 49 konstruksi `GetPage` | 49/49 tercatat | Binding `/oss_v2` belum dipasangkan; belum diuji runtime. |
 | Middleware sesi | 18 nama pengecualian ditemukan | 18/18 nama tercatat | Interpretasi berasal dari list statis dan tidak menunjukkan route mana yang benar-benar tercapai. |
@@ -34,8 +34,8 @@
 1. Ekstrak inventaris per file XAPK/APK termasuk path internal, ukuran, hash, ABI, DEX, resource, dan assets.
 2. Hitung class/method per DEX dan cocokkan hasil JADX dengan error report sehingga 164 error memiliki dampak per unit.
 3. Bangun inventaris resource yang membedakan XML/value, drawable, asset binary, dan file yang tidak dapat didekode.
-4. Bandingkan output Blutter dengan code range executable dan Function Manager Ghidra; identifikasi gap, overlap, alignment, dan byte yang belum terklasifikasi.
-5. Jalankan analisis Ghidra untuk library native relevan lain atau dokumentasikan alasan tidak dianalisis.
+4. Triase 50 indirect jump table Ghidra, lalu bandingkan seluruh output Blutter dengan code range executable, Function Manager, overlap, dan byte yang belum terklasifikasi.
+5. Petakan symbol `_kDartVmSnapshotInstructions` dan library native relevan lain, atau dokumentasikan alasan tidak dianalisis.
 6. Tambahkan provenance per temuan dan tandai status runtime hanya setelah ada eksekusi yang kompatibel dan berizin.
 
 ## Referensi baseline

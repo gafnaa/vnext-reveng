@@ -20,7 +20,7 @@ Snapshot baseline untuk target versi 1.11.1:
 | DEX base APK | 5 file ditemukan; JADX memproses 10.477 unit dan menghasilkan 14.647 file Java | Parsial; 164 error JADX belum ditriase per unit |
 | Resource JADX | 797 file keluaran | Perlu dicocokkan dengan inventaris resource sumber |
 | Flutter AOT / Blutter | 2.312 file assembly, 418 file khusus aplikasi | Parsial; satu assertion di `0xcab944` |
-| Fungsi Ghidra | 2.052 fungsi setelah seeding; 5 fungsi pilihan memiliki pseudocode | Parsial; denominator seluruh fungsi belum terbukti |
+| Fungsi Ghidra | 2.051/2.051 kandidat code function yang ditemukan menghasilkan pseudocode; 50 memiliki caveat indirect jump table | Parsial; function discovery dan code range total belum terbukti |
 | Modul | 43 direktori modul ditemukan | Peta nama modul tersedia |
 | Route | 49 path dan 49 konstruksi route ditemukan | Binding `/oss_v2` belum dipasangkan |
 | Caller/service | 36 pasangan, 29 label service unik | Pemetaan statis |
@@ -32,7 +32,8 @@ Persentase keseluruhan tidak ditampilkan sebelum denominator per lapisan dapat d
 
 - [Hasil static reverse engineering](reports/ANALYSIS.md) — identitas paket, izin, konfigurasi, metode, provenance, dan batasan.
 - [Peta route dan service](reports/FEATURE-MAP.md) — route, pengecualian middleware sesi, modul, dan caller/service statis.
-- [Analisis Ghidra](reports/GHIDRA-ANALYSIS.md) — metode seeding, alamat, fungsi hasil, pseudocode, dan keterbatasan.
+- [Analisis Ghidra](reports/GHIDRA-ANALYSIS.md) — metode seeding, alamat, fungsi prioritas, dan keterbatasan.
+- [Batch decompile Ghidra](reports/GHIDRA-FULL-DECOMPILE.md) — hasil 2.051 pseudocode, 50 caveat control-flow, dan lokasi output lokal di `/smster`.
 - [Pseudocode AOT terpilih](reports/GHIDRA-AOT-SELECTED.md) — lima fungsi yang didecompile dengan Ghidra.
 - [PRD reverse engineering](docs/PRD-REVERSE-ENGINEERING.md) — definisi cakupan, kriteria 100%, kebutuhan CI/CD, dan Definition of Done.
 - [`analysis/ghidra/`](analysis/ghidra/) — script seed dan langkah reproduksi Ghidra.
