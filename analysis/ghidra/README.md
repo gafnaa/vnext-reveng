@@ -1,4 +1,4 @@
-# Ghidra AOT function seeding
+# Ghidra AOT seeding dan batch decompile
 
 `SeedBlutterFunctions.java` membuka batas fungsi Dart AOT yang diambil dari label Blutter, menginstruksikan Ghidra mendisassemble range yang dibatasi, memberi label fungsi, lalu menyimpan pseudocode hasil decompiler.
 
@@ -22,3 +22,23 @@ TMPDIR=/smster/work/ghidra/tmp \
 ```
 
 Untuk analisis lanjutan pada proyek tersimpan, ganti `-import /smster/artifacts/native/libapp.so` dengan `-process libapp.so`. Direktori project, konfigurasi, cache, dan temporary Ghidra pada perintah ini berada di `/smster`.
+
+
+## Decompile seluruh function entry yang ditemukan
+
+Setelah project mempunyai seed di atas, jalankan batch berikut. Script mencoba semua fungsi internal yang tercatat di Function Manager, menulis satu pseudocode `.c` per fungsi, serta `function-index.tsv` dan `summary.txt`. Hasil lengkap berada di `/smster/work/ghidra`, bukan di checkout Git. Cocokkan hash input sebelum menjalankan.
+
+```sh
+JAVA_HOME=/smster/tools/rea-tools/jdk-21.0.13 \
+JAVA_TOOL_OPTIONS='-Duser.home=/smster/work/ghidra/home -Duser.name=smster -Djava.io.tmpdir=/smster/work/ghidra/tmp' \
+XDG_CONFIG_HOME=/smster/work/ghidra/home/.config \
+XDG_CACHE_HOME=/smster/work/ghidra/cache \
+TMPDIR=/smster/work/ghidra/tmp \
+/smster/tools/bin/analyzeHeadless /smster/work/ghidra/projects SimasterAOT \
+  -process libapp.so \
+  -scriptPath /smster/repo/analysis/ghidra \
+  -postScript DecompileAllFunctions.java \
+  /smster/work/ghidra/decompiled-all/SimasterAOT-YYYY-MM-DD 15
+```
+
+Status `partial-control-flow` tetap menghasilkan pseudocode, tetapi menunjukkan jump table yang belum pulih. Symbol ELF `_kDartIsolateSnapshotInstructions` yang hanya muncul sebagai stub 1 byte diperlakukan sebagai kandidat non-code. Hasil run 2026-10-27 dan keterbatasan range AOT ada di [`reports/GHIDRA-FULL-DECOMPILE.md`](../../reports/GHIDRA-FULL-DECOMPILE.md).

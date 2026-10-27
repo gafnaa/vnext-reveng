@@ -124,7 +124,21 @@
     "blutter_analysis_error_address": "0xcab944",
     "ghidra_version": "12.1.4",
     "ghidra_defined_procedures": 0,
-    "ghidra_defined_strings": 75
+    "ghidra_defined_strings": 75,
+    "ghidra_seeded_procedures": 2052,
+    "ghidra_full_batch": {
+      "inventory_entries": 2052,
+      "code_function_denominator": 2051,
+      "pseudocode_generated": 2051,
+      "pseudocode_without_detected_control_flow_markers": 2001,
+      "partial_control_flow": 50,
+      "failed": 0,
+      "non_code_candidates": 1,
+      "timeout_seconds_per_function": 15,
+      "pseudocode_bytes": 6421320,
+      "output_directory": "/smster/work/ghidra/decompiled-all/SimasterAOT-2026-10-27-audited",
+      "report": "reports/GHIDRA-FULL-DECOMPILE.md"
+    }
   },
   "analysis_bundle": {
     "file": "analysis-results.zip",
