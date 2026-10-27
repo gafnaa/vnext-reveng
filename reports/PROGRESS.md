@@ -11,8 +11,8 @@
 |---|---:|---|---|
 | Kontainer XAPK | 20 entri APK/split | Inventaris 20/20 | [`xapk-inventory.json`](xapk-inventory.json); belum ada daftar seluruh path internal tiap arsip di repo. |
 | Identitas dan manifest | 1 paket; manifest memuat 50 komponen | Diperiksa statis | [`ANALYSIS.md`](ANALYSIS.md), [`AndroidManifest.xml`](AndroidManifest.xml); bukan observasi runtime. |
-| DEX | 5 file pada base APK; JADX memproses 10.477 unit | Parsial | JADX 1.5.6 menghasilkan 14.647 file Java dan 797 resource, dengan 164 error/exit 3. Denominator seluruh method dan error per unit belum dibuat. |
-| Resource/assets | Inventaris split mencatat resource dan asset per paket; JADX menulis 797 resource | Parsial | Belum ada rekonsiliasi resource sumber terhadap hasil decompile; aset binary diklasifikasi per jenis belum lengkap. |
+| DEX | 5 file; APK Analyzer: 27.317 class, 170.057 method, 79.957 field | Fallback JADX: 14.749 file, 9.707 unit diproses, 0 error CLI; auto 164 error, simple 67 error | Perbedaan 11 class JADX vs APK Analyzer belum direkonsiliasi; method-to-output crosswalk pending. Lihat [`DEX-DECOMPILATION.md`](DEX-DECOMPILATION.md). |
+| Resource/assets | Inventaris split tersedia; JADX auto/simple masing-masing menulis 797 resource | Parsial | Fallback dijalankan dengan `--no-res`; rekonsiliasi semua resource/asset sumber ke output belum dilakukan. |
 | Native | Split ARM64 mencatat 12 `.so`, termasuk `libapp.so` dan `libflutter.so` | Inventaris ABI tersedia | Belum ada laporan decompile/fungsi per setiap library. Fokus Ghidra saat ini pada `libapp.so`. |
 | Dart AOT / Blutter | 2.312 file assembly; 418 file aplikasi | Parsial | Satu assertion pada `0xcab944`; denominator fungsi/range AOT belum dikonfirmasi secara independen. |
 | Ghidra `libapp.so` | 2.052 function entries; 1 kandidat data dikecualikan; 2.051 kandidat code | Pseudocode 2.051/2.051; 2.001 tanpa marker control-flow terdeteksi, 50 partial-control-flow, 0 gagal | Database awal menemukan 0 fungsi. 50 indirect jump table belum pulih; object Dart VM snapshot 92.768 byte belum dipetakan. Output lokal: `/smster/work/ghidra/decompiled-all/SimasterAOT-2026-10-27-audited`. Lihat [`GHIDRA-FULL-DECOMPILE.md`](GHIDRA-FULL-DECOMPILE.md). |
@@ -32,7 +32,7 @@
 ## Next actions
 
 1. Ekstrak inventaris per file XAPK/APK termasuk path internal, ukuran, hash, ABI, DEX, resource, dan assets.
-2. Hitung class/method per DEX dan cocokkan hasil JADX dengan error report sehingga 164 error memiliki dampak per unit.
+2. Buat crosswalk 170.057 method DEX ke hasil fallback, lalu triase 67 error simple dan 164 error auto per method.
 3. Bangun inventaris resource yang membedakan XML/value, drawable, asset binary, dan file yang tidak dapat didekode.
 4. Triase 50 indirect jump table Ghidra, lalu bandingkan seluruh output Blutter dengan code range executable, Function Manager, overlap, dan byte yang belum terklasifikasi.
 5. Petakan symbol `_kDartVmSnapshotInstructions` dan library native relevan lain, atau dokumentasikan alasan tidak dianalisis.

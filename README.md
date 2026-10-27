@@ -17,7 +17,7 @@ Snapshot baseline untuk target versi 1.11.1:
 | Area | Cakupan saat ini | Status |
 |---|---:|---|
 | Entri APK/split dalam XAPK | 20/20 terinventaris | Inventaris tersedia |
-| DEX base APK | 5 file ditemukan; JADX memproses 10.477 unit dan menghasilkan 14.647 file Java | Parsial; 164 error JADX belum ditriase per unit |
+| DEX base APK | 5 DEX; 27.317 class dan 170.057 method tercatat. Fallback JADX menghasilkan 14.749 file, 0 error CLI | Mode auto: 164 error; simple: 67 error. Pemetaan method ke output masih pending |
 | Resource JADX | 797 file keluaran | Perlu dicocokkan dengan inventaris resource sumber |
 | Flutter AOT / Blutter | 2.312 file assembly, 418 file khusus aplikasi | Parsial; satu assertion di `0xcab944` |
 | Fungsi Ghidra | 2.051/2.051 kandidat code function yang ditemukan menghasilkan pseudocode; 50 memiliki caveat indirect jump table | Parsial; function discovery dan code range total belum terbukti |
@@ -35,12 +35,13 @@ Persentase keseluruhan tidak ditampilkan sebelum denominator per lapisan dapat d
 - [Analisis Ghidra](reports/GHIDRA-ANALYSIS.md) — metode seeding, alamat, fungsi prioritas, dan keterbatasan.
 - [Batch decompile Ghidra](reports/GHIDRA-FULL-DECOMPILE.md) — hasil 2.051 pseudocode, 50 caveat control-flow, dan lokasi output lokal di `/smster`.
 - [Pseudocode AOT terpilih](reports/GHIDRA-AOT-SELECTED.md) — lima fungsi yang didecompile dengan Ghidra.
+- [Inventaris dan mode decompile DEX](reports/DEX-DECOMPILATION.md) — hitungan per DEX, perbandingan auto/simple/fallback, dan gap pemetaan method.
 - [PRD reverse engineering](docs/PRD-REVERSE-ENGINEERING.md) — definisi cakupan, kriteria 100%, kebutuhan CI/CD, dan Definition of Done.
 - [`analysis/ghidra/`](analysis/ghidra/) — script seed dan langkah reproduksi Ghidra.
 - [`recovered/`](recovered/) — rekonstruksi dan wrapper yang dapat ditinjau; bukan source asli.
 - [`reports/`](reports/) — manifest inventaris, hash, dan bukti analisis.
 
-Output JADX/Blutter yang sudah disanitasi tersedia di [`analysis-results.zip`](analysis-results.zip). APK/XAPK mentah, DEX, library `.so`, serta database project Ghidra tidak dimasukkan ke repo. Hash dan identitas input dicatat di [`reports/artifact-manifest.json`](reports/artifact-manifest.json).
+Output JADX/Blutter tersanitasi ada di [`analysis-results.zip`](analysis-results.zip); output JADX fallback ada di [`analysis-results-jadx-fallback.zip`](analysis-results-jadx-fallback.zip). APK/XAPK mentah, DEX, library `.so`, serta database project Ghidra tidak dimasukkan ke repo. Hash dan identitas input dicatat di [`reports/artifact-manifest.json`](reports/artifact-manifest.json).
 
 ## Reproduksi
 

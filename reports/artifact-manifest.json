@@ -138,6 +138,40 @@
       "pseudocode_bytes": 6421320,
       "output_directory": "/smster/work/ghidra/decompiled-all/SimasterAOT-2026-10-27-audited",
       "report": "reports/GHIDRA-FULL-DECOMPILE.md"
+    },
+    "jadx_mode_runs": {
+      "auto": {
+        "input": "XAPK",
+        "units_processed": 10477,
+        "java_files": 14647,
+        "resource_files": 797,
+        "reported_errors": 164,
+        "exit_code": 3
+      },
+      "simple": {
+        "input": "base APK",
+        "units_processed": 10477,
+        "java_files": 14749,
+        "resource_files": 797,
+        "reported_errors": 67,
+        "exit_code": 3,
+        "error_markers": 46,
+        "files_with_error_markers": 23
+      },
+      "fallback": {
+        "input": "base APK",
+        "units_processed": 9707,
+        "java_files": 14749,
+        "resource_files": 0,
+        "reported_errors": 0,
+        "exit_code": 0,
+        "loaded_classes": 27328,
+        "loaded_methods": 170057,
+        "loaded_instructions": 3961288,
+        "archive": "analysis-results-jadx-fallback.zip",
+        "archive_bytes": 21661766,
+        "archive_sha256": "e6c770efda9b7167139491f591afdc6647690907389968495a0c8b212a1cd1f4"
+      }
     }
   },
   "analysis_bundle": {
@@ -176,5 +210,45 @@
     "ghidra": "12.1.4",
     "blutter_commit": "4a60ac648bf448c5a7596437243bcd0b9376fdf0",
     "blutter_dart": "3.12.2"
+  },
+  "dex_inventory": {
+    "tool": "apkanalyzer dex packages --defined-only",
+    "dex_count": 5,
+    "defined_classes": 27317,
+    "defined_methods": 170057,
+    "defined_fields": 79957,
+    "by_file": [
+      {
+        "file": "classes.dex",
+        "classes": 7420,
+        "methods": 55728,
+        "fields": 24655
+      },
+      {
+        "file": "classes2.dex",
+        "classes": 31,
+        "methods": 31,
+        "fields": 0
+      },
+      {
+        "file": "classes3.dex",
+        "classes": 172,
+        "methods": 1845,
+        "fields": 501
+      },
+      {
+        "file": "classes4.dex",
+        "classes": 11169,
+        "methods": 56199,
+        "fields": 34926
+      },
+      {
+        "file": "classes5.dex",
+        "classes": 8525,
+        "methods": 56254,
+        "fields": 19875
+      }
+    ],
+    "inventory_path": "/smster/work/dex-inventory/"
   }
 }
