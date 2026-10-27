@@ -11,13 +11,13 @@
 | ID | Area | Temuan | Dampak potensial | Status |
 |---|---|---|---|---|
 | F-01 | Presensi | Password presensi diturunkan secara deterministik dari username + tanggal + salt statis, lalu diobfuskasi dengan `_enc`; kredensial Basic client juga hardcoded | Pembuatan kredensial presensi tanpa password UGM; penyalahgunaan token presensi jika server menerima model ini | Kandidat; belum diuji ke server |
-| F-02 | OAuth | Client secret berada di aplikasi; tidak ada PKCE/`state`; redirect memakai custom scheme | Pencurian code/token melalui deep link atau ekstraksi secret | Kandidat; belum diuji runtime |
+| F-02 | OAuth | Client secret tertanam; tidak ada PKCE/`state`; redirect custom scheme dan validasi substring; payload sensitif ke Crashlytics saat error | Code interception/login CSRF, penyalahgunaan secret, kebocoran code/secret | Deep dive statis selesai; kandidat; uji staging belum |
 | F-03 | Penyimpanan token | Token disimpan di SharedPreferences tanpa enkripsi aplikasi | Token dapat dibaca pada perangkat yang di-root/backup | Kandidat; perlu validasi perangkat |
 | F-04 | Konfigurasi dev | Flavor dev memiliki scope tambahan dan redirect Postman | Permukaan serangan lebih luas bila build dev tersebar | Kandidat; belum ada build dev yang dianalisis runtime |
 | F-05 | RPC pre-auth | `staff/get_simaster_atribut_by_username` memakai username mentah | Enumerasi user/PII bila endpoint tidak membatasi akses | Kandidat; perlu uji otorisasi |
 | F-06 | Otorisasi | `v1/staff/micro/doscanent` dipanggil dari alur mahasiswa | Potensi BFLA/IDOR bila server tidak memeriksa peran | Kandidat; perlu uji peran |
 
-Fokus laporan ini adalah **F-01**. F-02–F-06 dicatat sebagai kandidat yang perlu deep dive terpisah; tidak ada klaim eksploitasi.
+Fokus laporan ini adalah **F-01** dan ringkasan **F-02**. F-02 dianalisis mendalam di [`OAUTH-DEEP-DIVE.md`](OAUTH-DEEP-DIVE.md) dengan rencana uji berizin di [`OAUTH-STAGING-TEST-PLAN.md`](OAUTH-STAGING-TEST-PLAN.md); F-03–F-06 tetap dicatat sebagai kandidat yang perlu deep dive terpisah. Tidak ada klaim eksploitasi.
 
 ## Metode dan batasan
 
@@ -175,17 +175,42 @@ Yang **belum** dibuktikan:
 5. Uji apakah Basic credential dapat dipakai tanpa aplikasi dan apakah ada pembatasan per device/IP.
 6. Dokumentasikan hasilnya sebagai **tervalidasi** atau **tidak tervalidasi**; jangan mengubah status berdasarkan asumsi.
 
-## F-02–F-06 — Kandidat lain (ringkas)
+## F-02 — OAuth (deep dive)
+
+Deep dive statis memverifikasi alur production: custom tabs, authorization code tanpa PKCE, redirect custom scheme, token exchange dengan client secret, penyimpanan token, refresh, dan jalur error. Tidak ada request yang dikirim; status tetap kandidat.
+
+| ID | Temuan | Status |
+|---|---|---|
+| F-02.1 | Tidak ada `state` pada authorization request dan tidak ada validasi `state` pada redirect | Kandidat; uji O-02 |
+| F-02.2 | Tidak ada PKCE; client secret tertanam dan dikirim di body + Basic auth | Kandidat; uji O-03 |
+| F-02.3 | Redirect diverifikasi dengan `contains` (`redirectUri`, `oauth2`, `login-callback`), bukan exact match; `MainActivity` exported dengan custom scheme | Kandidat; uji O-04 |
+| F-02.4 | Pada token exchange non-200, `request_headers` dan `request_body` dikirim ke Crashlytics tanpa redaksi | Kandidat; uji O-05 |
+| F-02.5 | Token disimpan di SharedPreferences biasa | Kandidat; cross-ref F-03, uji O-06 |
+| F-02.6 | JWT hanya di-decode; tidak ada verifikasi signature/issuer/audience | Kandidat; uji O-07 |
+| F-02.7 | Konfigurasi dan secret dev/staging tetap ada di binary production | Kandidat; cross-ref F-04, uji O-08 |
+| F-02.8 | Hardening: AppAuth activities exported, `usesCleartextTraffic=true`, scope write lebar, error `access_denied` tidak ditangani | Hardening; uji O-09/O-10/O-12 |
+
+Bukti utama:
+
+- Production dipilih oleh `main_production.dart` (`0x13e5414`) dan `configOauth()` cabang production (`0x8c0368`); authorization URL di `0x8c0410` hanya memuat `response_type`, `client_id`, `redirect_uri`, dan `scope`.
+- Client secret production tertanam di `flavors.dart` `0x8c03a4` (fingerprint `THFn…7DD`); secret dev juga tertanam.
+- Token request `exchangeCodeForToken` (`0x8e3834`) memuat `client_secret` dan Basic auth; tidak ada `code_verifier`.
+- `_handleRedirectUri` (`0x8df054`) memakai tiga pemeriksaan `contains` dan hanya membaca `queryParameters['code']`; tidak ada `state`/`error`.
+- Crashlytics custom keys production (`0x8e5404`–`0x8e5628`) mengirim `request_headers`/`request_body`; `stringifyRequestBody` (`0x8e8050`) memakai `jsonEncode` tanpa redaksi.
+- Token disimpan lewat `SharedPreferencesService.saveData` (`0x920b74`); JWT di-decode (`0x8e4654`) tanpa verifikasi.
+
+Rincian alamat, bukti, dampak, dan batasan ada di [`OAUTH-DEEP-DIVE.md`](OAUTH-DEEP-DIVE.md). Langkah verifikasi berizin ada di [`OAUTH-STAGING-TEST-PLAN.md`](OAUTH-STAGING-TEST-PLAN.md). Jangan menguji produksi; semua uji memerlukan staging, akun uji, dan izin tertulis.
+
+## F-03–F-06 — Kandidat lain (ringkas)
 
 | ID | Bukti statis | Mengapa perlu deep dive |
 |---|---|---|
-| F-02 | `OAuthWebviewService::exchangeCodeForToken` mengirim `client_secret`; tidak ditemukan `code_verifier`/PKCE atau validasi `state`; redirect production memakai custom scheme `id.ac.ugm.student.vnext.simaster://oauth2`; `MainActivity` exported | Code/token interception, replay, atau penyalahgunaan client secret; perlu uji dengan akun uji dan redirect yang dikendalikan |
 | F-03 | Token disimpan di SharedPreferences dengan key `access_token`, `refresh_token`, `access_token_expiration_unix`, `refresh_token_expiration_unix` | Backup/root dapat membaca token; perlu validasi pada perangkat uji dan kebijakan backup |
 | F-04 | `flavors.dart` memuat konfigurasi dev/prod; dev memakai redirect Postman dan scope tambahan (`staff`, `pegawai.all.read`, `tte`, `ldap`) | Build dev yang tersebar dapat memperluas permukaan serangan; perlu memastikan build produksi tidak memuat konfigurasi dev |
 | F-05 | `staff/get_simaster_atribut_by_username` memakai username mentah | Enumerasi user/PII bila endpoint dapat diakses tanpa sesi yang tepat; perlu uji otorisasi |
 | F-06 | `v1/staff/micro/doscanent` dipanggil dari alur mahasiswa; scope produksi tidak memuat `staff` | Potensi BFLA/IDOR bila server tidak memeriksa peran; perlu uji dengan beberapa peran |
 
-Kandidat F-02–F-06 tidak dianalisis sedalam F-01 di laporan ini. Mereka dicatat agar tidak hilang, bukan sebagai klaim dampak.
+F-02 dianalisis di laporan terpisah; F-03–F-06 tidak dianalisis sedalam F-01/F-02 di laporan ini. Mereka dicatat agar tidak hilang, bukan sebagai klaim dampak.
 
 ## Rekomendasi
 
@@ -197,15 +222,20 @@ Kandidat F-02–F-06 tidak dianalisis sedalam F-01 di laporan ini. Mereka dicata
 4. Validasi `username` vs token sesi, `identitas_id`, dan `device_id` di server; jangan percaya payload client.
 5. Tambahkan rate limit, audit log, dan deteksi penggunaan credential dari device/IP yang tidak wajar.
 6. Terapkan otorisasi per peran pada `doscanent` dan endpoint `micro`/`service`; uji dengan akun mahasiswa/staff.
+7. Tegakkan exact redirect URI dan PKCE S256 untuk client OAuth; tolak token exchange tanpa `code_verifier` yang cocok.
+8. Jangan mengandalkan client secret yang tertanam sebagai autentikasi client; rotasi/revoke secret yang terekspos dan batasi scope.
 
 ### Client-side
 
-1. Hapus `client_secret` dari aplikasi mobile dan hentikan grant yang memerlukannya.
-2. Terapkan PKCE dan validasi `state` pada OAuth; batasi redirect URI ke skema yang benar-benar dimiliki aplikasi.
-3. Gunakan secure storage (Keystore/Keychain) untuk token, bukan SharedPreferences biasa.
-4. Hapus konfigurasi dev/Postman dari build produksi; pastikan scope minimum.
-5. Nonaktifkan `usesCleartextTraffic` dan log debug `[PRES_NEW]` pada build produksi.
-6. Jangan menurunkan password dari username/tanggal/salt statis; gunakan server-issued per-user credential.
+1. Hapus `client_secret` dari aplikasi mobile dan hentikan grant yang memerlukannya; gunakan public client + PKCE atau backend-for-frontend.
+2. Buat `state` acak minimal 128-bit, simpan sementara, dan validasi exact saat redirect; tolak missing/mismatch.
+3. Terapkan PKCE S256 dan exact redirect URI; ganti custom scheme dengan Android App Links bila memungkinkan, dan hapus pemeriksaan `contains`.
+4. Redaksi Crashlytics: jangan kirim `Authorization`, body mentah, `client_secret`, atau code; gunakan allowlist metadata.
+5. Gunakan secure storage (Keystore/EncryptedSharedPreferences) untuk token, bukan SharedPreferences biasa.
+6. Hapus konfigurasi dev/Postman dan secret dev dari build produksi; rotasi kredensial yang pernah tertanam.
+7. Verifikasi JWT (signature/issuer/audience) atau jangan gunakan klaim untuk keputusan lokal; server tetap harus memvalidasi token.
+8. Hapus/disable AppAuth activities yang tidak dipakai, set `usesCleartextTraffic=false`, dan pastikan log debug tidak mencetak code/token/secret.
+9. Jangan menurunkan password dari username/tanggal/salt statis; gunakan server-issued per-user credential.
 
 ### Proses
 
