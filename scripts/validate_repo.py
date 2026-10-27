@@ -5,6 +5,7 @@ import json
 import re
 import subprocess
 import sys
+import zipfile
 import xml.etree.ElementTree as ET
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
@@ -14,9 +15,20 @@ FORBIDDEN_SUFFIXES = {
     ".apk", ".xapk", ".dex", ".so", ".aab", ".jar", ".keystore", ".jks",
     ".pem", ".p12", ".pfx",
 }
-TEXT_SUFFIXES = {".md", ".json", ".svg", ".java", ".xml", ".yaml", ".yml", ".txt"}
+TEXT_SUFFIXES = {
+    ".md", ".json", ".svg", ".java", ".xml", ".yaml", ".yml", ".txt",
+    ".dart", ".kt", ".c", ".h", ".smali", ".properties",
+}
 SECRET_PATTERNS = [
-    ("private key", re.compile(r"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----")),
+    (
+        "private key block",
+        re.compile(
+            r"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----\s*"
+            r"(?:[A-Za-z0-9+/=]{1,80}\s*){2,}"
+            r"-----END (?:RSA |EC |OPENSSH )?PRIVATE KEY-----",
+            re.MULTILINE,
+        ),
+    ),
     ("Google API key", re.compile(r"\bAIza[0-9A-Za-z_-]{35}\b")),
     ("bearer token", re.compile(r"(?i)\bBearer\s+[A-Za-z0-9._~+/=-]{20,}")),
     ("JWT-shaped value", re.compile(r"\beyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\b")),
@@ -24,7 +36,7 @@ SECRET_PATTERNS = [
         "credential assignment",
         re.compile(
             r"(?i)\b(?:api[_-]?key|access[_-]?token|refresh[_-]?token|client[_-]?secret)"
-            r"\b[\"']?\s*[:=]\s*[\"']?[A-Za-z0-9._~+/=-]{20,}"
+            r"\b[\"']?\s*[:=]\s*[\"']([A-Za-z0-9._~+/=-]{20,})[\"']"
         ),
     ),
 ]
@@ -63,12 +75,55 @@ def local_links(path, content, errors):
             errors.append("{}: broken local link: {}".format(path.relative_to(ROOT), destination))
 
 
+def validate_zip(path, errors):
+    try:
+        with zipfile.ZipFile(str(path), "r") as archive:
+            for member in archive.infolist():
+                member_path = Path(member.filename)
+                if member_path.suffix.lower() in FORBIDDEN_SUFFIXES:
+                    errors.append(
+                        "forbidden proprietary/key archive member: {}!{}".format(
+                            path.relative_to(ROOT), member.filename
+                        )
+                    )
+                    continue
+                if member_path.suffix.lower() not in TEXT_SUFFIXES or member_path.suffix.lower() == ".txt":
+                    continue
+                try:
+                    content = archive.read(member).decode("utf-8")
+                except UnicodeDecodeError:
+                    errors.append(
+                        "archive text member is not UTF-8: {}!{}".format(
+                            path.relative_to(ROOT), member.filename
+                        )
+                    )
+                    continue
+                except (OSError, zipfile.BadZipFile, RuntimeError) as exc:
+                    errors.append(
+                        "cannot read archive member {}!{}: {}".format(
+                            path.relative_to(ROOT), member.filename, exc
+                        )
+                    )
+                    continue
+                for label, pattern in SECRET_PATTERNS:
+                    if pattern.search(content):
+                        errors.append(
+                            "{} pattern found in {}!{}".format(
+                                label, path.relative_to(ROOT), member.filename
+                            )
+                        )
+    except (OSError, zipfile.BadZipFile) as exc:
+        errors.append("invalid ZIP archive {}: {}".format(path.relative_to(ROOT), exc))
+
+
 def main():
     errors = []
     files = tracked_paths()
     for path in files:
         if path.suffix.lower() in FORBIDDEN_SUFFIXES:
             errors.append("forbidden proprietary/key file tracked: {}".format(path.relative_to(ROOT)))
+        elif path.suffix.lower() == ".zip":
+            validate_zip(path, errors)
 
     for rel in REQUIRED_FILES:
         if not (ROOT / rel).is_file():

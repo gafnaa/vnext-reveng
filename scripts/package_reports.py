@@ -17,6 +17,7 @@ ALLOWLIST = [
     "reports/GHIDRA-AOT-SELECTED.md",
     "reports/GHIDRA-FULL-DECOMPILE.md",
     "reports/PROGRESS.md",
+    "reports/DEX-DECOMPILATION.md",
 ]
 
 
