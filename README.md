@@ -54,6 +54,10 @@ Analisis yang tercatat memakai REA, JADX 1.5.6, Blutter pada commit yang ditautk
 - Modul, string, izin, route, dan descriptor API adalah temuan statis. Tanpa eksekusi kompatibel, layar, perilaku, request, dan respons backend tetap belum diketahui.
 - Nilai token/API key yang ditemukan pada hasil alat harus disamarkan sebelum perubahan masuk repo.
 
+## CI/CD
+
+[Workflow validasi dan publikasi](https://github.com/gafnaa/simaster-ugm-student-vnext-re/actions/workflows/docs-ci.yml) memeriksa Markdown, tautan lokal, JSON, SVG, pola secret, dan file proprietary pada setiap PR. Setelah merge ke `main`, workflow membuat artifact privat berisi dokumen yang diizinkan saja; artifact disimpan 30 hari. APK tidak diunduh atau dijalankan oleh CI.
+
 ## Kontribusi
 
 Setiap perubahan masuk lewat PR dengan satu Conventional Commit per PR, kemudian squash-merge ke `main`. Jalankan `git diff --check` sebelum push dan sertakan sumber/bukti serta dampak ke progress map. Detail kriteria CI/CD dan keamanan ada di PRD.
