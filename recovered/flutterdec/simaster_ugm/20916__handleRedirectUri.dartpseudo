@@ -1,0 +1,310 @@
+dynamic _handleRedirectUri(dynamic slot0, dynamic slot1, dynamic slot2, dynamic slot3, dynamic slot4, dynamic slot5) {
+  dynamic resultTmp1;
+  dynamic resultTmp2;
+  dynamic resultTmp3;
+  dynamic resultTmp4;
+  dynamic tmp5;
+  dynamic tmp6;
+  dynamic tmp7;
+
+  // omitted complex paths: block 13, block 16, block 17, block 20, block 27, block 30, block 32, block 35, block 39
+  tmp7 = null;
+  tmp6 = slot0;
+  tmp5 = slot1;
+  final t49 = fn_0x13de838(1);
+  resultTmp4 = t49;
+  t49.f16 = tmp6;
+  final t50 = fn_0x7f5e44(tmp6, t49);
+  ((reg15 - 0xd8)).f0 = tmp5;
+  final t51 = tmp5.sel41409(); // dispatch table, selector_offset: 41409, args: unknown
+  resultTmp3 = t51;
+  final t52 = fn_0x13df928(null, 4);
+  t52.f16 = poolOff[537416];
+  t52.f20 = resultTmp3;
+  ((reg15 - 0xd8)).f0 = t52;
+  final t53 = fn_0x7e1b8c(resultTmp3);
+  if (thread.f120.f4704 != thread.f144) {
+    final t54 = fn_0x13df928(null, 4);
+    resultTmp2 = t54;
+    t54.f16 = poolOff[537424];
+    final t55 = configOauth();
+    resultTmp1 = t55;
+    if (t55 == null) {
+      final t56 = fn_0x13e0274();
+      final t57 = fn_0x13e0274();
+    }
+    else {
+      final t58 = fn_0x13d8564(t55, poolOff[95232]);
+      if (resultTmp1.f16 != t58) {
+        ((resultTmp2 + 0x13)).f0 = reg0;
+        if (((reg0 >> 0) & 1) == 0) {
+          ((reg15 - 0xd8)).f0 = resultTmp2;
+          final t59 = fn_0x7e1b8c();
+          final t60 = configOauth();
+          resultTmp2 = t60;
+          if (t60 == null) {
+            final t61 = fn_0x13e0274();
+          }
+          else {
+            final t62 = fn_0x13d8564(t60, poolOff[95232]);
+            if (resultTmp2.f16 != t62) {
+              resultTmp2 = reg4;
+              if (((reg4 >> 0) & 1) == 0) {
+                return null;
+              }
+            }
+            else {
+              resultTmp2 = reg4;
+              if (((reg4 >> 0) & 1) == 0) {
+                return null;
+              }
+            }
+          }
+        }
+        else {
+          if (needsWriteBarrier((reg0._tag & (resultTmp2._tag >>> 2))) == 0) {
+            ((reg15 - 0xd8)).f0 = resultTmp2;
+            final t63 = fn_0x7e1b8c();
+            final t64 = configOauth();
+            resultTmp2 = t64;
+            if (t64 == null) {
+              final t65 = fn_0x13e0274();
+            }
+            else {
+              final t66 = fn_0x13d8564(t64, poolOff[95232]);
+              if (resultTmp2.f16 != t66) {
+                resultTmp2 = reg4;
+                if (((reg4 >> 0) & 1) == 0) {
+                  return null;
+                }
+              }
+              else {
+                resultTmp2 = reg4;
+                if (((reg4 >> 0) & 1) == 0) {
+                  return null;
+                }
+              }
+            }
+          }
+          else {
+            final t67 = fn_0x13ddb50(resultTmp2);
+            ((reg15 - 0xd8)).f0 = resultTmp2;
+            final t68 = fn_0x7e1b8c();
+            final t69 = configOauth();
+            resultTmp2 = t69;
+            if (t69 == null) {
+              final t70 = fn_0x13e0274();
+            }
+            else {
+              final t71 = fn_0x13d8564(t69, poolOff[95232]);
+              if (!(resultTmp2.f16 != t71)) {
+              }
+            }
+          }
+        }
+      }
+      else {
+        ((resultTmp2 + 0x13)).f0 = reg0;
+        if (((reg0 >> 0) & 1) == 0) {
+          ((reg15 - 0xd8)).f0 = resultTmp2;
+          final t72 = fn_0x7e1b8c();
+          final t73 = configOauth();
+          resultTmp2 = t73;
+          if (t73 == null) {
+            final t74 = fn_0x13e0274();
+          }
+          else {
+            final t75 = fn_0x13d8564(t73, poolOff[95232]);
+            if (resultTmp2.f16 != t75) {
+              resultTmp2 = reg4;
+              if (((reg4 >> 0) & 1) == 0) {
+                return null;
+              }
+            }
+            else {
+              resultTmp2 = reg4;
+              if (((reg4 >> 0) & 1) == 0) {
+                return null;
+              }
+            }
+          }
+        }
+        else {
+          if (needsWriteBarrier((reg0._tag & (resultTmp2._tag >>> 2))) == 0) {
+            ((reg15 - 0xd8)).f0 = resultTmp2;
+            final t76 = fn_0x7e1b8c();
+            final t77 = configOauth();
+            resultTmp2 = t77;
+            if (t77 == null) {
+              final t78 = fn_0x13e0274();
+            }
+            else {
+              final t79 = fn_0x13d8564(t77, poolOff[95232]);
+              if (resultTmp2.f16 != t79) {
+                resultTmp2 = reg4;
+                if (((reg4 >> 0) & 1) == 0) {
+                  return null;
+                }
+              }
+              else {
+                resultTmp2 = reg4;
+                if (((reg4 >> 0) & 1) == 0) {
+                  return null;
+                }
+              }
+            }
+          }
+          else {
+            final t80 = fn_0x13ddb50(resultTmp2);
+            ((reg15 - 0xd8)).f0 = resultTmp2;
+            final t81 = fn_0x7e1b8c();
+            final t82 = configOauth();
+            resultTmp2 = t82;
+            if (t82 == null) {
+              final t83 = fn_0x13e0274();
+            }
+            else {
+              final t84 = fn_0x13d8564(t82, poolOff[95232]);
+              if (!(resultTmp2.f16 != t84)) {
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  else {
+    final t85 = fn_0x13dd9ec(reg1, poolOff[31128]);
+    final t86 = fn_0x13df928(null, 4);
+    resultTmp2 = t86;
+    t86.f16 = poolOff[537424];
+    final t87 = configOauth();
+    resultTmp1 = t87;
+    if (t87 == null) {
+      final t88 = fn_0x13e0274();
+      final t89 = fn_0x13e0274();
+    }
+    else {
+      final t90 = fn_0x13d8564(t87, poolOff[95232]);
+      if (resultTmp1.f16 != t90) {
+        ((resultTmp2 + 0x13)).f0 = reg0;
+        if (((reg0 >> 0) & 1) == 0) {
+          ((reg15 - 0xd8)).f0 = resultTmp2;
+          final t91 = fn_0x7e1b8c();
+          final t92 = configOauth();
+          resultTmp2 = t92;
+          if (t92 == null) {
+            final t93 = fn_0x13e0274();
+          }
+          else {
+            final t94 = fn_0x13d8564(t92, poolOff[95232]);
+            if (resultTmp2.f16 != t94) {
+              resultTmp2 = reg4;
+              if (((reg4 >> 0) & 1) == 0) {
+                return null;
+              }
+            }
+            else {
+              resultTmp2 = reg4;
+              if (((reg4 >> 0) & 1) == 0) {
+                return null;
+              }
+            }
+          }
+        }
+        else {
+          if (needsWriteBarrier((reg0._tag & (resultTmp2._tag >>> 2))) == 0) {
+            ((reg15 - 0xd8)).f0 = resultTmp2;
+            final t95 = fn_0x7e1b8c();
+            final t96 = configOauth();
+            resultTmp2 = t96;
+            if (t96 == null) {
+              final t97 = fn_0x13e0274();
+            }
+            else {
+              final t98 = fn_0x13d8564(t96, poolOff[95232]);
+              if (!(resultTmp2.f16 != t98)) {
+              }
+            }
+          }
+          else {
+            final t99 = fn_0x13ddb50(resultTmp2);
+            ((reg15 - 0xd8)).f0 = resultTmp2;
+            final t100 = fn_0x7e1b8c();
+            final t101 = configOauth();
+            resultTmp2 = t101;
+            if (t101 == null) {
+              final t102 = fn_0x13e0274();
+            }
+            else {
+              final t103 = fn_0x13d8564(t101, poolOff[95232]);
+              if (resultTmp2.f16 != t103) {
+                return null;
+              }
+            }
+          }
+        }
+      }
+      else {
+        ((resultTmp2 + 0x13)).f0 = reg0;
+        if (((reg0 >> 0) & 1) == 0) {
+          ((reg15 - 0xd8)).f0 = resultTmp2;
+          final t104 = fn_0x7e1b8c();
+          final t105 = configOauth();
+          resultTmp2 = t105;
+          if (t105 == null) {
+            final t106 = fn_0x13e0274();
+          }
+          else {
+            final t107 = fn_0x13d8564(t105, poolOff[95232]);
+            if (resultTmp2.f16 != t107) {
+              resultTmp2 = reg4;
+              if (((reg4 >> 0) & 1) == 0) {
+                return null;
+              }
+            }
+            else {
+              resultTmp2 = reg4;
+              if (((reg4 >> 0) & 1) == 0) {
+                return null;
+              }
+            }
+          }
+        }
+        else {
+          if (needsWriteBarrier((reg0._tag & (resultTmp2._tag >>> 2))) == 0) {
+            ((reg15 - 0xd8)).f0 = resultTmp2;
+            final t108 = fn_0x7e1b8c();
+            final t109 = configOauth();
+            resultTmp2 = t109;
+            if (t109 == null) {
+              final t110 = fn_0x13e0274();
+            }
+            else {
+              final t111 = fn_0x13d8564(t109, poolOff[95232]);
+              if (!(resultTmp2.f16 != t111)) {
+              }
+            }
+          }
+          else {
+            final t112 = fn_0x13ddb50(resultTmp2);
+            ((reg15 - 0xd8)).f0 = resultTmp2;
+            final t113 = fn_0x7e1b8c();
+            final t114 = configOauth();
+            resultTmp2 = t114;
+            if (t114 == null) {
+              final t115 = fn_0x13e0274();
+            }
+            else {
+              final t116 = fn_0x13d8564(t114, poolOff[95232]);
+              if (resultTmp2.f16 != t116) {
+                return null;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  break;
+}

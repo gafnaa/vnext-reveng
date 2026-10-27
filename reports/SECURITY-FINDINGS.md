@@ -198,6 +198,7 @@ Bukti utama:
 - `_handleRedirectUri` (`0x8df054`) memakai tiga pemeriksaan `contains` dan hanya membaca `queryParameters['code']`; tidak ada `state`/`error`.
 - Crashlytics custom keys production (`0x8e5404`–`0x8e5628`) mengirim `request_headers`/`request_body`; `stringifyRequestBody` (`0x8e8050`) memakai `jsonEncode` tanpa redaksi.
 - Token disimpan lewat `SharedPreferencesService.saveData` (`0x920b74`); JWT di-decode (`0x8e4654`) tanpa verifikasi.
+- Flutterdec 2026-10-27 memberikan dekompilasi independen untuk `_handleRedirectUri` dan `exchangeCodeForToken`; call graph konsisten, tetapi 9/141 penanda jalur hilang dan object-pool index ordinal, sehingga tidak menambah klaim `state`/PKCE/token payload. Lihat [`FLUTTERDEC-APP-DECOMPILE.md`](FLUTTERDEC-APP-DECOMPILE.md).
 
 Rincian alamat, bukti, dampak, dan batasan ada di [`OAUTH-DEEP-DIVE.md`](OAUTH-DEEP-DIVE.md). Langkah verifikasi berizin ada di [`OAUTH-STAGING-TEST-PLAN.md`](OAUTH-STAGING-TEST-PLAN.md). Jangan menguji produksi; semua uji memerlukan staging, akun uji, dan izin tertulis.
 
@@ -213,6 +214,8 @@ Rincian alamat, bukti, dampak, dan batasan ada di [`OAUTH-DEEP-DIVE.md`](OAUTH-D
 Koreksi penting: **F-05 bukan pre-auth.** `/auth` terdaftar sebagai route, tetapi tidak ditemukan pemanggil statis ke sana dan `/auth` tidak ada di allowlist `SessionMiddleware`. Controller F-05 juga memakai Bearer dari `getValidAccessToken`. Dengan demikian statusnya **latent, session-gated**, bukan bypass login. F-05 adalah lookup akun, bukan autentikasi; password divalidasi di form tetapi tidak dikirim ke server.
 
 F-06 lebih kuat untuk reachability. Tab attendance di `LandingView` membangun `AttedenceView` langsung, dan kartu `participant_student` menavigasi ke `/qr-scanner`. Pemeriksaan yang terlihat adalah integritas perangkat/lokasi palsu, bukan peran. QR dengan panjang lebih dari 37 karakter memilih `v1/staff/micro/doscanent` dan mengirim identitas dari client. Ini adalah kandidat cross-role/BFLA dan identity tampering; belum ada bukti server menerima token mahasiswa atau memakai identitas body.
+
+Flutterdec 2026-10-27 juga memulihkan `scanEntrant` (ID 20785): function ini memanggil `baseUrl()`, `post()`, dan konverter parameter scan tanpa pemeriksaan peran lokal yang terlihat. String endpoint tetap berupa object-pool index, dan 88 jalur kompleks dihilangkan. Ini adalah corroboration reachability statis, bukan bukti otorisasi server. Lihat [`FLUTTERDEC-APP-DECOMPILE.md`](FLUTTERDEC-APP-DECOMPILE.md).
 
 | ID | Fakta statis | Status | Uji |
 |---|---|---|---|
@@ -306,6 +309,7 @@ Contoh output lenient ada di [`presensi-credential-model.example.json`](presensi
 - [`FEATURE-MAP.md`](FEATURE-MAP.md) — route dan service statis.
 - [`GHIDRA-AOT-SELECTED.md`](GHIDRA-AOT-SELECTED.md) — metode decompile Ghidra.
 - [`GHIDRA-APP-DECOMPILE.md`](GHIDRA-APP-DECOMPILE.md) — cakupan function start paket aplikasi dan batas full binary.
+- [`FLUTTERDEC-APP-DECOMPILE.md`](FLUTTERDEC-APP-DECOMPILE.md) — pipeline sekunder, kualitas pseudo-Dart, dan batasnya.
 - [`GHIDRA-FULL-DECOMPILE.md`](GHIDRA-FULL-DECOMPILE.md) — cakupan dan caveat.
 - [`OAUTH-DEEP-DIVE.md`](OAUTH-DEEP-DIVE.md) — analisis OAuth F-02.
 - [`OAUTH-STAGING-TEST-PLAN.md`](OAUTH-STAGING-TEST-PLAN.md) — rencana uji OAuth O-01–O-13.

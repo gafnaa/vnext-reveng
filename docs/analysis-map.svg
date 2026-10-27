@@ -118,15 +118,15 @@
   <rect x="64" y="506" width="4" height="76" fill="#d97706"/>
   <text x="80" y="530" class="num">05</text>
   <text x="80" y="550" class="layer">Dart AOT / Blutter</text>
-  <text x="80" y="568" class="small">libapp.so</text>
+  <text x="80" y="568" class="small">Blutter + flutterdec</text>
   <text x="346" y="534" class="body">29.989 header function</text>
   <text x="346" y="552" class="small">418 file paket aplikasi</text>
-  <text x="612" y="542" class="body">Blutter</text>
-  <text x="808" y="534" class="body">2.312 file assembly</text>
+  <text x="612" y="542" class="body">Blutter · flutterdec</text>
+  <text x="808" y="534" class="body">2.312 asm · 2.628 pseudo-Dart</text>
   <text x="808" y="552" class="small">2.796 header aplikasi</text>
   <rect x="1098" y="522" width="82" height="22" rx="11" fill="#fffbeb" stroke="#fde68a"/>
   <text x="1155" y="537" text-anchor="middle" class="pill" fill="#92400e">PARSIAL</text>
-  <text x="1098" y="564" class="tiny">1 assertion · denominator range pending</text>
+  <text x="1098" y="564" class="tiny">1 assertion · 88 omitted paths · pool ordinal</text>
 
   <!-- row 06 -->
   <rect x="64" y="582" width="1312" height="76" fill="#f8fafc" stroke="#e2e8f0"/>
@@ -195,5 +195,5 @@
   <line x1="64" y1="910" x2="1376" y2="910" class="divider"/>
   <text x="64" y="936" class="small">Status per 2026-10-27. “Selesai” berarti unit dalam inventaris sudah diproses, bukan source Dart asli pulih identik.</text>
   <text x="64" y="954" class="small">Runtime tetap 0 sesi dan 0 request backend. Temuan keamanan tetap kandidat sampai diuji di staging berizin dengan akun sintetis.</text>
-  <text x="64" y="978" class="tiny">Sumber: PROGRESS.md, artifact-manifest.json, DEX-DECOMPILATION.md, GHIDRA-APP-DECOMPILE.md, FEATURE-MAP.md, SECURITY-FINDINGS.md.</text>
+  <text x="64" y="978" class="tiny">Sumber: PROGRESS.md, artifact-manifest.json, DEX-DECOMPILATION.md, GHIDRA-APP-DECOMPILE.md, FLUTTERDEC-APP-DECOMPILE.md, FEATURE-MAP.md, SECURITY-FINDINGS.md.</text>
 </svg>

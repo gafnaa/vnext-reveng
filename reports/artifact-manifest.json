@@ -167,6 +167,54 @@
       "output_directory": "/smster/work/ghidra/decompiled-app-2026-10-27",
       "report": "reports/GHIDRA-APP-DECOMPILE.md"
     },
+    "flutterdec_app_batch": {
+      "tool": "caverav/flutterdec",
+      "commit": "ccf7dfa",
+      "version": "0.1.0-alpha.4",
+      "build": "source release",
+      "adapter_backend": "blutter",
+      "analysis_profile": "light",
+      "snapshot_hash": "ace654289f5abc240509fc941453ebc5",
+      "app_package": "simaster_ugm",
+      "selected_records": 2628,
+      "emitted_pseudocode_files": 2628,
+      "empty_pseudocode_files": 0,
+      "pseudocode_text_bytes": 5898899,
+      "blutter_app_function_headers": 2796,
+      "unreconciled_record_difference": 168,
+      "classes": 6118,
+      "libraries": 2312,
+      "object_pool_entries": 108584,
+      "total_calls": 42386,
+      "indirect_calls": 3510,
+      "indirect_call_ratio": 0.08281036191195205,
+      "dispatch_table_calls": 1834,
+      "unlifted_instructions": 1841,
+      "placeholder_ifs": 12,
+      "omitted_path_markers": 88,
+      "loop_backedge_markers": 19,
+      "disassembly_ratio": 1.0,
+      "unresolved_cf": 0,
+      "quality_gate": "strict; passed with --max-placeholder-ifs 12",
+      "name_resolution": {
+        "heuristic": 2628,
+        "exact": 0,
+        "external": 0,
+        "placeholder": 0
+      },
+      "registry_patch_features": [
+        "dedup_instructions",
+        "no-asan",
+        "no-dwarf_stack_traces_mode",
+        "no-msan",
+        "no-shared_data",
+        "no-tsan"
+      ],
+      "output_directory": "/var/smster/work/flutterdec-2026-10-27/app-simaster_ugm",
+      "selected_excerpt_directory": "recovered/flutterdec/simaster_ugm",
+      "report": "reports/FLUTTERDEC-APP-DECOMPILE.md",
+      "quality_artifact": "reports/flutterdec-quality.json"
+    },
     "jadx_mode_runs": {
       "auto": {
         "input": "XAPK",
@@ -244,7 +292,11 @@
     "rea_jadx_bridge": "0.7.1",
     "ghidra": "12.1.4",
     "blutter_commit": "4a60ac648bf448c5a7596437243bcd0b9376fdf0",
-    "blutter_dart": "3.12.2"
+    "blutter_dart": "3.12.2",
+    "flutterdec_commit": "ccf7dfa",
+    "flutterdec_version": "0.1.0-alpha.4",
+    "flutterdec_python": ">=3.9",
+    "flutterdec_registry_alias": "3.12.1"
   },
   "dex_inventory": {
     "tool": "apkanalyzer dex packages --defined-only",
