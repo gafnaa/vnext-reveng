@@ -182,6 +182,7 @@
       "pseudocode_text_bytes": 5898899,
       "blutter_app_function_headers": 2796,
       "unreconciled_record_difference": 168,
+      "unreconciled_record_difference_scope": "canonical run vs 2796 Blutter app headers; the augmented run reconciles all 2796",
       "classes": 6118,
       "libraries": 2312,
       "object_pool_entries": 108584,
@@ -195,7 +196,7 @@
       "loop_backedge_markers": 19,
       "disassembly_ratio": 1.0,
       "unresolved_cf": 0,
-      "quality_gate": "strict; passed with --max-placeholder-ifs 12",
+      "quality_gate": "canonical strict; passed with --max-placeholder-ifs 12; augmented strict; passed with --max-placeholder-ifs 15",
       "name_resolution": {
         "heuristic": 2628,
         "exact": 0,
@@ -213,7 +214,96 @@
       "output_directory": "/var/smster/work/flutterdec-2026-10-27/app-simaster_ugm",
       "selected_excerpt_directory": "recovered/flutterdec/simaster_ugm",
       "report": "reports/FLUTTERDEC-APP-DECOMPILE.md",
-      "quality_artifact": "reports/flutterdec-quality.json"
+      "quality_artifact": "reports/flutterdec-quality.json",
+      "canonical_selected_records": 2628,
+      "augmented_selected_records": 2796,
+      "reconciliation": {
+        "method": "match the first address in each flutterdec asm/*.s file to a Blutter function header address",
+        "canonical_entries_inside_blutter_headers": 2628,
+        "canonical_entries_outside_blutter_headers": 0,
+        "missing_from_canonical": 168,
+        "missing_owner": "class :: (no owner class)",
+        "missing_ordinary_static": 142,
+        "missing_static_closures": 26,
+        "missing_body_bytes_total": 114924,
+        "augmented_entries": 2796,
+        "augmented_entries_inside_blutter_headers": 2796,
+        "missing_from_augmented": 0,
+        "new_functions_in_augmented": 168,
+        "canonical_ids_or_names_changed_in_augmented": 0,
+        "interpretation": "top-level static members without an owner class, not deduplication and not a decompilation failure"
+      },
+      "augmented_run": {
+        "date": "2026-10-28",
+        "blutter_dump": "/var/smster/work/flutterdec-2026-10-28/blutter-augmented",
+        "augmentation_manifest": "/var/smster/work/flutterdec-2026-10-28/blutter-augmentation.json",
+        "files_rewritten": 418,
+        "top_level_blocks_rewritten": 418,
+        "selected_records": 2796,
+        "emitted_pseudocode_files": 2796,
+        "empty_pseudocode_files": 0,
+        "pseudocode_text_bytes": 6255076,
+        "classes": 6536,
+        "libraries": 2312,
+        "object_pool_entries": 108584,
+        "total_calls": 44675,
+        "indirect_calls": 3990,
+        "indirect_call_ratio": 0.08931169557918299,
+        "dispatch_table_calls": 2265,
+        "unlifted_instructions": 1943,
+        "placeholder_ifs": 15,
+        "omitted_path_markers": 90,
+        "loop_backedge_markers": 20,
+        "repeated_blocks": 3064,
+        "disassembly_ratio": 1.0,
+        "unresolved_cf": 0,
+        "quality_gate": "strict; passed with --max-placeholder-ifs 15",
+        "name_resolution": {
+          "heuristic": 2796,
+          "exact": 0,
+          "external": 0,
+          "placeholder": 0
+        },
+        "output_directory": "/var/smster/work/flutterdec-2026-10-28/app-simaster_ugm-toplevel"
+      },
+      "pool_offset_crosswalk": {
+        "mapping": "poolOff[N] -> [pp+0xN] using decimal N",
+        "confidence": "inferred, not a documented flutterdec contract",
+        "configOauth": {
+          "distinct_refs": 38,
+          "resolved": 38
+        },
+        "_launchOAuth": {
+          "distinct_refs": 13,
+          "resolved": 13
+        },
+        "_handleRedirectUri": {
+          "distinct_refs": 4,
+          "resolved": 4
+        },
+        "exchangeCodeForToken": {
+          "distinct_refs": 8,
+          "resolved": 8
+        },
+        "_ScanEntrantParamImplToJson": {
+          "distinct_refs": 8,
+          "resolved": 8
+        },
+        "scanEntrant": {
+          "distinct_refs": 12,
+          "resolved": 11,
+          "unresolved": [
+            "0x83d00"
+          ]
+        },
+        "BaseNetworking__internal": {
+          "distinct_refs": 4,
+          "resolved": 4
+        },
+        "note": "Selected-function verification only; values remain in private artifacts."
+      },
+      "augmented_output_directory": "/var/smster/work/flutterdec-2026-10-28/app-simaster_ugm-toplevel",
+      "augmented_unreconciled_record_difference": 0
     },
     "jadx_mode_runs": {
       "auto": {

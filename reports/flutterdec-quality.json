@@ -1,6 +1,6 @@
 {
-  "schema": "flutterdec-app-quality/v1",
-  "generated": "2026-10-27",
+  "schema": "flutterdec-app-quality/v2",
+  "generated": "2026-10-28",
   "tool": {
     "name": "flutterdec",
     "repository": "https://github.com/caverav/flutterdec",
@@ -29,72 +29,247 @@
   "scope": {
     "function_scope": "app",
     "app_package": "simaster_ugm",
-    "selected_records": 2628,
     "blutter_app_function_headers": 2796,
-    "unreconciled_record_difference": 168,
-    "total_aot_functions": 29989
+    "canonical_selected_records": 2628,
+    "augmented_selected_records": 2796,
+    "reconciled_difference": 0,
+    "total_aot_functions": 29989,
+    "canonical_unreconciled_difference": 168,
+    "augmented_unreconciled_difference": 0
   },
-  "counts": {
-    "emitted_pseudocode_files": 2628,
-    "empty_pseudocode_files": 0,
-    "pseudocode_text_bytes": 5898899,
-    "classes": 6118,
-    "libraries": 2312,
-    "object_pool_entries": 108584
+  "runs": {
+    "canonical": {
+      "date": "2026-10-27",
+      "input_dump": "unmodified Blutter dump",
+      "counts": {
+        "emitted_pseudocode_files": 2628,
+        "empty_pseudocode_files": 0,
+        "pseudocode_text_bytes": 5898899,
+        "classes": 6118,
+        "libraries": 2312,
+        "object_pool_entries": 108584,
+        "disassembled_functions": 2628,
+        "functions": 2628,
+        "functions_total": 29989
+      },
+      "quality": {
+        "mode": "strict",
+        "passed": true,
+        "failure_reasons": [],
+        "max_placeholder_ifs": 12,
+        "function_count": 2628,
+        "disassembled_function_count": 2628,
+        "disassembly_ratio": 1.0,
+        "total_calls": 42386,
+        "indirect_calls": 3510,
+        "indirect_call_ratio": 0.08281036191195205,
+        "dispatch_table_calls": 1834,
+        "dispatch_selector_calls": 0,
+        "unlifted_instructions": 1841,
+        "placeholder_ifs": 12,
+        "placeholder_cond_markers": 12,
+        "omitted_path_markers": 88,
+        "loop_backedge_markers": 19,
+        "repeated_blocks": 2975,
+        "raw_register_calls": 3510,
+        "raw_register_name_refs": 26394,
+        "semantic_direct_calls": 0,
+        "semantic_indirect_calls": 0,
+        "target_va_symbol_calls": 0,
+        "block_helper_refs": 0,
+        "raw_arg_name_refs": 0,
+        "unresolved_cf": 0
+      },
+      "name_resolution": {
+        "heuristic": 2628,
+        "exact": 0,
+        "external": 0,
+        "placeholder": 0
+      }
+    },
+    "augmented": {
+      "date": "2026-10-28",
+      "input_dump": "Blutter dump with synthetic owners for 418 top-level class :: blocks",
+      "augmentation": {
+        "method": "replace each class :: header with a path-derived __TopLevel_* class name",
+        "files_scanned": 418,
+        "files_rewritten": 418,
+        "top_level_blocks_rewritten": 418,
+        "new_functions_emitted": 168
+      },
+      "counts": {
+        "emitted_pseudocode_files": 2796,
+        "empty_pseudocode_files": 0,
+        "pseudocode_text_bytes": 6255076,
+        "classes": 6536,
+        "libraries": 2312,
+        "object_pool_entries": 108584,
+        "disassembled_functions": 2796,
+        "functions": 2796,
+        "functions_total": 29989
+      },
+      "quality": {
+        "mode": "strict",
+        "passed": true,
+        "failure_reasons": [],
+        "max_placeholder_ifs": 15,
+        "function_count": 2796,
+        "disassembled_function_count": 2796,
+        "disassembly_ratio": 1.0,
+        "total_calls": 44675,
+        "indirect_calls": 3990,
+        "indirect_call_ratio": 0.08931169557918299,
+        "dispatch_table_calls": 2265,
+        "dispatch_selector_calls": 0,
+        "unlifted_instructions": 1943,
+        "placeholder_ifs": 15,
+        "placeholder_cond_markers": 15,
+        "omitted_path_markers": 90,
+        "loop_backedge_markers": 20,
+        "repeated_blocks": 3064,
+        "raw_register_calls": 3990,
+        "raw_register_name_refs": 29196,
+        "semantic_direct_calls": 0,
+        "semantic_indirect_calls": 0,
+        "target_va_symbol_calls": 0,
+        "block_helper_refs": 0,
+        "raw_arg_name_refs": 0,
+        "unresolved_cf": 0
+      },
+      "name_resolution": {
+        "heuristic": 2796,
+        "exact": 0,
+        "external": 0,
+        "placeholder": 0
+      }
+    }
   },
-  "quality": {
-    "mode": "strict",
-    "passed": true,
-    "failure_reasons": [],
-    "disassembly_ratio": 1.0,
-    "unresolved_cf": 0,
-    "total_calls": 42386,
-    "indirect_calls": 3510,
-    "indirect_call_ratio": 0.08281036191195205,
-    "dispatch_table_calls": 1834,
-    "unlifted_instructions": 1841,
-    "placeholder_ifs": 12,
-    "omitted_path_markers": 88,
-    "loop_backedge_markers": 19,
-    "repeated_blocks": 2975,
-    "raw_register_name_refs": 26394
+  "crosswalk": {
+    "method": "match the first address in each flutterdec asm/*.s file to a Blutter function header address",
+    "blutter_app_function_headers": 2796,
+    "canonical_asm_entries": 2628,
+    "canonical_entries_inside_headers": 2628,
+    "canonical_entries_outside_headers": 0,
+    "missing_from_canonical": 168,
+    "augmented_asm_entries": 2796,
+    "augmented_entries_inside_headers": 2796,
+    "augmented_entries_outside_headers": 0,
+    "missing_from_augmented": 0,
+    "new_functions_in_augmented": 168,
+    "canonical_ids_or_names_changed_in_augmented": 0,
+    "missing_functions": {
+      "owner": "class :: (no owner class)",
+      "total": 168,
+      "ordinary_static": 142,
+      "static_closures": 26,
+      "body_bytes_total": 114924,
+      "body_bytes_min": 12,
+      "body_bytes_max": 3620,
+      "top_level_source_groups": 5
+    },
+    "interpretation": "The 168 missing records are top-level static members without an owner class, not deduplication and not a decompilation failure. Synthetic owners make them addressable without asserting a real Dart class."
   },
-  "name_resolution": {
-    "heuristic": 2628,
-    "exact": 0,
-    "external": 0,
-    "placeholder": 0
+  "pool_offsets": {
+    "mapping": "poolOff[N] -> [pp+0xN] using decimal N",
+    "confidence": "inferred",
+    "note": "Empirically consistent for this dump and selected functions, but not documented by flutterdec and not guaranteed across builds or tool versions.",
+    "selected_functions": [
+      {
+        "function_id": 23360,
+        "name": "configOauth",
+        "total_refs": 87,
+        "distinct_refs": 38,
+        "resolved": 38,
+        "unresolved": []
+      },
+      {
+        "function_id": 20909,
+        "name": "_launchOAuth",
+        "total_refs": 13,
+        "distinct_refs": 13,
+        "resolved": 13,
+        "unresolved": []
+      },
+      {
+        "function_id": 20916,
+        "name": "_handleRedirectUri",
+        "total_refs": 18,
+        "distinct_refs": 4,
+        "resolved": 4,
+        "unresolved": []
+      },
+      {
+        "function_id": 20890,
+        "name": "exchangeCodeForToken",
+        "total_refs": 71,
+        "distinct_refs": 8,
+        "resolved": 8,
+        "unresolved": []
+      },
+      {
+        "function_id": 20810,
+        "name": "_ScanEntrantParamImplToJson",
+        "total_refs": 8,
+        "distinct_refs": 8,
+        "resolved": 8,
+        "unresolved": []
+      },
+      {
+        "function_id": 20785,
+        "name": "scanEntrant",
+        "total_refs": 40,
+        "distinct_refs": 12,
+        "resolved": 11,
+        "unresolved": [
+          "0x83d00"
+        ]
+      },
+      {
+        "function_id": 23478,
+        "name": "BaseNetworking__internal",
+        "total_refs": 4,
+        "distinct_refs": 4,
+        "resolved": 4,
+        "unresolved": []
+      }
+    ]
   },
   "selected_functions": [
     {
       "function_id": 20916,
       "name": "_handleRedirectUri",
       "omitted_path_markers": 9,
-      "observation": "Calls configOauth; no state/PKCE logic is readable in this pseudo-Dart excerpt."
+      "observation": "Calls configOauth; redirectUri and log strings resolve through pp.txt. No state or PKCE logic is readable in this pseudo-Dart excerpt."
     },
     {
       "function_id": 20890,
       "name": "exchangeCodeForToken",
       "omitted_path_markers": 141,
-      "observation": "Too incomplete for claims about token body or secret handling."
+      "observation": "Too incomplete for claims about token body, secret handling, or Basic auth; use Ghidra/assembly."
     },
     {
       "function_id": 20909,
       "name": "_launchOAuth",
       "omitted_path_markers": 0,
-      "observation": "OAuth launch wrapper; calls configOauth; pool literals remain unresolved."
+      "observation": "OAuth launch wrapper; calls configOauth; all 13 pool references resolve."
     },
     {
       "function_id": 23360,
       "name": "configOauth",
       "omitted_path_markers": 0,
-      "observation": "Constructs flavor-dependent configuration; ordinal pool indexes are not authoritative."
+      "observation": "Builds flavor-dependent OAuth configuration. All 38 pool references resolve, including clientId, clientSecret, scope, and URL keys. Sensitive values are redacted."
     },
     {
       "function_id": 20785,
       "name": "scanEntrant",
       "omitted_path_markers": 88,
-      "observation": "Calls baseUrl, post, and the scan-entrant JSON converter; no local role gate visible."
+      "observation": "Calls baseUrl, post, and the now-named _ScanEntrantParamImplToJson converter. No local role gate is visible; 11 of 12 distinct pool references resolve."
+    },
+    {
+      "function_id": 20810,
+      "name": "_ScanEntrantParamImplToJson",
+      "omitted_path_markers": 0,
+      "observation": "Confirms the eight scan body keys and their order: code, latitudeGps, longitudeGps, radius, userTipeNomor, identitasId, username, NamaLengkap."
     },
     {
       "function_id": 23478,
@@ -105,11 +280,11 @@
   ],
   "comparison": {
     "ghidra_app_function_starts": 2796,
-    "ghidra_app_function_starts_represented": 2796,
-    "flutterdec_emitted_records": 2628,
-    "difference": 168,
-    "comparable": false,
-    "reason": "Flutterdec record selection, Blutter headers, and Ghidra function boundaries are different units; no address-level crosswalk has been completed."
+    "flutterdec_canonical_records": 2628,
+    "flutterdec_augmented_records": 2796,
+    "difference_after_augmentation": 0,
+    "comparable": true,
+    "reason": "Address-level crosswalk against Blutter app headers is complete after synthetic top-level owners. Ghidra function boundaries remain a separate unit, and address coverage is not semantic completeness."
   },
   "registry_patch": {
     "snapshot_hash": "ace654289f5abc240509fc941453ebc5",
@@ -125,12 +300,15 @@
     "reason": "The upstream record did not match the local adapter's observed layout features; without the patch flutterdec fell back to unnamed core recovery."
   },
   "artifacts": {
-    "full_output_local": "/var/smster/work/flutterdec-2026-10-27/app-simaster_ugm",
+    "full_output_canonical_local": "/var/smster/work/flutterdec-2026-10-27/app-simaster_ugm",
+    "full_output_augmented_local": "/var/smster/work/flutterdec-2026-10-28/app-simaster_ugm-toplevel",
+    "augmented_blutter_dump_local": "/var/smster/work/flutterdec-2026-10-28/blutter-augmented",
+    "augmentation_manifest_local": "/var/smster/work/flutterdec-2026-10-28/blutter-augmentation.json",
     "selected_excerpts": "recovered/flutterdec/simaster_ugm",
     "selected_excerpt_index": "recovered/flutterdec/README.md",
     "report": "reports/FLUTTERDEC-APP-DECOMPILE.md",
-    "source_report_sha256": "f9c7e0a577f6d2ad390d18cbdea6e3bed51bbf1b60fcd21ec43b4c287f323cee",
-    "source_quality_sha256": "5f67f78ed89670a0768e4ce14747235ddf8d1cc22b63827e92e95b531e36e387"
+    "report_sha256": "9b4c15512d7f1b8a1443f7c5965295e9b8d3a5423370ccf0f0e0daba2450f0e3",
+    "excerpt_index_sha256": "4fc05b41fa4eaaad19e0ad7d09fb04ec42b71721b02e57b7c1902a38ef4e8fde"
   },
   "status": {
     "static_only": true,

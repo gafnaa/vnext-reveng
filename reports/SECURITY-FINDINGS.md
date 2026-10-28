@@ -198,7 +198,7 @@ Bukti utama:
 - `_handleRedirectUri` (`0x8df054`) memakai tiga pemeriksaan `contains` dan hanya membaca `queryParameters['code']`; tidak ada `state`/`error`.
 - Crashlytics custom keys production (`0x8e5404`–`0x8e5628`) mengirim `request_headers`/`request_body`; `stringifyRequestBody` (`0x8e8050`) memakai `jsonEncode` tanpa redaksi.
 - Token disimpan lewat `SharedPreferencesService.saveData` (`0x920b74`); JWT di-decode (`0x8e4654`) tanpa verifikasi.
-- Flutterdec 2026-10-27 memberikan dekompilasi independen untuk `_handleRedirectUri` dan `exchangeCodeForToken`; call graph konsisten, tetapi 9/141 penanda jalur hilang dan object-pool index ordinal, sehingga tidak menambah klaim `state`/PKCE/token payload. Lihat [`FLUTTERDEC-APP-DECOMPILE.md`](FLUTTERDEC-APP-DECOMPILE.md).
+- Flutterdec 2026-10-28 memberikan dekompilasi independen untuk `_handleRedirectUri`, `exchangeCodeForToken`, `_launchOAuth`, dan `configOauth`; call graph konsisten. Crosswalk `poolOff[N]` ke `[pp+0xN]` bersifat inferensial tetapi me-resolve 4/4 referensi unik `_handleRedirectUri` dan 8/8 `exchangeCodeForToken`; `configOauth` juga me-resolve key `clientId`, `clientSecret`, scope, dan URL (nilai diredaksi). Penanda jalur 9/141 tetap hilang, sehingga ini tidak menambah klaim `state`, PKCE, atau isi token payload. Lihat [`FLUTTERDEC-APP-DECOMPILE.md`](FLUTTERDEC-APP-DECOMPILE.md).
 
 Rincian alamat, bukti, dampak, dan batasan ada di [`OAUTH-DEEP-DIVE.md`](OAUTH-DEEP-DIVE.md). Langkah verifikasi berizin ada di [`OAUTH-STAGING-TEST-PLAN.md`](OAUTH-STAGING-TEST-PLAN.md). Jangan menguji produksi; semua uji memerlukan staging, akun uji, dan izin tertulis.
 
@@ -215,7 +215,7 @@ Koreksi penting: **F-05 bukan pre-auth.** `/auth` terdaftar sebagai route, tetap
 
 F-06 lebih kuat untuk reachability. Tab attendance di `LandingView` membangun `AttedenceView` langsung, dan kartu `participant_student` menavigasi ke `/qr-scanner`. Pemeriksaan yang terlihat adalah integritas perangkat/lokasi palsu, bukan peran. QR dengan panjang lebih dari 37 karakter memilih `v1/staff/micro/doscanent` dan mengirim identitas dari client. Ini adalah kandidat cross-role/BFLA dan identity tampering; belum ada bukti server menerima token mahasiswa atau memakai identitas body.
 
-Flutterdec 2026-10-27 juga memulihkan `scanEntrant` (ID 20785): function ini memanggil `baseUrl()`, `post()`, dan konverter parameter scan tanpa pemeriksaan peran lokal yang terlihat. String endpoint tetap berupa object-pool index, dan 88 jalur kompleks dihilangkan. Ini adalah corroboration reachability statis, bukan bukti otorisasi server. Lihat [`FLUTTERDEC-APP-DECOMPILE.md`](FLUTTERDEC-APP-DECOMPILE.md).
+Flutterdec 2026-10-28 (run augmented) juga memulihkan `scanEntrant` (ID 20785): function ini memanggil `baseUrl()`, `post()`, dan konverter parameter scan tanpa pemeriksaan peran lokal yang terlihat. Konverter top-level `_ScanEntrantParamImplToJson` (ID 20810) kini teremitkan dan mengonfirmasi delapan key body: `code`, `latitudeGps`, `longitudeGps`, `radius`, `userTipeNomor`, `identitasId`, `username`, `NamaLengkap`. Crosswalk `poolOff[N]` ke `[pp+0xN]` berhasil untuk 8/8 key tersebut, tetapi pemetaan ini inferensial dan satu referensi lain di `scanEntrant` (`0x83d00`) tidak ditemukan. Ini adalah corroboration reachability dan body statis, bukan bukti bahwa server menerima token mahasiswa atau memakai identitas body. Lihat [`FLUTTERDEC-APP-DECOMPILE.md`](FLUTTERDEC-APP-DECOMPILE.md).
 
 | ID | Fakta statis | Status | Uji |
 |---|---|---|---|

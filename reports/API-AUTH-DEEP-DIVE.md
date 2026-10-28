@@ -184,6 +184,15 @@ Path literal ada di `0xd50b1c`; base URL berasal dari `F::baseUrl()` (`0xd50b00`
 | `username` | username dari data pengguna |
 | `NamaLengkap` | nama lengkap; fallback `"-"` |
 
+Flutterdec 2026-10-28 (run augmented) memulihkan function top-level
+`_ScanEntrantParamImplToJson` (ID 20810) yang sebelumnya tidak teremitkan. Pseudo-Dart-nya
+memuat delapan key dalam urutan yang sama; crosswalk `poolOff[N]` ke `[pp+0xN]`
+me-resolve 8/8 key tersebut. `scanEntrant` (ID 20785) juga kini memanggil converter
+itu secara bernama, bukan `fn_0xd51494`. Ini mengonfirmasi **key body** dari jalur
+independen, tetapi tidak membuktikan nilai, sumber nilai, atau perilaku server.
+Pemetaan pool tetap inferensial dan satu referensi lain di `scanEntrant`
+(`0x83d00`) tidak ditemukan.
+
 `BaseNetworkingV2.post` memiliki default `contentType = "application/form-data"` (`0xd50da0`). Karena pemanggil tidak mengoverride ke `application/json`, map dibungkus `FormData.fromMap` (`0xd5101c`). Body dikirim sebagai form fields, bukan JSON mentah.
 
 `BaseNetworkingV2.getHeaders` (`0xd5135c`) membaca `access_token` dari SharedPreferences (`0xd5139c`) dan menambahkan:
@@ -328,7 +337,7 @@ Rincian langkah, kriteria lulus/gagal, dan stop condition ada di [`API-AUTH-STAG
 | Gate scanner | fake-location/device, bukan role | `0xfd63d4`–`0xfd643c` |
 | Ambang QR | `> 37` | `0xd4f8e0`, `0xd4fd0c` |
 | Path F-06 | `v1/staff/micro/doscanent` | `0xd50b1c` |
-| Body F-06 | delapan field, termasuk identitas | `0xd51494`–`0xd5157c` |
+| Body F-06 | delapan field, termasuk identitas; dikonfirmasi flutterdec ID 20810 | `0xd51494`–`0xd5157c` |
 | Envelope F-06 | FormData karena default `application/form-data` | `0xd50da0`, `0xd5101c` |
 | Header F-06 | Bearer dari `access_token`, tanpa `UGMFWSERVICE` | `0xd5139c`–`0xd51450` |
 | Hasil F-06 | network `null` → controller `false` → `alert_fail_scan` | `0xd50b74`, `0xd4fa3c`, `0xd4d5d4` |
@@ -340,5 +349,6 @@ Rincian langkah, kriteria lulus/gagal, dan stop condition ada di [`API-AUTH-STAG
 - Tidak ada bukti runtime bahwa route `/auth` dapat dibuka, bahwa QR panjang tersedia, atau bahwa server menerima request.
 - Tidak ada bukti bahwa `doscanent` adalah endpoint staff-only atau student-allowed; pengujian peran diperlukan.
 - Tidak ada bukti bahwa `IdentitasId` berasal dari user saat ini versus data QR; analisis staging harus mencatat nilai aktualnya.
+- Crosswalk `poolOff[N]` ke `[pp+0xN]` hanya diuji pada function terpilih dan tidak didokumentasikan flutterdec; satu referensi `scanEntrant` tidak ditemukan. Jangan memperlakukan pemetaan ini sebagai kontrak stabil antar-build.
 - Status 400 pada F-05 dan `null` pada F-06 adalah perilaku statis yang mengejutkan; keduanya harus diverifikasi dengan capture, bukan diasumsikan sebagai perilaku production.
 - Laporan ini tidak memuat token, secret, atau PII. Untuk reproduksi, gunakan artefak privat dan izin tertulis.

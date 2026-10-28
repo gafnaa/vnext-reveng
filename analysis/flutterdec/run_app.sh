@@ -37,7 +37,17 @@ export FLUTTERDEC_BLUTTER_CMD
 
 mkdir -p "$OUT_DIR"
 
-# This target produces 12 placeholder ifs; keep the gate at the measured count.
+# The canonical dump produces 12 placeholder ifs; the augmented dump adds the
+# 168 top-level functions and produces 15. Keep the gate at the measured count
+# for the dump supplied through BLUTTER_DUMP.
+max_placeholder_ifs=${MAX_PLACEHOLDER_IFS:-12}
+case "$max_placeholder_ifs" in
+  ''|*[!0-9]*)
+    echo "MAX_PLACEHOLDER_IFS must be a non-negative integer" >&2
+    exit 2
+    ;;
+esac
+
 "$FLUTTERDEC_BIN" decompile "$INPUT_APK" \
   --out "$OUT_DIR" \
   --adapter-backend blutter \
@@ -45,5 +55,5 @@ mkdir -p "$OUT_DIR"
   --app-package simaster_ugm \
   --analysis-profile light \
   --require-snapshot-hash-match \
-  --max-placeholder-ifs 12 \
+  --max-placeholder-ifs "$max_placeholder_ifs" \
   "$@"
