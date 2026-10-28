@@ -27,7 +27,7 @@ dynamic scanEntrant(dynamic slot0, dynamic slot1, dynamic slot2, dynamic slot3, 
         resultTmp7 = reg0;
         final t90 = baseUrl();
         resultTmp5 = t90;
-        final t91 = fn_0xd51494(tmp6);
+        final t91 = ___ScanEntrantParamImplToJson(tmp6);
         resultTmp4 = t91;
         ((reg15 - 0x170)).f0 = resultTmp5;
         final t92 = post();
@@ -45,7 +45,7 @@ dynamic scanEntrant(dynamic slot0, dynamic slot1, dynamic slot2, dynamic slot3, 
       resultTmp7 = reg0;
       final t97 = baseUrl();
       resultTmp5 = t97;
-      final t98 = fn_0xd51494(tmp6);
+      final t98 = ___ScanEntrantParamImplToJson(tmp6);
       resultTmp4 = t98;
       ((reg15 - 0x170)).f0 = resultTmp5;
       final t99 = post();
@@ -278,7 +278,7 @@ dynamic scanEntrant(dynamic slot0, dynamic slot1, dynamic slot2, dynamic slot3, 
         resultTmp7 = reg0;
         final t159 = baseUrl();
         resultTmp5 = t159;
-        final t160 = fn_0xd51494(tmp6);
+        final t160 = ___ScanEntrantParamImplToJson(tmp6);
         resultTmp4 = t160;
         ((reg15 - 0x170)).f0 = resultTmp5;
         final t161 = post();
@@ -296,7 +296,7 @@ dynamic scanEntrant(dynamic slot0, dynamic slot1, dynamic slot2, dynamic slot3, 
       resultTmp7 = reg0;
       final t166 = baseUrl();
       resultTmp5 = t166;
-      final t167 = fn_0xd51494(tmp6);
+      final t167 = ___ScanEntrantParamImplToJson(tmp6);
       resultTmp4 = t167;
       ((reg15 - 0x170)).f0 = resultTmp5;
       final t168 = post();

@@ -28,7 +28,7 @@ Diagram memetakan containment artefak, wrapper Android, Flutter/Dart AOT, model 
 | Resource dan assets | 797 resource dari JADX auto/simple | Rekonsiliasi sumber belum selesai |
 | Dart AOT / Blutter | 2.312 file assembly; 29.989 function header; 418 file aplikasi | Parsial; satu assertion |
 | Ghidra app-level | 2.796/2.796 function start aplikasi terwakili; 2.763 pseudocode baru | Selesai untuk paket `simaster_ugm` |
-| Flutterdec app-level | 2.628 record `simaster_ugm`; 2.796 header Blutter; selisih 168 belum direkonsiliasi | Parsial; 88 penanda jalur hilang |
+| Flutterdec app-level | 2.796/2.796 header function aplikasi setelah augmentasi owner top-level; canonical 2.628 record | Cakupan alamat app-level lengkap; pseudo-Dart parsial |
 | Ghidra full binary | 4.815 function; 3.862/29.989 header Blutter (12,88%) | Parsial; 50 jump table, VM snapshot, dan function non-aplikasi belum selesai |
 | Feature map | 43 modul; 49 route; 36 caller/service | Statis; belum diuji runtime |
 | Runtime | 0 sesi aplikasi; 0 request backend | Belum terverifikasi |
@@ -56,7 +56,7 @@ Rincian, batas interpretasi, dan rencana uji ada di [SECURITY-FINDINGS.md](repor
 - [Inventaris dan mode decompile DEX](reports/DEX-DECOMPILATION.md) — hitungan per DEX, perbandingan JADX auto/simple/fallback, dan gap crosswalk.
 - [Analisis Ghidra](reports/GHIDRA-ANALYSIS.md) — metode seeding, alamat, fungsi prioritas, dan keterbatasan.
 - [Decompile AOT paket aplikasi](reports/GHIDRA-APP-DECOMPILE.md) — cakupan function start `simaster_ugm` dan audit full binary.
-- [Decompile Flutterdec paket aplikasi](reports/FLUTTERDEC-APP-DECOMPILE.md) — pipeline sekunder, 2.628 record pseudo-Dart, kualitas, dan batasnya.
+- [Decompile Flutterdec paket aplikasi](reports/FLUTTERDEC-APP-DECOMPILE.md) — pipeline sekunder, 2.628 record canonical dan 2.796 record augmented, rekonsiliasi, kualitas, dan batasnya.
 - [Batch decompile Ghidra](reports/GHIDRA-FULL-DECOMPILE.md) — hasil baseline, caveat control-flow, dan lokasi output lokal.
 - [Pseudocode AOT terpilih](reports/GHIDRA-AOT-SELECTED.md) — fungsi prioritas yang didecompile dengan Ghidra.
 
@@ -88,7 +88,7 @@ Analisis yang tercatat memakai JADX 1.5.6, Blutter pada commit yang ditautkan di
 - JADX menghasilkan output parsial: 164 error pada mode auto dan 67 error pada mode simple.
 - Blutter menyelesaikan dump utama tetapi berhenti pada satu assertion.
 - Ghidra memerlukan seed alamat dari output Blutter; jumlah function yang ditemukan bukan bukti seluruh AOT telah dipulihkan.
-- Flutterdec menghasilkan pseudo-Dart dengan nama heuristic dan object-pool index ordinal; 2.628 record yang dipilih belum direkonsiliasi dengan 2.796 header Blutter aplikasi.
+- Flutterdec menghasilkan pseudo-Dart dengan nama heuristic. Setelah augmentasi owner top-level, 2.796/2.796 header function aplikasi terwakili; nama `__TopLevel_*` sintetis dan pemetaan `poolOff` bersifat inferensial.
 - Kompilasi Flutter AOT menghilangkan komentar, nama lokal, dan sebagian struktur tipe Dart. Pseudocode bukan source asli.
 - Route, endpoint, izin, dan descriptor API adalah temuan statis. Tanpa eksekusi yang kompatibel, perilaku layar dan backend tetap belum diketahui.
 - Nilai token, API key, dan kredensial pada hasil alat harus disamarkan sebelum dipublikasikan.

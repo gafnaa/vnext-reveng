@@ -1,0 +1,24 @@
+dynamic ___ScanEntrantParamImplToJson(dynamic slot0, dynamic slot1, dynamic slot2, dynamic slot3, dynamic slot4, dynamic slot5) {
+  dynamic tmp1;
+
+  tmp1 = slot0;
+  final t1 = fn_0x13df928(null, 0x20);
+  t1.f16 = poolOff[16496];
+  t1.f20 = tmp1.f8;
+  t1.f24 = poolOff[540232];
+  t1.f28 = tmp1.f12;
+  t1.f32 = poolOff[540240];
+  t1.f36 = tmp1.f16;
+  t1.f40 = poolOff[540248];
+  t1.f44 = tmp1.f20;
+  t1.f48 = poolOff[99272];
+  t1.f52 = tmp1.f24;
+  t1.f56 = poolOff[540256];
+  t1.f60 = tmp1.f28;
+  t1.f64 = poolOff[113096];
+  t1.f68 = tmp1.f32;
+  t1.f72 = poolOff[540264];
+  t1.f76 = tmp1.f36;
+  final t2 = fn_0x7efee0(tmp1, tmp1.f36);
+  return t2;
+}

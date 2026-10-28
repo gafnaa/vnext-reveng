@@ -86,7 +86,7 @@ the dump path; a plain `BLUTTER_DUMP` export would not reach the bridge.
 export BLUTTER_DUMP=/path/to/blutter-dump   # contains asm/ and pp.txt
 export INPUT_APK=/path/to/config.arm64_v8a.apk
 export OUT_DIR=/path/to/flutterdec-output
-analysis/flutterdec/run_app.sh
+analysis/flutterdec/run_app.sh --emit-asm
 ```
 
 `run_app.sh` passes:
@@ -95,23 +95,61 @@ analysis/flutterdec/run_app.sh
 - `--function-scope app --app-package simaster_ugm`
 - `--analysis-profile light`
 - `--require-snapshot-hash-match`
-- `--max-placeholder-ifs 12` (the measured target count; the default zero gate
-  rejects this alpha output even though all artifacts are written)
+- `--max-placeholder-ifs "$MAX_PLACEHOLDER_IFS"` (default `12`)
 
-The measured run took about 73 seconds and produced 2,628 pseudocode files.
-The quality gate passed with 12 placeholder `if`s, 0 unresolved control-flow
-edges, 8.28% indirect calls, and a 1.0 disassembly ratio.
+The canonical run took about 73 seconds and produced 2,628 pseudocode files and
+2,628 ASM files. The quality gate passed with 12 placeholder `if`s, 0 unresolved
+control-flow edges, 8.28% indirect calls, and a 1.0 disassembly ratio.
+
+## Add synthetic owners for top-level members
+
+Blutter writes members that have no Dart class as a block headed by
+`class :: {`. flutterdec attributes functions through their owning class, so
+those members are not attached to `package:simaster_ugm` and disappear from an
+app-scoped run. The canonical run therefore emitted 2,628 of 2,796 Blutter app
+headers.
+
+`augment_top_level.py` copies the dump and rewrites each `class :: {` header to
+a deterministic, path-derived name such as
+`__TopLevel_simaster_ugm_theme_theme__`. It does not modify `pp.txt` or the
+upstream dump. The synthetic owner is an attribution workaround, not a recovered
+Dart class.
+
+```sh
+python3 analysis/flutterdec/augment_top_level.py \
+  /path/to/blutter-dump /path/to/blutter-augmented \
+  --package simaster_ugm \
+  --manifest /path/to/augmentation.json
+
+export BLUTTER_DUMP=/path/to/blutter-augmented
+export OUT_DIR=/path/to/flutterdec-augmented
+export MAX_PLACEHOLDER_IFS=15
+analysis/flutterdec/run_app.sh --emit-asm
+```
+
+The augmented run emits 2,796/2,796 app headers: the 2,628 canonical records
+with unchanged IDs and names, plus 168 top-level functions. The gate passes at 15
+placeholder `if`s, 0 unresolved control-flow edges, 8.93% indirect calls, and a
+1.0 disassembly ratio. Raising the limit from 12 to 15 is required by the three
+additional placeholders in the new functions, not by a change in the canonical
+records.
 
 ## Output and limits
 
 The full output stays outside Git. It is pseudo-Dart, not original Dart source:
 
-- function names are heuristic (2,628/2,628 in this run);
-- object-pool indexes are ordinal, so `poolOff[N]` values are not authoritative;
-- complex functions contain 88 omitted-path markers and 1,841 unlifted
+- function names are heuristic (2,796/2,796 in the augmented run);
+- `poolOff[N]` maps empirically to `[pp+0xN]` on this snapshot, but the mapping
+  is inferred, not documented by flutterdec; one reference in `scanEntrant`
+  (`0x83d00`) does not resolve, so the crosswalk is not complete;
+- the augmented run contains 90 omitted-path markers and 1,943 unlifted
   instructions;
-- the run emits 2,628 records against 2,796 Blutter app headers; the 168-record
-  difference is not yet reconciled.
+- the run emits 2,796 records against 2,796 Blutter app headers after synthetic
+  top-level owners; the 168-function difference from the canonical run is
+  reconciled and documented in the report.
+
+Synthetic `__TopLevel_*` names identify a source file, not a Dart class. Do not
+use them as evidence of inheritance, owner, or original source structure.
 
 Use flutterdec for triage, call-name recovery, and fast package-level summaries.
 Use Blutter addresses and Ghidra pseudocode for address-level evidence and final
