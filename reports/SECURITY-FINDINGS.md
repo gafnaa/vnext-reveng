@@ -15,7 +15,7 @@
 | F-03 | Penyimpanan token | Token disimpan di SharedPreferences tanpa enkripsi aplikasi | Token dapat dibaca pada perangkat yang di-root/backup | Kandidat; perlu validasi perangkat |
 | F-04 | Konfigurasi dev | Flavor dev memiliki scope tambahan dan redirect Postman | Permukaan serangan lebih luas bila build dev tersebar | Kandidat; belum ada build dev yang dianalisis runtime |
 | F-05 | Otorisasi API / lookup akun | `/auth` memanggil lookup `staff/get_simaster_atribut_by_username` hanya dengan username dan nilai `"8"`; password divalidasi form tetapi tidak dikirim; route tidak punya pemanggil statis dan tidak allowlisted | Enumerasi/status akun bila route dapat dicapai dengan token valid | Deep dive statis selesai; **latent**, bukan pre-auth; uji A-02–A-05 |
-| F-06 | Otorisasi API | Alur mahasiswa dapat memilih `v1/staff/micro/doscanent`; body membawa identitas client; QR panjang selalu tampil gagal di UI | BFLA/cross-role dan identity/parameter tampering bila server tidak memeriksa peran/token | Deep dive statis selesai; kandidat; uji A-06–A-11 |
+| F-06 | Otorisasi API | Alur mahasiswa dapat memilih `v1/staff/micro/doscanent`; body membawa identitas client; body respons sukses dibuang oleh data source | BFLA/cross-role dan identity/parameter tampering bila server tidak memeriksa peran/token | Deep dive statis selesai; kandidat; uji A-06–A-11 |
 
 Fokus laporan ini adalah **F-01**, ringkasan **F-02**, dan ringkasan **F-05/F-06**. F-02 dianalisis mendalam di [`OAUTH-DEEP-DIVE.md`](OAUTH-DEEP-DIVE.md) dengan rencana uji berizin di [`OAUTH-STAGING-TEST-PLAN.md`](OAUTH-STAGING-TEST-PLAN.md). F-05/F-06 dianalisis di [`API-AUTH-DEEP-DIVE.md`](API-AUTH-DEEP-DIVE.md) dengan rencana uji di [`API-AUTH-STAGING-TEST-PLAN.md`](API-AUTH-STAGING-TEST-PLAN.md); F-03–F-04 tetap ringkas. Tidak ada klaim eksploitasi.
 
@@ -209,6 +209,8 @@ Rincian alamat, bukti, dampak, dan batasan ada di [`OAUTH-DEEP-DIVE.md`](OAUTH-D
 | F-03 | Token disimpan di SharedPreferences dengan key `access_token`, `refresh_token`, `access_token_expiration_unix`, `refresh_token_expiration_unix` | Backup/root dapat membaca token; perlu validasi pada perangkat uji dan kebijakan backup |
 | F-04 | `flavors.dart` memuat konfigurasi dev/prod; dev memakai redirect Postman dan scope tambahan (`staff`, `pegawai.all.read`, `tte`, `ldap`) | Build dev yang tersebar dapat memperluas permukaan serangan; perlu memastikan build produksi tidak memuat konfigurasi dev |
 
+Catatan koreksi: `BaseNetworkingV2` bukan tanpa refresh. Constructor V2 mendaftarkan `_onRequestToken` (`0xd52bbc`) yang memanggil `OnboardingController.getValidAccessToken` (`0xd52bf8`) dan menulis `Authorization`; `getHeaders` V2 juga membaca `access_token` langsung. F-03 tetap tentang penyimpanan token plaintext, bukan tentang tidak adanya jalur refresh. Rincian ada di [`API-AUTH-DEEP-DIVE.md`](API-AUTH-DEEP-DIVE.md); inventaris endpoint konsolidasi ada di [`API-ENDPOINT-INVENTORY.md`](API-ENDPOINT-INVENTORY.md).
+
 ## F-05–F-06 — Otorisasi API (deep dive)
 
 Koreksi penting: **F-05 bukan pre-auth.** `/auth` terdaftar sebagai route, tetapi tidak ditemukan pemanggil statis ke sana dan `/auth` tidak ada di allowlist `SessionMiddleware`. Controller F-05 juga memakai Bearer dari `getValidAccessToken`. Dengan demikian statusnya **latent, session-gated**, bukan bypass login. F-05 adalah lookup akun, bukan autentikasi; password divalidasi di form tetapi tidak dikirim ke server.
@@ -224,7 +226,7 @@ Flutterdec 2026-10-28 (run augmented) juga memulihkan `scanEntrant` (ID 20785): 
 | F-05.3 | Password divalidasi form tetapi tidak dibaca controller dan tidak ada di request | Observasi desain/legacy | Fungsional |
 | F-06.1 | UI mahasiswa dapat memilih endpoint `v1/staff/micro/doscanent`; scope production tidak memuat `staff` | Kandidat cross-role | A-06, A-07, A-10 |
 | F-06.2 | Body mengirim `identitasId`, `username`, `NamaLengkap`, `userTipeNomor` | Kandidat identity tampering | A-08 |
-| F-06.3 | Jalur QR panjang mengembalikan `null` → controller `false` → `alert_fail_scan` | Bug fungsional; risiko retry/duplikasi | A-11 |
+| F-06.3 | Jalur QR panjang mengembalikan `null`; controller memperlakukan `null`/non-Map sebagai `true`, Map dibaca `status == "1"`, exception menjadi `false`; body respons dibuang | Kandidat fungsional; konsistensi UI/server belum terbukti; klaim lama `null` → `false` tidak didukung | A-11 |
 
 Rincian alamat, envelope, dan batas interpretasi ada di [`API-AUTH-DEEP-DIVE.md`](API-AUTH-DEEP-DIVE.md). Langkah uji berizin, matriks peran, evidence, dan stop condition ada di [`API-AUTH-STAGING-TEST-PLAN.md`](API-AUTH-STAGING-TEST-PLAN.md). Jangan menguji production; semua uji memerlukan staging, akun sintetis, dan izin tertulis.
 
@@ -255,7 +257,7 @@ Rincian alamat, envelope, dan batas interpretasi ada di [`API-AUTH-DEEP-DIVE.md`
 8. Hapus/disable AppAuth activities yang tidak dipakai, set `usesCleartextTraffic=false`, dan pastikan log debug tidak mencetak code/token/secret.
 9. Jangan menurunkan password dari username/tanggal/salt statis; gunakan server-issued per-user credential.
 10. Hapus route `/auth` dan lookup yang tidak dipakai, atau hubungkan ke alur dengan kontrol otorisasi yang jelas; jangan meminta password bila tidak dikirim.
-11. Hentikan pengiriman identitas dari client dan perbaiki penanganan hasil `doscanent`: 2xx tidak boleh menampilkan `alert_fail_scan`.
+11. Hentikan pengiriman identitas dari client dan perbaiki penanganan hasil `doscanent`: pertahankan status/response agar controller dapat membedakan sukses, gagal aplikasi, dan error; jangan memakai `alert_fail_scan` sebagai penentu hasil server.
 
 ### Proses
 

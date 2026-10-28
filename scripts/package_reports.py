@@ -16,6 +16,7 @@ ALLOWLIST = [
     "docs/analysis-map.svg",
     "reports/ANALYSIS.md",
     "reports/FEATURE-MAP.md",
+    "reports/API-ENDPOINT-INVENTORY.md",
     "reports/GHIDRA-ANALYSIS.md",
     "reports/GHIDRA-AOT-SELECTED.md",
     "reports/GHIDRA-APP-DECOMPILE.md",

@@ -22,6 +22,7 @@
 | Route | 49 literal path dan 49 konstruksi `GetPage` | 49/49 tercatat | Binding `/oss_v2` belum dipasangkan; belum diuji runtime. |
 | Middleware sesi | 18 nama pengecualian ditemukan | 18/18 nama tercatat | Interpretasi berasal dari list statis dan tidak menunjukkan route mana yang benar-benar tercapai. |
 | Caller/API service | 36 caller/method/service triples, 29 label unik | 36/36 triples yang dipulihkan tercatat | Tidak membuktikan request terkirim. Path beberapa layanan dirakit saat runtime dan perlu ditelusuri. |
+| Endpoint inventory | 8 URL production + 2 URL OAuth dev; 29 label; 28 operasi gateway + 1 lookup langsung | Konsolidasi statis; 0 request | [`API-ENDPOINT-INVENTORY.md`](API-ENDPOINT-INVENTORY.md); jumlah ini mencakup bukti yang sudah didokumentasikan, bukan seluruh permukaan backend. |
 | Perilaku runtime | 0 sesi aplikasi; 0 request backend diamati | Belum diketahui | Emulator x86_64 tidak mendukung split ARM64 target dalam konfigurasi yang dicoba; lihat `ANALYSIS.md`. |
 | Keamanan statis | 4 deep dive (F-01, F-02, F-05, F-06) + 2 kandidat ringkas (F-03–F-04) | Kandidat; belum divalidasi runtime/server | [`SECURITY-FINDINGS.md`](SECURITY-FINDINGS.md), [`OAUTH-DEEP-DIVE.md`](OAUTH-DEEP-DIVE.md), [`API-AUTH-DEEP-DIVE.md`](API-AUTH-DEEP-DIVE.md); model presensi/PoC offline dan rencana uji staging, tanpa uji produksi. |
 
@@ -56,6 +57,7 @@ Diagram merangkum hubungan sumber, alat, keluaran, dan status untuk setiap lapis
 
 - [Analisis umum](ANALYSIS.md)
 - [Feature map](FEATURE-MAP.md)
+- [Inventaris endpoint dan operasi gateway](API-ENDPOINT-INVENTORY.md)
 - [Analisis Ghidra](GHIDRA-ANALYSIS.md)
 - [Decompile AOT paket aplikasi](GHIDRA-APP-DECOMPILE.md)
 - [Decompile Flutterdec paket aplikasi](FLUTTERDEC-APP-DECOMPILE.md)

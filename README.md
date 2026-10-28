@@ -31,6 +31,7 @@ Diagram memetakan containment artefak, wrapper Android, Flutter/Dart AOT, model 
 | Flutterdec app-level | 2.796/2.796 header function aplikasi setelah augmentasi owner top-level; canonical 2.628 record | Cakupan alamat app-level lengkap; pseudo-Dart parsial |
 | Ghidra full binary | 4.815 function; 3.862/29.989 header Blutter (12,88%) | Parsial; 50 jump table, VM snapshot, dan function non-aplikasi belum selesai |
 | Feature map | 43 modul; 49 route; 36 caller/service | Statis; belum diuji runtime |
+| Endpoint inventory | 8 URL production + 2 OAuth dev; 29 label service | Statis; belum diuji runtime |
 | Runtime | 0 sesi aplikasi; 0 request backend | Belum terverifikasi |
 
 Peta cakupan per lapisan, rumus denominator, bukti, dan langkah berikutnya tersedia di [reports/PROGRESS.md](reports/PROGRESS.md). Target “100% inventaris statis” mengikuti [PRD](docs/PRD-REVERSE-ENGINEERING.md); angka tersebut tidak berarti source Dart asli pulih identik dari kompilasi AOT.
@@ -53,6 +54,7 @@ Rincian, batas interpretasi, dan rencana uji ada di [SECURITY-FINDINGS.md](repor
 
 - [Hasil static reverse engineering](reports/ANALYSIS.md) — identitas paket, izin, konfigurasi, metode, dan batasan.
 - [Feature map](reports/FEATURE-MAP.md) — route, middleware sesi, modul, dan caller/service statis.
+- [Inventaris endpoint dan operasi gateway](reports/API-ENDPOINT-INVENTORY.md) — 8 URL production + 2 URL OAuth dev, 29 label service, envelope, kredensial, dan matriks risiko.
 - [Inventaris dan mode decompile DEX](reports/DEX-DECOMPILATION.md) — hitungan per DEX, perbandingan JADX auto/simple/fallback, dan gap crosswalk.
 - [Analisis Ghidra](reports/GHIDRA-ANALYSIS.md) — metode seeding, alamat, fungsi prioritas, dan keterbatasan.
 - [Decompile AOT paket aplikasi](reports/GHIDRA-APP-DECOMPILE.md) — cakupan function start `simaster_ugm` dan audit full binary.

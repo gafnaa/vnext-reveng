@@ -203,8 +203,9 @@ flutterdec, bukan jumlah bug.
   menerima token mahasiswa. Status tetap kandidat; lihat
   [`API-AUTH-DEEP-DIVE.md`](API-AUTH-DEEP-DIVE.md).
 - **F-01/F-05:** tidak ada klaim baru dari run ini.
-- **F-06.3:** anomali `null` → `false` tetap temuan fungsional kandidat;
-  flutterdec tidak mengubah statusnya.
+- **F-06.3:** koreksi—`null`/non-Map dari jalur QR panjang diperlakukan sebagai
+  `true` oleh controller; klaim lama `null` → `false` tidak didukung. Data source
+  tetap membuang body respons; konsistensi UI/server menunggu uji A-11.
 
 Tidak ada status temuan yang dinaikkan menjadi tervalidasi.
 

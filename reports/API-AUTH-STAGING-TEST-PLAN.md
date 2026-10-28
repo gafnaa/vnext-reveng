@@ -17,7 +17,7 @@ Membuktikan atau menyanggah kandidat berikut pada staging:
 3. **F-06:** apakah token mahasiswa dapat memanggil `doscanent`, dan apakah server memeriksa role/scope.
 4. **F-06:** apakah server memakai identitas dari body (`identitasId`, `username`, `NamaLengkap`, `userTipeNomor`) atau identitas dari token.
 5. **F-06:** apakah QR/scan terikat pada event/peserta dan tahan replay.
-6. **F-06:** apakah UI menampilkan gagal meski server mencatat aksi, dan apakah hal itu menimbulkan risiko duplikasi.
+6. **F-06:** apakah UI dan audit/server state konsisten, termasuk bila UI menampilkan gagal, dan apakah hal itu menimbulkan risiko duplikasi.
 
 ## 2. Non-goals
 
@@ -84,7 +84,7 @@ Membuktikan atau menyanggah kandidat berikut pada staging:
 | A-08 | F-06 `doscanent` | Student A, body identitas B | Identity tampering | Ditolak, atau identitas token A yang dipakai | Aksi/data untuk B |
 | A-09 | F-06 `doscanent` | Student A/B, QR sama | Replay/binding | Scan kedua ditolak/idempoten; QR terikat event/peserta | Dua record; scan B diterima untuk QR A |
 | A-10 | F-06 `doscanent` | Matriks token | Peran/scope | Kebijakan konsisten; token tidak berhak ditolak | Student diterima saat kebijakan staff-only; scope diabaikan |
-| A-11 | F-06 UI | Student A via app | Konsistensi UI/server | UI sukses saat server sukses; UI gagal saat server gagal | `alert_fail_scan` pada 2xx yang tercatat |
+| A-11 | F-06 UI | Student A via app | Konsistensi UI/server | UI sukses saat server sukses; UI gagal saat server gagal | UI gagal (`alert_fail_scan`) padahal audit/server state menunjukkan aksi sukses |
 | A-12 | F-05/F-06 | Terbatas | Rate limit/audit | 429/limit dan audit trail terlihat | Tidak ada limit/audit pada pengulangan terbatas |
 | A-13 | F-05/F-06 | Matriks terpilih | Retest setelah perbaikan | Semua kontrol yang ditargetkan lulus | Regresi atau kontrol tidak berlaku |
 
@@ -258,7 +258,7 @@ Gunakan definisi berikut secara konsisten:
 
 **Hasil aman:** UI dan audit konsisten.
 
-**Gagal:** `alert_fail_scan` pada 2xx yang tercatat, atau UI sukses tanpa aksi server. Dampak otorisasi tetap ditentukan oleh A-07/A-08, bukan oleh UI.
+**Gagal:** UI gagal (`alert_fail_scan`) padahal audit/server state menunjukkan aksi sukses, atau UI sukses tanpa aksi server. Dampak otorisasi tetap ditentukan oleh A-07/A-08, bukan oleh UI.
 
 ### A-12 — Rate limit dan audit (kondisional)
 

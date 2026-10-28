@@ -358,6 +358,21 @@
       "pem_private_key_blocks": 0
     }
   },
+  "api_endpoint_inventory": {
+    "report": "reports/API-ENDPOINT-INVENTORY.md",
+    "request_urls": 10,
+    "production_request_urls": 8,
+    "dev_oauth_request_urls": 2,
+    "redirect_targets": 2,
+    "service_labels": 29,
+    "gateway_operations": 28,
+    "student_gateway_operations": 27,
+    "staff_gateway_operations": 1,
+    "direct_lookup_operations": 1,
+    "caller_service_triples": 36,
+    "runtime_validation": "not performed",
+    "note": "Static inventory only; counts cover documented evidence, not the entire backend surface."
+  },
   "evidence_ids": {
     "android_package": "ev_fdc891b44e4014e6a41277dcee65ba7fda9cc718a6f056628a48379318d753c0",
     "flutter_identification": "ev_3b8feb71641a7c5ff95b59ec8f233a429049b8c3e0d1ae02aabb75fce460b72c",

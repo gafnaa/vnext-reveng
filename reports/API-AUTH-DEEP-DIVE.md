@@ -21,9 +21,11 @@ F-05 dan F-06 sama-sama menyentuh endpoint dengan prefiks `staff`, tetapi bukti 
 | F-05.3 | Password divalidasi di form, tetapi tidak dibaca oleh controller dan tidak ada di request | Salah desain/legacy; bukan bukti bypass login | Tinggi | Observasi statis |
 | F-06.1 | UI mahasiswa dapat memilih endpoint `v1/staff/micro/doscanent` | BFLA/cross-role call bila server tidak memeriksa peran/scope | Sedang | Kandidat; uji A-06/A-07/A-10 |
 | F-06.2 | Body mengirim `identitasId`, `username`, `NamaLengkap`, dan `userTipeNomor` dari client | IDOR/parameter tampering bila server memakai nilai body, bukan identitas token | Sedang–tinggi | Kandidat; uji A-08 |
-| F-06.3 | Jalur QR panjang mengembalikan `null`; controller mengubahnya menjadi `false`; UI menampilkan `alert_fail_scan` | UI melaporkan gagal meski server memproses; risiko retry/duplikasi | Tinggi untuk fakta statis | Temuan fungsional; uji A-11 |
+| F-06.3 | Jalur QR panjang mengembalikan `null` setelah respons sukses; controller memperlakukan `null`/non-Map sebagai `true`, Map dibaca `status == "1"`, exception menjadi `false` | Detail respons dibuang; konsistensi UI/server belum terbukti; klaim lama `null` → `false` tidak didukung | Kandidat fungsional; uji A-11 |
 
 **Kesimpulan singkat:** F-05 belum layak disebut pre-auth atau account takeover. F-06 layak diprioritaskan sebagai kandidat otorisasi karena jalur UI-nya jauh lebih jelas, tetapi server tetap harus membuktikan apakah token mahasiswa diterima dan apakah identitas di body dipercaya. Tidak ada klaim eksploitasi.
+
+Inventaris konsolidasi seluruh URL, label gateway, envelope, dan matriks kredensial ada di [`API-ENDPOINT-INVENTORY.md`](API-ENDPOINT-INVENTORY.md).
 
 ## Metode dan batas
 
@@ -156,12 +158,12 @@ Tidak ada pemeriksaan peran, tipe pengguna, atau scope pada jalur ini. Pemeriksa
 
 ### 2. Pemilihan endpoint
 
-Di `AttedenceController.scanEntrant`, panjang QR dibandingkan dengan `0x25` (37) di `0xd4f8e0`:
+`AttedenceController.scanEntrant` memanggil `AttendanceNetworkImpl.scanEntrant` (`0xd4fc74`) di `0xd4f8ac` untuk semua QR, lalu menunggu hasilnya. Setelah await, panjang QR dibandingkan dengan `0x25` (37) di `0xd4f8e0`:
 
-- panjang `> 37` menuju `0xd4fa3c`, yang memanggil `AttendanceNetworkImpl.scanEntrant` (`0xd4fc74`);
-- panjang `<= 37` memakai jalur presensi pendek yang berbeda.
+- panjang `> 37` menuju `0xd4fa3c` untuk penanganan hasil tanpa membaca Map `status`;
+- panjang `<= 37` melanjutkan pemeriksaan Map/`status` pada hasil yang sama.
 
-Di `AttendanceNetworkImpl.scanEntrant`, perbandingan yang sama diulang di `0xd4fd0c`; panjang `> 37` menuju `0xd50adc`. Jalur itu membangun `ScanEntrantParam` (`0xd50b0c`) dan memanggil:
+Pemilihan endpoint sebenarnya ada di `AttendanceNetworkImpl.scanEntrant`: perbandingan yang sama di `0xd4fd0c`; panjang `> 37` menuju `0xd50adc`. Jalur itu membangun `ScanEntrantParam` (`0xd50b0c`) dan memanggil:
 
 ```text
 POST https://api.simaster.ugm.ac.id/v1/staff/micro/doscanent
@@ -202,18 +204,24 @@ Pemetaan pool tetap inferensial dan satu referensi lain di `scanEntrant`
 - `Charset: utf-8` (`0xd51414`);
 - `accept: application/json` (`0xd5142c`).
 
-Tidak ada `UGMFWSERVICE` pada jalur V2. Berbeda dari F-05, jalur ini **tidak** memanggil `getValidAccessToken`; token dibaca langsung. Jika token kedaluwarsa, tidak ada refresh yang terlihat di jalur ini.
+Tidak ada `UGMFWSERVICE` pada jalur V2. Berbeda dari F-05, `scanEntrant` tidak memanggil `getValidAccessToken` secara langsung; token dibaca di `getHeaders`. Namun `BaseNetworkingV2._internal` (`0xd52094`) mendaftarkan `InterceptorsWrapper` dengan `_onRequestToken` (`0xd52bbc`) pada request interceptor. Fungsi itu memanggil `OnboardingController.getValidAccessToken` (`0xd52bf8`) dan menulis `Authorization: Bearer ...` ke request; jika token null, ia menangani `logout_in_progress`/`_handleLogout`.
 
-### 4. Penanganan respons dan anomali UI
+Dengan demikian, klaim lama bahwa V2 tidak memiliki jalur refresh **tidak didukung** oleh assembly. Refresh terlihat di interceptor V2, bukan di `scanEntrant`. `getHeaders` dan `_onRequestToken` sama-sama dapat menulis Authorization; urutan/penimpaan header final perlu direkam pada staging. Ini tidak membuktikan bahwa refresh berhasil atau bahwa server menerima token hasil refresh.
 
-`AttendanceNetworkImpl.scanEntrant` mencatat respons sukses (`0xd50b58`) lalu mengembalikan `null` (`0xd50b74`–`0xd50b78`). `AttedenceController.scanEntrant` menerima hasil tersebut di `0xd4fa3c`; karena hasilnya `null`, controller menuju `0xd4fae4` dan mengembalikan `false`.
+### 4. Penanganan respons dan konsistensi UI
+
+**Koreksi:** klaim lama bahwa controller mengubah `null` menjadi `false` tidak didukung oleh assembly. `AttendanceNetworkImpl.scanEntrant` mencatat respons sukses (`0xd50b58`) lalu mengembalikan `null` (`0xd50b74`–`0xd50b78`); body respons tidak disimpan. `AttedenceController.scanEntrant` menerima hasil di `0xd4fa3c`:
+
+- hasil `null`/non-Map diarahkan ke `0xd4fae4` (nilai `false`), lalu `tbnz w0, #4` menuju `0xd4fb84` dan mengembalikan `true` (representasi bool Dart: `false` = `0x30`, `true` = `0x20`);
+- hasil Map dibaca `status` dan dianggap sukses hanya jika `status == "1"`;
+- `DioException` di catch mengembalikan `false` (`0xd4fc64`).
 
 UI di `qr_scanner.dart` memeriksa hasil `scanEntrant` di `0xd4d5d4`:
 
 - jika hasilnya `true`, UI melanjutkan jalur sukses (`0xd4d7c4`);
 - jika bukan `true`, UI membangun `AlertMetronic` dengan `alert_fail_scan` (`0xd4d690`).
 
-Akibatnya, secara statis jalur QR panjang **selalu** menghasilkan `false` di UI setelah network call selesai, termasuk bila server mengembalikan 2xx. Ini adalah bug fungsional/error-handling, bukan bukti bahwa server menolak. Dampak operasionalnya: petugas dapat mengulang scan karena UI mengatakan gagal, padahal aksi pertama mungkin sudah diproses; ini dapat menyebabkan duplikasi atau kebingungan audit. Perilaku server harus direkam pada staging.
+Dengan demikian, secara statis jalur QR panjang yang sukses (`null`) berakhir di jalur sukses UI, bukan `alert_fail_scan`. Pemeriksaan `status` adalah jalur Map untuk QR pendek/legacy. Keterbatasan yang tersisa: data source membuang body respons, sehingga controller tidak dapat membedakan detail sukses/gagal selain `null` versus Map `status`. Perilaku UI/server tetap harus direkam pada staging; jangan memakai layar sebagai bukti otorisasi.
 
 ### 5. Penilaian otorisasi
 
@@ -240,7 +248,7 @@ Kandidat yang paling kuat adalah **identity/parameter tampering**: bila server m
 - Apakah server memeriksa scope `staff` atau role staff.
 - Apakah server mengabaikan identitas di body dan memakai identitas token.
 - Apakah QR panjang memang tersedia untuk mahasiswa pada event nyata.
-- Apakah UI selalu menampilkan gagal pada 2xx dan apakah server tetap mencatat aksi.
+- Apakah UI dan audit/server state konsisten, termasuk bila UI menampilkan `alert_fail_scan`.
 - Apakah ada idempotency, replay protection, atau rate limit.
 
 ## Cross-cutting
@@ -271,9 +279,9 @@ Tidak ada `staff` pada daftar production. Konfigurasi dev yang juga tertanam mem
 | Jalur | Fungsi header | Refresh? | Header tambahan |
 |---|---|---|---|
 | F-05 `BaseNetworking` | `getValidAccessToken` | Ya, lewat helper token | `UGMFWSERVICE: 1` |
-| F-06 `BaseNetworkingV2` | `getAttribut("access_token")` | Tidak terlihat | Tidak ada |
+| F-06 `BaseNetworkingV2` | `getAttribut("access_token")` + `_onRequestToken` | Ya, lewat interceptor V2 (`getValidAccessToken`); `getHeaders` juga membaca token langsung | Tidak ada |
 
-Kedua jalur memakai Bearer. Perbedaan ini penting untuk staging: token kedaluwarsa dapat menyebabkan F-06 gagal tanpa refresh, sementara F-05 dapat memakai token yang diperbarui.
+Kedua jalur memakai Bearer. F-05 memakai `getValidAccessToken` di `getHeaders`; F-06 memakai `getHeaders` yang membaca token langsung, ditambah interceptor `_onRequestToken` yang juga memanggil `getValidAccessToken`. Perbedaan urutan/penimpaan header ini penting untuk staging, terutama saat token kedaluwarsa.
 
 ### Logging
 
@@ -288,7 +296,7 @@ F-05 mencatat seluruh respons `sso response: ` sebelum validasi. F-06 mencatat r
 | F-05.3 | Observasi desain; password tidak dikirim | Tidak perlu uji jaringan; cukup uji fungsional |
 | F-06.1 | Kandidat cross-role; UI mahasiswa dapat memilih endpoint staff | A-06, A-07, A-10 |
 | F-06.2 | Kandidat identity tampering | A-08 |
-| F-06.3 | Bug fungsional; UI gagal pada jalur panjang | A-11 |
+| F-06.3 | Kandidat fungsional; body respons dibuang; konsistensi UI/server belum diuji | A-11 |
 | F-06 replay | Belum diketahui | A-09 |
 
 Rincian langkah, kriteria lulus/gagal, dan stop condition ada di [`API-AUTH-STAGING-TEST-PLAN.md`](API-AUTH-STAGING-TEST-PLAN.md). Jangan menjalankan uji ini pada production.
@@ -311,9 +319,9 @@ Rincian langkah, kriteria lulus/gagal, dan stop condition ada di [`API-AUTH-STAG
 1. Hapus route `/auth` dan kode lookup yang tidak dipakai, atau hubungkan ke alur yang jelas dengan kontrol otorisasi.
 2. Jangan meminta password bila tidak dikirim/diverifikasi; jika password diperlukan, gunakan autentikasi server yang benar.
 3. Hentikan pengiriman identitas dari client; gunakan identitas yang diturunkan server dari token.
-4. Perbaiki penanganan hasil `doscanent`: bedakan sukses jaringan, sukses aplikasi, dan kegagalan; jangan menampilkan `alert_fail_scan` untuk respons 2xx.
+4. Perbaiki penanganan hasil `doscanent`: data source membuang body dan mengembalikan `null`; pertahankan status/response agar controller dapat membedakan sukses, gagal aplikasi, dan error, serta jangan memakai `alert_fail_scan` sebagai penentu hasil server.
 5. Jangan mencatat respons penuh atau data scan; gunakan metadata yang telah diredaksi.
-6. Gunakan `getValidAccessToken` atau mekanisme refresh yang konsisten pada V2, dengan penanganan 401 yang aman.
+6. Samakan sumber token pada V2: `getHeaders` membaca `access_token` langsung, sedangkan `_onRequestToken` memakai `getValidAccessToken`. Pastikan tidak ada penimpaan header yang tidak konsisten dan tangani 401 dengan aman.
 7. Gunakan secure storage untuk token dan hapus konfigurasi dev/Postman dari build produksi.
 
 ## Peta bukti
@@ -340,7 +348,8 @@ Rincian langkah, kriteria lulus/gagal, dan stop condition ada di [`API-AUTH-STAG
 | Body F-06 | delapan field, termasuk identitas; dikonfirmasi flutterdec ID 20810 | `0xd51494`–`0xd5157c` |
 | Envelope F-06 | FormData karena default `application/form-data` | `0xd50da0`, `0xd5101c` |
 | Header F-06 | Bearer dari `access_token`, tanpa `UGMFWSERVICE` | `0xd5139c`–`0xd51450` |
-| Hasil F-06 | network `null` → controller `false` → `alert_fail_scan` | `0xd50b74`, `0xd4fa3c`, `0xd4d5d4` |
+| Refresh F-06 | `_onRequestToken` → `getValidAccessToken` di interceptor V2 | `0xd52094`, `0xd52bbc`, `0xd52bf8` |
+| Hasil F-06 | QR panjang `null`/non-Map → controller `true`; Map (QR pendek) `status == "1"`; exception → `false` | `0xd50b74`, `0xd4fa3c`–`0xd4fb88`, `0xd4d5d4` |
 | Allowlist | `/auth`, `/attedence`, `/qr-scanner` tidak ada | constructor `0xeb03e4`–`0xeb050c` |
 
 ## Batas interpretasi
