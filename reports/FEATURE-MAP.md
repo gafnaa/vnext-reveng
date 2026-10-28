@@ -127,6 +127,8 @@ Nama persis dipertahankan, termasuk kapitalisasi. Kehadiran nama di daftar ini t
 
 Fungsi-fungsi ini memanggil `BaseNetworking::post` dan menyusun body dengan field `micro`, `service`, `query` atau `param`. Ini menjelaskan protokol yang terlihat di kode; format body lengkap dan respons tiap operasi perlu ditelusuri per fungsi/model. Tidak ada request yang direkam dari jaringan.
 
+Dari 29 label di atas, **27 adalah operasi gateway student**, **1 operasi gateway staff** (`get_staff_profil_by_staff_id`), dan **1 lookup langsung ke `/staff`** (`get_simaster_atribut_by_username`). Label bukan URL terpisah; semuanya dikirim di body, kecuali lookup `/staff` yang memakai path langsung. Rincian URL, envelope, kredensial, dan matriks risiko ada di [`API-ENDPOINT-INVENTORY.md`](API-ENDPOINT-INVENTORY.md).
+
 ### Panggilan yang relevan untuk otorisasi
 
 | Alur | Path efektif production | Metode/envelope | Catatan statis |
