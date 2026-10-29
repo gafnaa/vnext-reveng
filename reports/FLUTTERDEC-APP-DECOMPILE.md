@@ -297,8 +297,11 @@ registry, dan provenance input.
 
 ## 10. Langkah berikutnya
 
-1. Uji backend `r2flutter` pada snapshot yang sama; backend ini belum diuji pada
-   laporan ini. Bandingkan resolusi pool dan nama function dengan run Blutter.
+1. Tindak lanjuti evaluasi backend `r2flutter` yang sudah dijalankan pada
+   snapshot ini; lihat
+   [`R2FLUTTER-BACKEND-EVALUATION.md`](R2FLUTTER-BACKEND-EVALUATION.md).
+   Fokus pada 48 header dengan batas +0x18, 9 slot pool residual, dan 23
+   perbedaan atribusi `_enumToString`.
 2. Buat crosswalk alamat untuk function OAuth dan `doscanent` antara flutterdec,
    Ghidra, dan assembly, lalu gunakan Ghidra/assembly untuk keputusan
    control-flow final.
@@ -324,3 +327,32 @@ registry, dan provenance input.
 
 Output lengkap tidak dimasukkan ke Git; hanya excerpt yang ditinjau yang
 disimpan. File APK, DEX, `.so`, dan database Ghidra tetap berada di luar repo.
+
+## 12. Evaluasi backend r2flutter
+
+Backend `r2flutter` 0.5.1 diuji pada snapshot yang sama sebagai pembanding
+independen. Ringkasnya:
+
+- 42.809 entri instruction table, 9.888 record class, dan 67.508 slot
+  ObjectPool yang direferensikan string berhasil dibaca.
+- 2.748/2.796 header function aplikasi Blutter memiliki alamat start yang sama
+  persis; 48 header sisanya mulai 0x18 byte setelah entry `r2flutter` dan
+  seluruhnya berupa thunk `dyn:` atau getter. Ukuran body cocok pada
+  2.747/2.748 start yang sama.
+- Pada 1.160 header yang dapat diparse menjadi class + metode, nama metode cocok
+  100% setelah normalisasi konvensi; nama owner cocok 98,02%, dengan 23 sisa
+  perbedaan `_enumToString` yang merupakan atribusi Blutter.
+- ObjectPool tervalidasi: 67.048/67.440 slot identik byte-per-byte (99,42%),
+  dan 67.431/67.440 (99,99%) setelah normalisasi escaping punctuation Blutter.
+  Enam puluh delapan slot yang tidak muncul sebagai baris `String:` di
+  `pp.txt` semuanya dirender Blutter sebagai `UnlinkedCall: String:`.
+
+Keterbatasan utama: tidak ada atribusi library/package, sehingga
+`--function-scope app` menghasilkan 0 function; tidak ada nama superclass pada
+9.888 record class; dan pseudo-Dart fokus memerlukan ambang gate eksploratif
+karena denominator disassembly adalah seluruh 42.809 function. Gunakan
+`--function-scope all` + `--focus <prefix-nama-lengkap>`, bukan substring.
+
+Enam excerpt fokus ada di [`recovered/r2flutter/`](../recovered/r2flutter/).
+Metrik lengkap, perbandingan nama/pool, dan perintah reproduksi ada di
+[`R2FLUTTER-BACKEND-EVALUATION.md`](R2FLUTTER-BACKEND-EVALUATION.md).

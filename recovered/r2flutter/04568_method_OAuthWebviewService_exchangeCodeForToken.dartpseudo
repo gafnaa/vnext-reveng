@@ -1,0 +1,656 @@
+dynamic method_OAuthWebviewService_exchangeCodeForToken(dynamic slot0, dynamic slot1, dynamic slot2, dynamic slot3, dynamic slot4, dynamic slot5) {
+  dynamic tmp1;
+  dynamic tmp2;
+
+  // omitted complex paths: block 1, block 2, block 3, block 4, block 5, block 6, block 7, block 8, block 9, block 10, block 11, block 12, block 13, block 15, block 16, block 17, block 18, block 22, block 23, block 26, block 27, block 28, block 30, block 32, block 33, block 34, block 35, block 36, block 37, block 39, block 42, block 45, block 46, block 47, block 61, block 64, block 66, block 68, block 81, block 83, block 86, block 88, block 90, block 99, block 104, block 105, block 106, block 107, block 108, block 109, block 110, block 111, block 112, block 113, block 114, block 115, block 116, block 118, block 119, block 120, block 121, block 123, block 124, block 125, block 127, block 128, block 129, block 130, block 131, block 132, block 133, block 134, block 135, block 136, block 137, block 138, block 139, block 140, block 141, block 142, block 143, block 145, block 146, block 147, block 148, block 149, block 150, block 151, block 153, block 154, block 155, block 156, block 157, block 158, block 159, block 160, block 161, block 170, block 171, block 172, block 173, block 174, block 175, block 176, block 177, block 178, block 179, block 180, block 181, block 182, block 183, block 184, block 185, block 186, block 187, block 188, block 189, block 191, block 192, block 193, block 204, block 206, block 208, block 209, block 210, block 211, block 212, block 213, block 214, block 215, block 216, block 217, block 218, block 219, block 220, block 221, block 223, block 225, block 226, block 227, block 228
+  tmp1 = null;
+  reg15[-0x160] = slot0;
+  final t1 = method_fn_673();
+  final t2 = stub_AllocateDeviceInfoPluginStub();
+  framePointer[-0x168] = t2;
+  if (thread.f120.f8448 != thread.f144) {
+    framePointer[-0x170] = reg0;
+    final t3 = method_DeviceInfoPlugin_get_androidInfo(framePointer[-0x168]);
+    framePointer[-0x178] = t3;
+    final t4 = method_fn_668(t3);
+    framePointer[-0x178] = t4;
+    final t5 = stub_AllocateMobileDeviceIdentifierStub();
+    final t6 = method_MobileDeviceIdentifier_getDeviceId(t5);
+    framePointer[-0x180] = t6;
+    final t7 = method_fn_668(t6);
+    framePointer[-0x168] = t7;
+    if (t7 == null) {
+      if (reg0 != null) {
+        framePointer[-0x180] = reg0;
+        framePointer[-0x168] = reg2.f52;
+        final t8 = method_lookupAndroidName(reg2.f52, reg2, reg2.f52);
+        framePointer[-0x188] = t8;
+        final t9 = method_fn_42424(null, 0xe);
+        t9.f16 = (framePointer[-0x178]).f60;
+        t9.f20 = pool[285];
+        t9.f24 = (framePointer[-0x178]).f48;
+        t9.f28 = pool[285];
+        t9.f32 = framePointer[-0x168];
+        t9.f36 = pool[285];
+        t9.f40 = framePointer[-0x188];
+        ((reg15 - 0x240)).f0 = t9;
+        final t10 = method__StringBase_0150898__interpolate_0150898(t9, framePointer[-0x168], framePointer[-0x188]);
+        framePointer[-0x190] = t10;
+        final t11 = method__RegExp_0150898__RegExp_0150898_();
+        final t12 = method__StringBase_0150898_replaceAll(framePointer[-0x190], t11, pool[286]);
+        framePointer[-0x190] = t12;
+        final t13 = method_fn_42424(null, 4);
+        t13.f16 = pool[67188];
+        t13.f20 = framePointer[-0x190];
+        ((reg15 - 0x240)).f0 = t13;
+        final t14 = method__StringBase_0150898__interpolate_0150898(framePointer[-0x190]);
+        framePointer[-0x198] = t14;
+        if (thread.f120.f4704 != thread.f144) {
+          framePointer[-0x1a0] = (framePointer[-0x178]).f20;
+          final t15 = method_fn_42424(null, 4, (framePointer[-0x178]).f20);
+          t15.f16 = pool[67189];
+          t15.f20 = ((framePointer[-0x178]).f12).f8;
+          ((reg15 - 0x240)).f0 = t15;
+          final t16 = method__StringBase_0150898__interpolate_0150898(framePointer[-0x178], (framePointer[-0x178]).f12, ((framePointer[-0x178]).f12).f8);
+          framePointer[-0x170] = t16;
+          final t17 = method_Firebase_app();
+          final t18 = method_FirebaseMessaging_FirebaseMessaging__instanceFor_1290057947(null, t17);
+          final t19 = method_FirebaseMessaging_getToken(t18);
+          framePointer[-0x178] = t19;
+          final t20 = method_fn_668(t19);
+          if (t20 != null) {
+            framePointer[-0x178] = reg2;
+            framePointer[-0x188] = reg1;
+            framePointer[-0x198] = reg0;
+            final t21 = method_F_get_configOauth();
+            framePointer[-0x1a8] = t21;
+            if (t21 == null) {
+              final t22 = method_fn_42439();
+              return null;
+            }
+            final t23 = method___Map_HashVMBaseMapMixin_HashBase_OperatorEqualsAndHashCode_LinkedHashMapMixin_3099033__getValueOrData_3099033(t21, pool[11635]);
+            return null;
+          }
+          framePointer[-0x178] = reg2;
+          framePointer[-0x188] = reg1;
+          framePointer[-0x198] = reg0;
+          final t24 = method_F_get_configOauth();
+          framePointer[-0x1a8] = t24;
+          if (t24 == null) {
+            return null;
+          }
+        }
+        else {
+          final t25 = method_fn_42381(reg1, pool[3889]);
+          framePointer[-0x1a0] = (framePointer[-0x178]).f20;
+          final t26 = method_fn_42424(null, 4, (framePointer[-0x178]).f20);
+          t26.f16 = pool[67189];
+          t26.f20 = ((framePointer[-0x178]).f12).f8;
+          ((reg15 - 0x240)).f0 = t26;
+          final t27 = method__StringBase_0150898__interpolate_0150898(framePointer[-0x178], (framePointer[-0x178]).f12, ((framePointer[-0x178]).f12).f8);
+          framePointer[-0x170] = t27;
+          final t28 = method_Firebase_app();
+          final t29 = method_FirebaseMessaging_FirebaseMessaging__instanceFor_1290057947(null, t28);
+          final t30 = method_FirebaseMessaging_getToken(t29);
+          framePointer[-0x178] = t30;
+          final t31 = method_fn_668(t30);
+          if (t31 != null) {
+            framePointer[-0x178] = reg2;
+            framePointer[-0x188] = reg1;
+            framePointer[-0x198] = reg0;
+            final t32 = method_F_get_configOauth();
+            framePointer[-0x1a8] = t32;
+            if (t32 == null) {
+              return null;
+            }
+          }
+        }
+      }
+      else {
+        framePointer[-0x180] = reg0;
+        framePointer[-0x168] = reg2.f52;
+        final t33 = method_lookupAndroidName(reg2.f52, reg2, reg2.f52);
+        framePointer[-0x188] = t33;
+        final t34 = method_fn_42424(null, 0xe);
+        t34.f16 = (framePointer[-0x178]).f60;
+        t34.f20 = pool[285];
+        t34.f24 = (framePointer[-0x178]).f48;
+        t34.f28 = pool[285];
+        t34.f32 = framePointer[-0x168];
+        t34.f36 = pool[285];
+        t34.f40 = framePointer[-0x188];
+        ((reg15 - 0x240)).f0 = t34;
+        final t35 = method__StringBase_0150898__interpolate_0150898(t34, framePointer[-0x168], framePointer[-0x188]);
+        framePointer[-0x190] = t35;
+        final t36 = method__RegExp_0150898__RegExp_0150898_();
+        final t37 = method__StringBase_0150898_replaceAll(framePointer[-0x190], t36, pool[286]);
+        framePointer[-0x190] = t37;
+        final t38 = method_fn_42424(null, 4);
+        t38.f16 = pool[67188];
+        t38.f20 = framePointer[-0x190];
+        ((reg15 - 0x240)).f0 = t38;
+        final t39 = method__StringBase_0150898__interpolate_0150898(framePointer[-0x190]);
+        framePointer[-0x198] = t39;
+        if (thread.f120.f4704 != thread.f144) {
+          framePointer[-0x1a0] = (framePointer[-0x178]).f20;
+          final t40 = method_fn_42424(null, 4, (framePointer[-0x178]).f20);
+          t40.f16 = pool[67189];
+          t40.f20 = ((framePointer[-0x178]).f12).f8;
+          ((reg15 - 0x240)).f0 = t40;
+          final t41 = method__StringBase_0150898__interpolate_0150898(framePointer[-0x178], (framePointer[-0x178]).f12, ((framePointer[-0x178]).f12).f8);
+          framePointer[-0x170] = t41;
+          final t42 = method_Firebase_app();
+          final t43 = method_FirebaseMessaging_FirebaseMessaging__instanceFor_1290057947(null, t42);
+          final t44 = method_FirebaseMessaging_getToken(t43);
+          framePointer[-0x178] = t44;
+          final t45 = method_fn_668(t44);
+          if (t45 != null) {
+            framePointer[-0x178] = reg2;
+            framePointer[-0x188] = reg1;
+            framePointer[-0x198] = reg0;
+            final t46 = method_F_get_configOauth();
+            framePointer[-0x1a8] = t46;
+            if (t46 == null) {
+              final t47 = method_fn_42439();
+              return null;
+            }
+            final t48 = method___Map_HashVMBaseMapMixin_HashBase_OperatorEqualsAndHashCode_LinkedHashMapMixin_3099033__getValueOrData_3099033(t46, pool[11635]);
+            return null;
+          }
+          framePointer[-0x178] = reg2;
+          framePointer[-0x188] = reg1;
+          framePointer[-0x198] = reg0;
+          final t49 = method_F_get_configOauth();
+          framePointer[-0x1a8] = t49;
+          if (t49 == null) {
+            return null;
+          }
+        }
+        else {
+          final t50 = method_fn_42381(reg1, pool[3889]);
+          framePointer[-0x1a0] = (framePointer[-0x178]).f20;
+          final t51 = method_fn_42424(null, 4, (framePointer[-0x178]).f20);
+          t51.f16 = pool[67189];
+          t51.f20 = ((framePointer[-0x178]).f12).f8;
+          ((reg15 - 0x240)).f0 = t51;
+          final t52 = method__StringBase_0150898__interpolate_0150898(framePointer[-0x178], (framePointer[-0x178]).f12, ((framePointer[-0x178]).f12).f8);
+          framePointer[-0x170] = t52;
+          final t53 = method_Firebase_app();
+          final t54 = method_FirebaseMessaging_FirebaseMessaging__instanceFor_1290057947(null, t53);
+          final t55 = method_FirebaseMessaging_getToken(t54);
+          framePointer[-0x178] = t55;
+          final t56 = method_fn_668(t55);
+          if (t56 != null) {
+            framePointer[-0x178] = reg2;
+            framePointer[-0x188] = reg1;
+            framePointer[-0x198] = reg0;
+            final t57 = method_F_get_configOauth();
+            framePointer[-0x1a8] = t57;
+            if (t57 == null) {
+              return null;
+            }
+          }
+        }
+      }
+    }
+    else {
+      final t58 = method_Utf8Encoder_convert(pool[573], t7);
+      final t59 = method_base64Encode(t58);
+      if (reg0 != null) {
+        framePointer[-0x180] = reg0;
+        framePointer[-0x168] = reg2.f52;
+        final t60 = method_lookupAndroidName(reg2.f52, reg2, reg2.f52);
+        framePointer[-0x188] = t60;
+        final t61 = method_fn_42424(null, 0xe);
+        t61.f16 = (framePointer[-0x178]).f60;
+        t61.f20 = pool[285];
+        t61.f24 = (framePointer[-0x178]).f48;
+        t61.f28 = pool[285];
+        t61.f32 = framePointer[-0x168];
+        t61.f36 = pool[285];
+        t61.f40 = framePointer[-0x188];
+        ((reg15 - 0x240)).f0 = t61;
+        final t62 = method__StringBase_0150898__interpolate_0150898(t61, framePointer[-0x168], framePointer[-0x188]);
+        framePointer[-0x190] = t62;
+        final t63 = method__RegExp_0150898__RegExp_0150898_();
+        final t64 = method__StringBase_0150898_replaceAll(framePointer[-0x190], t63, pool[286]);
+        framePointer[-0x190] = t64;
+        final t65 = method_fn_42424(null, 4);
+        t65.f16 = pool[67188];
+        t65.f20 = framePointer[-0x190];
+        ((reg15 - 0x240)).f0 = t65;
+        final t66 = method__StringBase_0150898__interpolate_0150898(framePointer[-0x190]);
+        framePointer[-0x198] = t66;
+        if (thread.f120.f4704 != thread.f144) {
+          framePointer[-0x1a0] = (framePointer[-0x178]).f20;
+          final t67 = method_fn_42424(null, 4, (framePointer[-0x178]).f20);
+          t67.f16 = pool[67189];
+          t67.f20 = ((framePointer[-0x178]).f12).f8;
+          ((reg15 - 0x240)).f0 = t67;
+          final t68 = method__StringBase_0150898__interpolate_0150898(framePointer[-0x178], (framePointer[-0x178]).f12, ((framePointer[-0x178]).f12).f8);
+          framePointer[-0x170] = t68;
+          final t69 = method_Firebase_app();
+          final t70 = method_FirebaseMessaging_FirebaseMessaging__instanceFor_1290057947(null, t69);
+          final t71 = method_FirebaseMessaging_getToken(t70);
+          framePointer[-0x178] = t71;
+          final t72 = method_fn_668(t71);
+          if (t72 != null) {
+            framePointer[-0x178] = reg2;
+            framePointer[-0x188] = reg1;
+            framePointer[-0x198] = reg0;
+            final t73 = method_F_get_configOauth();
+            framePointer[-0x1a8] = t73;
+            if (t73 == null) {
+              final t74 = method_fn_42439();
+              return null;
+            }
+            final t75 = method___Map_HashVMBaseMapMixin_HashBase_OperatorEqualsAndHashCode_LinkedHashMapMixin_3099033__getValueOrData_3099033(t73, pool[11635]);
+            return null;
+          }
+          framePointer[-0x178] = reg2;
+          framePointer[-0x188] = reg1;
+          framePointer[-0x198] = reg0;
+          final t76 = method_F_get_configOauth();
+          framePointer[-0x1a8] = t76;
+          if (t76 == null) {
+            return null;
+          }
+        }
+        else {
+          final t77 = method_fn_42381(reg1, pool[3889]);
+          framePointer[-0x1a0] = (framePointer[-0x178]).f20;
+          final t78 = method_fn_42424(null, 4, (framePointer[-0x178]).f20);
+          t78.f16 = pool[67189];
+          t78.f20 = ((framePointer[-0x178]).f12).f8;
+          ((reg15 - 0x240)).f0 = t78;
+          final t79 = method__StringBase_0150898__interpolate_0150898(framePointer[-0x178], (framePointer[-0x178]).f12, ((framePointer[-0x178]).f12).f8);
+          framePointer[-0x170] = t79;
+          final t80 = method_Firebase_app();
+          final t81 = method_FirebaseMessaging_FirebaseMessaging__instanceFor_1290057947(null, t80);
+          final t82 = method_FirebaseMessaging_getToken(t81);
+          framePointer[-0x178] = t82;
+          final t83 = method_fn_668(t82);
+          if (t83 != null) {
+            framePointer[-0x178] = reg2;
+            framePointer[-0x188] = reg1;
+            framePointer[-0x198] = reg0;
+            final t84 = method_F_get_configOauth();
+            framePointer[-0x1a8] = t84;
+            if (t84 == null) {
+              return null;
+            }
+          }
+        }
+      }
+      else {
+        framePointer[-0x180] = reg0;
+        framePointer[-0x168] = reg2.f52;
+        final t85 = method_lookupAndroidName(reg2.f52, reg2, reg2.f52);
+        framePointer[-0x188] = t85;
+        final t86 = method_fn_42424(null, 0xe);
+        t86.f16 = (framePointer[-0x178]).f60;
+        t86.f20 = pool[285];
+        t86.f24 = (framePointer[-0x178]).f48;
+        t86.f28 = pool[285];
+        t86.f32 = framePointer[-0x168];
+        t86.f36 = pool[285];
+        t86.f40 = framePointer[-0x188];
+        ((reg15 - 0x240)).f0 = t86;
+        final t87 = method__StringBase_0150898__interpolate_0150898(t86, framePointer[-0x168], framePointer[-0x188]);
+        framePointer[-0x190] = t87;
+        final t88 = method__RegExp_0150898__RegExp_0150898_();
+        final t89 = method__StringBase_0150898_replaceAll(framePointer[-0x190], t88, pool[286]);
+        framePointer[-0x190] = t89;
+        final t90 = method_fn_42424(null, 4);
+        t90.f16 = pool[67188];
+        t90.f20 = framePointer[-0x190];
+        ((reg15 - 0x240)).f0 = t90;
+        final t91 = method__StringBase_0150898__interpolate_0150898(framePointer[-0x190]);
+        framePointer[-0x198] = t91;
+        if (thread.f120.f4704 != thread.f144) {
+          framePointer[-0x1a0] = (framePointer[-0x178]).f20;
+          final t92 = method_fn_42424(null, 4, (framePointer[-0x178]).f20);
+          t92.f16 = pool[67189];
+          t92.f20 = ((framePointer[-0x178]).f12).f8;
+          ((reg15 - 0x240)).f0 = t92;
+          final t93 = method__StringBase_0150898__interpolate_0150898(framePointer[-0x178], (framePointer[-0x178]).f12, ((framePointer[-0x178]).f12).f8);
+          framePointer[-0x170] = t93;
+          final t94 = method_Firebase_app();
+          final t95 = method_FirebaseMessaging_FirebaseMessaging__instanceFor_1290057947(null, t94);
+          final t96 = method_FirebaseMessaging_getToken(t95);
+          framePointer[-0x178] = t96;
+          final t97 = method_fn_668(t96);
+          if (t97 != null) {
+            framePointer[-0x178] = reg2;
+            framePointer[-0x188] = reg1;
+            framePointer[-0x198] = reg0;
+            final t98 = method_F_get_configOauth();
+            framePointer[-0x1a8] = t98;
+            if (t98 == null) {
+              final t99 = method_fn_42439();
+              return null;
+            }
+            final t100 = method___Map_HashVMBaseMapMixin_HashBase_OperatorEqualsAndHashCode_LinkedHashMapMixin_3099033__getValueOrData_3099033(t98, pool[11635]);
+            return null;
+          }
+          framePointer[-0x178] = reg2;
+          framePointer[-0x188] = reg1;
+          framePointer[-0x198] = reg0;
+          final t101 = method_F_get_configOauth();
+          framePointer[-0x1a8] = t101;
+          if (t101 == null) {
+            return null;
+          }
+        }
+        else {
+          final t102 = method_fn_42381(reg1, pool[3889]);
+          framePointer[-0x1a0] = (framePointer[-0x178]).f20;
+          final t103 = method_fn_42424(null, 4, (framePointer[-0x178]).f20);
+          t103.f16 = pool[67189];
+          t103.f20 = ((framePointer[-0x178]).f12).f8;
+          ((reg15 - 0x240)).f0 = t103;
+          final t104 = method__StringBase_0150898__interpolate_0150898(framePointer[-0x178], (framePointer[-0x178]).f12, ((framePointer[-0x178]).f12).f8);
+          framePointer[-0x170] = t104;
+          final t105 = method_Firebase_app();
+          final t106 = method_FirebaseMessaging_FirebaseMessaging__instanceFor_1290057947(null, t105);
+          final t107 = method_FirebaseMessaging_getToken(t106);
+          framePointer[-0x178] = t107;
+          final t108 = method_fn_668(t107);
+          if (t108 != null) {
+            framePointer[-0x178] = reg2;
+            framePointer[-0x188] = reg1;
+            framePointer[-0x198] = reg0;
+            final t109 = method_F_get_configOauth();
+            framePointer[-0x1a8] = t109;
+            if (t109 == null) {
+              return null;
+            }
+          }
+        }
+      }
+    }
+  }
+  else {
+    final t110 = method_fn_42381(reg1, pool[20791]);
+    framePointer[-0x170] = reg0;
+    final t111 = method_DeviceInfoPlugin_get_androidInfo(framePointer[-0x168]);
+    framePointer[-0x178] = t111;
+    final t112 = method_fn_668(t111);
+    framePointer[-0x178] = t112;
+    final t113 = stub_AllocateMobileDeviceIdentifierStub();
+    final t114 = method_MobileDeviceIdentifier_getDeviceId(t113);
+    framePointer[-0x180] = t114;
+    final t115 = method_fn_668(t114);
+    framePointer[-0x168] = t115;
+    if (t115 == null) {
+      if (reg0 != null) {
+        framePointer[-0x180] = reg0;
+        framePointer[-0x168] = reg2.f52;
+        final t116 = method_lookupAndroidName(reg2.f52, reg2, reg2.f52);
+        framePointer[-0x188] = t116;
+        final t117 = method_fn_42424(null, 0xe);
+        t117.f16 = (framePointer[-0x178]).f60;
+        t117.f20 = pool[285];
+        t117.f24 = (framePointer[-0x178]).f48;
+        t117.f28 = pool[285];
+        t117.f32 = framePointer[-0x168];
+        t117.f36 = pool[285];
+        t117.f40 = framePointer[-0x188];
+        ((reg15 - 0x240)).f0 = t117;
+        final t118 = method__StringBase_0150898__interpolate_0150898(t117, framePointer[-0x168], framePointer[-0x188]);
+        framePointer[-0x190] = t118;
+        final t119 = method__RegExp_0150898__RegExp_0150898_();
+        final t120 = method__StringBase_0150898_replaceAll(framePointer[-0x190], t119, pool[286]);
+        framePointer[-0x190] = t120;
+        final t121 = method_fn_42424(null, 4);
+        t121.f16 = pool[67188];
+        t121.f20 = framePointer[-0x190];
+        ((reg15 - 0x240)).f0 = t121;
+        final t122 = method__StringBase_0150898__interpolate_0150898(framePointer[-0x190]);
+        framePointer[-0x198] = t122;
+        if (thread.f120.f4704 != thread.f144) {
+          framePointer[-0x1a0] = (framePointer[-0x178]).f20;
+          final t123 = method_fn_42424(null, 4, (framePointer[-0x178]).f20);
+          t123.f16 = pool[67189];
+          t123.f20 = ((framePointer[-0x178]).f12).f8;
+          ((reg15 - 0x240)).f0 = t123;
+          final t124 = method__StringBase_0150898__interpolate_0150898(framePointer[-0x178], (framePointer[-0x178]).f12, ((framePointer[-0x178]).f12).f8);
+          framePointer[-0x170] = t124;
+          final t125 = method_Firebase_app();
+          final t126 = method_FirebaseMessaging_FirebaseMessaging__instanceFor_1290057947(null, t125);
+          final t127 = method_FirebaseMessaging_getToken(t126);
+          framePointer[-0x178] = t127;
+          final t128 = method_fn_668(t127);
+          if (t128 != null) {
+            framePointer[-0x178] = reg2;
+            framePointer[-0x188] = reg1;
+            framePointer[-0x198] = reg0;
+            final t129 = method_F_get_configOauth();
+            framePointer[-0x1a8] = t129;
+            if (t129 == null) {
+              return null;
+            }
+          }
+        }
+        else {
+          final t130 = method_fn_42381(reg1, pool[3889]);
+          framePointer[-0x1a0] = (framePointer[-0x178]).f20;
+          final t131 = method_fn_42424(null, 4, (framePointer[-0x178]).f20);
+          t131.f16 = pool[67189];
+          t131.f20 = ((framePointer[-0x178]).f12).f8;
+          ((reg15 - 0x240)).f0 = t131;
+          final t132 = method__StringBase_0150898__interpolate_0150898(framePointer[-0x178], (framePointer[-0x178]).f12, ((framePointer[-0x178]).f12).f8);
+          framePointer[-0x170] = t132;
+          final t133 = method_Firebase_app();
+          final t134 = method_FirebaseMessaging_FirebaseMessaging__instanceFor_1290057947(null, t133);
+          final t135 = method_FirebaseMessaging_getToken(t134);
+          framePointer[-0x178] = t135;
+          final t136 = method_fn_668(t135);
+          if (!(t136 != null)) {
+          }
+        }
+      }
+      else {
+        framePointer[-0x180] = reg0;
+        framePointer[-0x168] = reg2.f52;
+        final t137 = method_lookupAndroidName(reg2.f52, reg2, reg2.f52);
+        framePointer[-0x188] = t137;
+        final t138 = method_fn_42424(null, 0xe);
+        t138.f16 = (framePointer[-0x178]).f60;
+        t138.f20 = pool[285];
+        t138.f24 = (framePointer[-0x178]).f48;
+        t138.f28 = pool[285];
+        t138.f32 = framePointer[-0x168];
+        t138.f36 = pool[285];
+        t138.f40 = framePointer[-0x188];
+        ((reg15 - 0x240)).f0 = t138;
+        final t139 = method__StringBase_0150898__interpolate_0150898(t138, framePointer[-0x168], framePointer[-0x188]);
+        framePointer[-0x190] = t139;
+        final t140 = method__RegExp_0150898__RegExp_0150898_();
+        final t141 = method__StringBase_0150898_replaceAll(framePointer[-0x190], t140, pool[286]);
+        framePointer[-0x190] = t141;
+        final t142 = method_fn_42424(null, 4);
+        t142.f16 = pool[67188];
+        t142.f20 = framePointer[-0x190];
+        ((reg15 - 0x240)).f0 = t142;
+        final t143 = method__StringBase_0150898__interpolate_0150898(framePointer[-0x190]);
+        framePointer[-0x198] = t143;
+        if (thread.f120.f4704 != thread.f144) {
+          framePointer[-0x1a0] = (framePointer[-0x178]).f20;
+          final t144 = method_fn_42424(null, 4, (framePointer[-0x178]).f20);
+          t144.f16 = pool[67189];
+          t144.f20 = ((framePointer[-0x178]).f12).f8;
+          ((reg15 - 0x240)).f0 = t144;
+          final t145 = method__StringBase_0150898__interpolate_0150898(framePointer[-0x178], (framePointer[-0x178]).f12, ((framePointer[-0x178]).f12).f8);
+          framePointer[-0x170] = t145;
+          final t146 = method_Firebase_app();
+          final t147 = method_FirebaseMessaging_FirebaseMessaging__instanceFor_1290057947(null, t146);
+          final t148 = method_FirebaseMessaging_getToken(t147);
+          framePointer[-0x178] = t148;
+          final t149 = method_fn_668(t148);
+          if (t149 != null) {
+            framePointer[-0x178] = reg2;
+            framePointer[-0x188] = reg1;
+            framePointer[-0x198] = reg0;
+            final t150 = method_F_get_configOauth();
+            framePointer[-0x1a8] = t150;
+            if (t150 == null) {
+              return null;
+            }
+          }
+        }
+        else {
+          final t151 = method_fn_42381(reg1, pool[3889]);
+          framePointer[-0x1a0] = (framePointer[-0x178]).f20;
+          final t152 = method_fn_42424(null, 4, (framePointer[-0x178]).f20);
+          t152.f16 = pool[67189];
+          t152.f20 = ((framePointer[-0x178]).f12).f8;
+          ((reg15 - 0x240)).f0 = t152;
+          final t153 = method__StringBase_0150898__interpolate_0150898(framePointer[-0x178], (framePointer[-0x178]).f12, ((framePointer[-0x178]).f12).f8);
+          framePointer[-0x170] = t153;
+          final t154 = method_Firebase_app();
+          final t155 = method_FirebaseMessaging_FirebaseMessaging__instanceFor_1290057947(null, t154);
+          final t156 = method_FirebaseMessaging_getToken(t155);
+          framePointer[-0x178] = t156;
+          final t157 = method_fn_668(t156);
+          if (!(t157 != null)) {
+          }
+        }
+      }
+    }
+    else {
+      final t158 = method_Utf8Encoder_convert(pool[573], t115);
+      final t159 = method_base64Encode(t158);
+      if (reg0 != null) {
+        framePointer[-0x180] = reg0;
+        framePointer[-0x168] = reg2.f52;
+        final t160 = method_lookupAndroidName(reg2.f52, reg2, reg2.f52);
+        framePointer[-0x188] = t160;
+        final t161 = method_fn_42424(null, 0xe);
+        t161.f16 = (framePointer[-0x178]).f60;
+        t161.f20 = pool[285];
+        t161.f24 = (framePointer[-0x178]).f48;
+        t161.f28 = pool[285];
+        t161.f32 = framePointer[-0x168];
+        t161.f36 = pool[285];
+        t161.f40 = framePointer[-0x188];
+        ((reg15 - 0x240)).f0 = t161;
+        final t162 = method__StringBase_0150898__interpolate_0150898(t161, framePointer[-0x168], framePointer[-0x188]);
+        framePointer[-0x190] = t162;
+        final t163 = method__RegExp_0150898__RegExp_0150898_();
+        final t164 = method__StringBase_0150898_replaceAll(framePointer[-0x190], t163, pool[286]);
+        framePointer[-0x190] = t164;
+        final t165 = method_fn_42424(null, 4);
+        t165.f16 = pool[67188];
+        t165.f20 = framePointer[-0x190];
+        ((reg15 - 0x240)).f0 = t165;
+        final t166 = method__StringBase_0150898__interpolate_0150898(framePointer[-0x190]);
+        framePointer[-0x198] = t166;
+        if (thread.f120.f4704 != thread.f144) {
+          framePointer[-0x1a0] = (framePointer[-0x178]).f20;
+          final t167 = method_fn_42424(null, 4, (framePointer[-0x178]).f20);
+          t167.f16 = pool[67189];
+          t167.f20 = ((framePointer[-0x178]).f12).f8;
+          ((reg15 - 0x240)).f0 = t167;
+          final t168 = method__StringBase_0150898__interpolate_0150898(framePointer[-0x178], (framePointer[-0x178]).f12, ((framePointer[-0x178]).f12).f8);
+          framePointer[-0x170] = t168;
+          final t169 = method_Firebase_app();
+          final t170 = method_FirebaseMessaging_FirebaseMessaging__instanceFor_1290057947(null, t169);
+          final t171 = method_FirebaseMessaging_getToken(t170);
+          framePointer[-0x178] = t171;
+          final t172 = method_fn_668(t171);
+          if (t172 != null) {
+            framePointer[-0x178] = reg2;
+            framePointer[-0x188] = reg1;
+            framePointer[-0x198] = reg0;
+            final t173 = method_F_get_configOauth();
+            framePointer[-0x1a8] = t173;
+            if (t173 == null) {
+              return null;
+            }
+          }
+        }
+        else {
+          final t174 = method_fn_42381(reg1, pool[3889]);
+          framePointer[-0x1a0] = (framePointer[-0x178]).f20;
+          final t175 = method_fn_42424(null, 4, (framePointer[-0x178]).f20);
+          t175.f16 = pool[67189];
+          t175.f20 = ((framePointer[-0x178]).f12).f8;
+          ((reg15 - 0x240)).f0 = t175;
+          final t176 = method__StringBase_0150898__interpolate_0150898(framePointer[-0x178], (framePointer[-0x178]).f12, ((framePointer[-0x178]).f12).f8);
+          framePointer[-0x170] = t176;
+          final t177 = method_Firebase_app();
+          final t178 = method_FirebaseMessaging_FirebaseMessaging__instanceFor_1290057947(null, t177);
+          final t179 = method_FirebaseMessaging_getToken(t178);
+          framePointer[-0x178] = t179;
+          final t180 = method_fn_668(t179);
+          if (t180 != null) {
+            return null;
+          }
+        }
+      }
+      else {
+        framePointer[-0x180] = reg0;
+        framePointer[-0x168] = reg2.f52;
+        final t181 = method_lookupAndroidName(reg2.f52, reg2, reg2.f52);
+        framePointer[-0x188] = t181;
+        final t182 = method_fn_42424(null, 0xe);
+        t182.f16 = (framePointer[-0x178]).f60;
+        t182.f20 = pool[285];
+        t182.f24 = (framePointer[-0x178]).f48;
+        t182.f28 = pool[285];
+        t182.f32 = framePointer[-0x168];
+        t182.f36 = pool[285];
+        t182.f40 = framePointer[-0x188];
+        ((reg15 - 0x240)).f0 = t182;
+        final t183 = method__StringBase_0150898__interpolate_0150898(t182, framePointer[-0x168], framePointer[-0x188]);
+        framePointer[-0x190] = t183;
+        final t184 = method__RegExp_0150898__RegExp_0150898_();
+        final t185 = method__StringBase_0150898_replaceAll(framePointer[-0x190], t184, pool[286]);
+        framePointer[-0x190] = t185;
+        final t186 = method_fn_42424(null, 4);
+        t186.f16 = pool[67188];
+        t186.f20 = framePointer[-0x190];
+        ((reg15 - 0x240)).f0 = t186;
+        final t187 = method__StringBase_0150898__interpolate_0150898(framePointer[-0x190]);
+        framePointer[-0x198] = t187;
+        if (thread.f120.f4704 != thread.f144) {
+          framePointer[-0x1a0] = (framePointer[-0x178]).f20;
+          final t188 = method_fn_42424(null, 4, (framePointer[-0x178]).f20);
+          t188.f16 = pool[67189];
+          t188.f20 = ((framePointer[-0x178]).f12).f8;
+          ((reg15 - 0x240)).f0 = t188;
+          final t189 = method__StringBase_0150898__interpolate_0150898(framePointer[-0x178], (framePointer[-0x178]).f12, ((framePointer[-0x178]).f12).f8);
+          framePointer[-0x170] = t189;
+          final t190 = method_Firebase_app();
+          final t191 = method_FirebaseMessaging_FirebaseMessaging__instanceFor_1290057947(null, t190);
+          final t192 = method_FirebaseMessaging_getToken(t191);
+          framePointer[-0x178] = t192;
+          final t193 = method_fn_668(t192);
+          if (t193 != null) {
+            return null;
+          }
+        }
+        else {
+          final t194 = method_fn_42381(reg1, pool[3889]);
+          framePointer[-0x1a0] = (framePointer[-0x178]).f20;
+          final t195 = method_fn_42424(null, 4, (framePointer[-0x178]).f20);
+          t195.f16 = pool[67189];
+          t195.f20 = ((framePointer[-0x178]).f12).f8;
+          ((reg15 - 0x240)).f0 = t195;
+          final t196 = method__StringBase_0150898__interpolate_0150898(framePointer[-0x178], (framePointer[-0x178]).f12, ((framePointer[-0x178]).f12).f8);
+          framePointer[-0x170] = t196;
+          final t197 = method_Firebase_app();
+          final t198 = method_FirebaseMessaging_FirebaseMessaging__instanceFor_1290057947(null, t197);
+          final t199 = method_FirebaseMessaging_getToken(t198);
+          framePointer[-0x178] = t199;
+          final t200 = method_fn_668(t199);
+          if (t200 != null) {
+            return null;
+          }
+        }
+      }
+    }
+  }
+  break;
+}

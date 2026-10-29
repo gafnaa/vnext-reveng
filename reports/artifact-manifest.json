@@ -305,6 +305,173 @@
       "augmented_output_directory": "/var/smster/work/flutterdec-2026-10-28/app-simaster_ugm-toplevel",
       "augmented_unreconciled_record_difference": 0
     },
+    "r2flutter_evaluation": {
+      "tool": "trufae/r2flutter",
+      "commit": "7be0c178fb6f2fe479df149cfdac31fa651b90e9",
+      "version": "0.5.1",
+      "build": "source release against radare2 6.2.4",
+      "radare2_version": "6.2.4",
+      "radare2_commit": "485e5e205b190fc297a2a95a6f982ff5d9f54039",
+      "binary_sha256": "4d521232867126e02b123445b4a006c759205b906054613cabd97dded766c473",
+      "snapshot_hash": "ace654289f5abc240509fc941453ebc5",
+      "dart_version": "3.12.1",
+      "version_source": "exact-hash",
+      "date": "2026-10-29",
+      "direct_extraction": {
+        "instruction_table_entries": 42809,
+        "instruction_table_code_entries": 42809,
+        "method_named_entries": 36952,
+        "stub_named_entries": 5857,
+        "entry_address_min": "0x7d6b00",
+        "entry_address_max": "0x13f08c0",
+        "class_records": 9888,
+        "unique_class_names_raw": 7392,
+        "top_level_records": 2333,
+        "class_methods": 37833,
+        "classes_with_methods": 6170,
+        "canonical_strings": 65981,
+        "fuzzy_strings": 94388,
+        "pool_referenced_string_slots": 67508,
+        "object_pool_length": 109106,
+        "object_pool_entries_offset": 16,
+        "object_pool_word_size": 8,
+        "package_uris_observed_fuzzy": 2543
+      },
+      "adapter_projection": {
+        "classes": 7390,
+        "libraries": 512,
+        "object_pool_entries": 67472,
+        "functions": 42809,
+        "capabilities": {
+          "class_relationships": "unavailable",
+          "classes": "partial",
+          "function_names": "partial",
+          "functions": "partial",
+          "libraries": "partial",
+          "object_pool": "partial",
+          "pool_index_space": "complete"
+        }
+      },
+      "blutter_comparison": {
+        "app_function_headers": 2796,
+        "exact_start_matches": 2748,
+        "exact_start_percent": 98.28,
+        "offset_start_matches": 48,
+        "offset_start_delta": "0x18",
+        "offset_start_breakdown": {
+          "dyn_thunks": 47,
+          "getter": 1
+        },
+        "headers_outside_r2flutter_range": 0,
+        "body_size_compared": 2748,
+        "body_size_exact": 2747,
+        "body_size_exact_percent": 99.96,
+        "body_size_truncated": {
+          "address": "0xfc9334",
+          "blutter_size": "0xc154",
+          "adapter_cap": "0x8000"
+        },
+        "name_subset_headers": 1160,
+        "name_method_exact": 1109,
+        "name_method_exact_percent": 95.6,
+        "name_owner_exact": 1134,
+        "name_owner_exact_percent": 97.76,
+        "name_both_exact": 1083,
+        "name_both_exact_percent": 93.36,
+        "name_method_normalized": 1160,
+        "name_method_normalized_percent": 100.0,
+        "name_owner_normalized": 1137,
+        "name_owner_normalized_percent": 98.02,
+        "name_both_normalized": 1137,
+        "name_both_normalized_percent": 98.02,
+        "name_residual_differences": 23,
+        "name_residual_cause": "_enumToString owner attribution: Blutter attaches the shared enum helper to the using class"
+      },
+      "object_pool_comparison": {
+        "r2flutter_slots": 67508,
+        "common_slots": 67440,
+        "byte_identical": 67048,
+        "byte_identical_percent": 99.42,
+        "identical_after_punctuation_unescape": 67431,
+        "identical_after_punctuation_unescape_percent": 99.99,
+        "residual_differences": 9,
+        "r2flutter_only_slots": 68,
+        "r2flutter_only_matching_adjacent_unlinkedcall": 68
+      },
+      "focus_runs": [
+        {
+          "name": "method.AttedenceController.scanEntrant",
+          "entry": "0xd4f850",
+          "function_id": 19817,
+          "pseudocode_lines": 58,
+          "omitted_path_markers": 0,
+          "indirect_call_ratio": 0.6,
+          "total_calls": 15,
+          "indirect_calls": 9
+        },
+        {
+          "name": "method.AttedenceController.getConfirmationQRStudent",
+          "entry": "0xd4e2f8",
+          "function_id": 19792,
+          "pseudocode_lines": 28,
+          "omitted_path_markers": 0,
+          "indirect_call_ratio": 0.1111111111111111,
+          "total_calls": 9,
+          "indirect_calls": 1
+        },
+        {
+          "name": "method.AuthNetworkImpl.signIn",
+          "entry": "0xfda15c",
+          "function_id": 29005,
+          "pseudocode_lines": 116,
+          "omitted_path_markers": 0,
+          "indirect_call_ratio": 0.23214285714285715,
+          "total_calls": 56,
+          "indirect_calls": 13
+        },
+        {
+          "name": "method.BaseNetworkingV2._onRequestToken_241238401",
+          "entry": "0xd52bbc",
+          "function_id": 19836,
+          "pseudocode_lines": 412,
+          "omitted_path_markers": 0,
+          "indirect_call_ratio": 0.10294117647058823,
+          "total_calls": 136,
+          "indirect_calls": 14
+        },
+        {
+          "name": "method.OAuthWebviewService.exchangeCodeForToken",
+          "entry": "0x8e3834",
+          "function_id": 4568,
+          "pseudocode_lines": 656,
+          "omitted_path_markers": 1,
+          "indirect_call_ratio": 0.0,
+          "total_calls": 200,
+          "indirect_calls": 0
+        },
+        {
+          "name": "method.F.get:configOauth",
+          "entry": "0x8bff94",
+          "function_id": 3933,
+          "pseudocode_lines": 154,
+          "omitted_path_markers": 0,
+          "indirect_call_ratio": 0.0,
+          "total_calls": 24,
+          "indirect_calls": 0
+        }
+      ],
+      "focus_run_gate": "exploratory: --min-disassembly-ratio 0.0 --max-indirect-call-ratio 1.0; strict denominator is all 42809 functions",
+      "limitations": [
+        "no library/package attribution; --function-scope app selects 0 functions",
+        "9888 class records expose super.type_ref but no super.name",
+        "adapter caps function body at 0x8000",
+        "--focus is a prefix filter, not a substring filter",
+        "9 pool slots remain different after punctuation normalization"
+      ],
+      "output_directory": "/var/smster/work/r2flutter-2026-10-29",
+      "selected_excerpt_directory": "recovered/r2flutter",
+      "report": "reports/R2FLUTTER-BACKEND-EVALUATION.md"
+    },
     "jadx_mode_runs": {
       "auto": {
         "input": "XAPK",
@@ -401,7 +568,14 @@
     "flutterdec_commit": "ccf7dfa",
     "flutterdec_version": "0.1.0-alpha.4",
     "flutterdec_python": ">=3.9",
-    "flutterdec_registry_alias": "3.12.1"
+    "flutterdec_registry_alias": "3.12.1",
+    "radare2": "6.2.4",
+    "radare2_commit": "485e5e205b190fc297a2a95a6f982ff5d9f54039",
+    "r2flutter": "0.5.1",
+    "r2flutter_commit": "7be0c178fb6f2fe479df149cfdac31fa651b90e9",
+    "r2flutter_binary_sha256": "4d521232867126e02b123445b4a006c759205b906054613cabd97dded766c473",
+    "r2flutter_dart_version": "3.12.1",
+    "r2flutter_version_source": "exact-hash"
   },
   "dex_inventory": {
     "tool": "apkanalyzer dex packages --defined-only",

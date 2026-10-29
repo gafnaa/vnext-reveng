@@ -1,0 +1,28 @@
+dynamic method_AttedenceController_getConfirmationQRStudent(dynamic slot0, dynamic slot1, dynamic slot2, dynamic slot3, dynamic slot4, dynamic slot5) {
+  dynamic resultTmp1;
+  dynamic tmp2;
+  dynamic resultTmp3;
+  dynamic tmp4;
+  dynamic tmp5;
+
+  tmp5 = null;
+  tmp4 = slot0;
+  resultTmp3 = slot1;
+  final t1 = method_fn_673(slot1, slot0);
+  final t2 = method__MixinApplication314RxNotifierRxObjectMixin_18353248_set_value(tmp4.f44, true, tmp4);
+  final t3 = resultTmp3.sel2(resultTmp3, pool[67432]); // dispatch table, selector_offset: 2, args: lower bound
+  if (0 >= smiUntag(t3.f12)) {
+    final t4 = method_fn_42433(0, t3);
+  }
+  else {
+    tmp2 = t3.f16.f16;
+    final t5 = stub_AllocateAttendanceNetworkImplStub(0, t3.f16.f16);
+    final t6 = method_AttendanceNetworkImpl_getConfirmationQRStudent(t5, tmp2);
+    resultTmp1 = t6;
+    final t7 = method_fn_668(t6);
+    resultTmp3 = t7;
+    final t8 = method__MixinApplication314RxNotifierRxObjectMixin_18353248_set_value(tmp4.f40, t7, t7);
+    final t9 = method__MixinApplication314RxNotifierRxObjectMixin_18353248_set_value(tmp4.f44, false, tmp4);
+    return tailCall_0x82fdf0();
+  }
+}

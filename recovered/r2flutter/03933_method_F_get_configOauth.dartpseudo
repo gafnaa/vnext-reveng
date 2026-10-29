@@ -1,0 +1,154 @@
+dynamic method_F_get_configOauth(dynamic slot0, dynamic slot1, dynamic slot2, dynamic slot3, dynamic slot4, dynamic slot5) {
+  dynamic resultTmp1;
+  dynamic resultTmp2;
+  dynamic resultTmp3;
+
+  final t1 = method_fn_42424(pool[280], 0x18);
+  resultTmp3 = t1;
+  t1.f16 = pool[11888];
+  t1.f20 = pool[11889];
+  t1.f24 = pool[11890];
+  t1.f28 = pool[11891];
+  t1.f32 = pool[11892];
+  t1.f36 = pool[11893];
+  t1.f40 = pool[11894];
+  t1.f44 = pool[11895];
+  t1.f48 = pool[11896];
+  t1.f52 = pool[11897];
+  t1.f56 = pool[11898];
+  t1.f60 = pool[11899];
+  final t2 = method_fn_42399(pool[280]);
+  resultTmp2 = t2;
+  t2.f16 = resultTmp3;
+  t2.f12 = 0x18;
+  if (thread.f120.f11408 != pool[10080]) {
+    if (thread.f120.f11408 != pool[10082]) {
+      if (thread.f120.f11408 != pool[10084]) {
+        if (thread.f120.f11408 != pool[10086]) {
+          if (thread.f120.f11408 != pool[3871]) {
+            final t3 = method_fn_42424(null, 0x18, t2);
+            resultTmp3 = t3;
+            t3.f16 = pool[11635];
+            t3.f20 = pool[11900];
+            t3.f24 = pool[11636];
+            t3.f28 = pool[11901];
+            t3.f32 = pool[11902];
+            t3.f36 = pool[11903];
+            t3.f40 = pool[11642];
+            t3.f44 = pool[11904];
+            t3.f48 = pool[11665];
+            t3.f52 = resultTmp2;
+            t3.f56 = pool[11905];
+            final t4 = method_fn_42424(null, 4, resultTmp2);
+            resultTmp1 = t4;
+            t4.f16 = pool[11915];
+            ((reg15 - 0x28)).f0 = pool[11914];
+            final t5 = method__GrowableList_0150898_join(resultTmp2);
+            ((resultTmp1 + 0x13)).f0 = t5;
+            if (((((t5 >> 0) & 1) != 0)) && (!(needsWriteBarrier((t5._tag & (resultTmp1._tag >>> 2))) == 0))) {
+              final t6 = method_fn_42387(resultTmp1);
+            }
+            ((reg15 - 0x28)).f0 = resultTmp1;
+            final t7 = method__StringBase_0150898__interpolate_0150898();
+            ((resultTmp3 + 0x3b)).f0 = t7;
+            if (((((t7 >> 0) & 1) != 0)) && (!(needsWriteBarrier((t7._tag & (resultTmp3._tag >>> 2))) == 0))) {
+              final t8 = method_fn_42387(resultTmp3);
+            }
+            final t9 = method_Map_Map__fromLiteral_0150898();
+            return t9;
+          }
+          final t10 = method_fn_42424(null, 0x18, t2);
+          resultTmp3 = t10;
+          t10.f16 = pool[11635];
+          t10.f20 = pool[11909];
+          t10.f24 = pool[11636];
+          t10.f28 = pool[11910];
+          t10.f32 = pool[11902];
+          t10.f36 = pool[11911];
+          t10.f40 = pool[11642];
+          t10.f44 = pool[11912];
+          t10.f48 = pool[11665];
+          t10.f52 = resultTmp2;
+          t10.f56 = pool[11905];
+          final t11 = method_fn_42424(null, 4, resultTmp2);
+          resultTmp1 = t11;
+          t11.f16 = pool[11913];
+          ((reg15 - 0x28)).f0 = pool[11914];
+          final t12 = method__GrowableList_0150898_join(resultTmp2);
+          ((resultTmp1 + 0x13)).f0 = t12;
+          if (((((t12 >> 0) & 1) != 0)) && (!(needsWriteBarrier((t12._tag & (resultTmp1._tag >>> 2))) == 0))) {
+            final t13 = method_fn_42387(resultTmp1);
+          }
+          ((reg15 - 0x28)).f0 = resultTmp1;
+          final t14 = method__StringBase_0150898__interpolate_0150898();
+          ((resultTmp3 + 0x3b)).f0 = t14;
+          if (((((t14 >> 0) & 1) != 0)) && (!(needsWriteBarrier((t14._tag & (resultTmp3._tag >>> 2))) == 0))) {
+            final t15 = method_fn_42387(resultTmp3);
+          }
+          final t16 = method_Map_Map__fromLiteral_0150898();
+          return t16;
+        }
+        final t17 = method_fn_42424(null, 0x18, t2);
+        t17.f16 = pool[11635];
+        t17.f20 = pool[11900];
+        t17.f24 = pool[11636];
+        t17.f28 = pool[11901];
+        t17.f32 = pool[11902];
+        t17.f36 = pool[11903];
+        t17.f40 = pool[11642];
+        t17.f44 = pool[11904];
+        t17.f48 = pool[11665];
+        t17.f52 = resultTmp2;
+        t17.f56 = pool[11905];
+        t17.f60 = pool[11908];
+        final t18 = method_Map_Map__fromLiteral_0150898(reg1, reg2, resultTmp2);
+        return t18;
+      }
+      final t19 = method_fn_42424(null, 0x18, t2);
+      t19.f16 = pool[11635];
+      t19.f20 = pool[11900];
+      t19.f24 = pool[11636];
+      t19.f28 = pool[11901];
+      t19.f32 = pool[11902];
+      t19.f36 = pool[11903];
+      t19.f40 = pool[11642];
+      t19.f44 = pool[11904];
+      t19.f48 = pool[11665];
+      t19.f52 = resultTmp2;
+      t19.f56 = pool[11905];
+      t19.f60 = pool[11907];
+      final t20 = method_Map_Map__fromLiteral_0150898(reg1, reg2, resultTmp2);
+      return t20;
+    }
+    final t21 = method_fn_42424(null, 0x18, t2);
+    t21.f16 = pool[11635];
+    t21.f20 = pool[11900];
+    t21.f24 = pool[11636];
+    t21.f28 = pool[11901];
+    t21.f32 = pool[11902];
+    t21.f36 = pool[11903];
+    t21.f40 = pool[11642];
+    t21.f44 = pool[11904];
+    t21.f48 = pool[11665];
+    t21.f52 = resultTmp2;
+    t21.f56 = pool[11905];
+    t21.f60 = pool[11907];
+    final t22 = method_Map_Map__fromLiteral_0150898(reg1, reg2, resultTmp2);
+    return t22;
+  }
+  final t23 = method_fn_42424(null, 0x18, t2);
+  t23.f16 = pool[11635];
+  t23.f20 = pool[11900];
+  t23.f24 = pool[11636];
+  t23.f28 = pool[11901];
+  t23.f32 = pool[11902];
+  t23.f36 = pool[11903];
+  t23.f40 = pool[11642];
+  t23.f44 = pool[11904];
+  t23.f48 = pool[11665];
+  t23.f52 = resultTmp2;
+  t23.f56 = pool[11905];
+  t23.f60 = pool[11906];
+  final t24 = method_Map_Map__fromLiteral_0150898(reg1, reg2, resultTmp2);
+  return t24;
+}

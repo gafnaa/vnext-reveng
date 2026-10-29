@@ -19,6 +19,7 @@ Selected verbatim pseudocode is under
 | Snapshot hash | `ace654289f5abc240509fc941453ebc5` |
 | Registry Dart alias | `3.12.1` (provenance: r2flutter offsets; not an independent SDK proof) |
 | Backend | Blutter bridge, reusing the existing Blutter dump |
+| Comparison backend | `r2flutter` 0.5.1 on radare2 6.2.4 |
 | Scope | `--function-scope app --app-package simaster_ugm` |
 
 ## Why a local registry patch is needed
@@ -100,6 +101,62 @@ analysis/flutterdec/run_app.sh --emit-asm
 The canonical run took about 73 seconds and produced 2,628 pseudocode files and
 2,628 ASM files. The quality gate passed with 12 placeholder `if`s, 0 unresolved
 control-flow edges, 8.28% indirect calls, and a 1.0 disassembly ratio.
+
+## r2flutter backend (comparison)
+
+`r2flutter` is an external MIT tool that reads the AOT instruction table and
+reconstructs the ObjectPool image. It is useful as a second opinion on exact
+names and pool indexes, but it does not attribute functions or classes to
+libraries/packages and does not recover superclass names. It therefore cannot
+serve `--function-scope app`; use `--function-scope all` with a full name prefix.
+
+Build radare2 and r2flutter once:
+
+```sh
+export R2_PREFIX=/path/to/radare2-install
+git clone --depth 1 --branch 6.2.4 https://github.com/radareorg/radare2 "$R2_SRC"
+cd "$R2_SRC"
+./configure --prefix="$R2_PREFIX"
+PATH=/path/to/python3.9/bin:$PATH make -j"$(nproc)"
+PATH=/path/to/python3.9/bin:$PATH make install
+
+git clone --depth 1 --branch 0.5.1 https://github.com/trufae/r2flutter "$R2F_SRC"
+cd "$R2F_SRC"
+export PATH="$R2_PREFIX/bin:$PATH"
+export LD_LIBRARY_PATH="$R2_PREFIX/lib"
+make PREFIX="$R2_PREFIX" -j"$(nproc)"
+```
+
+Then point flutterdec at the binary and run a focused function:
+
+```sh
+export FLUTTERDEC_R2FLUTTER_BIN="$R2F_SRC/bin/r2flutter"
+
+"$FLUTTERDEC_BIN" decompile /path/to/config.arm64_v8a.apk \
+  --out "$OUT_DIR" \
+  --adapter-backend r2-flutter \
+  --function-scope all \
+  --focus method.AttedenceController.scanEntrant \
+  --analysis-profile light \
+  --require-snapshot-hash-match \
+  --emit-asm \
+  --min-disassembly-ratio 0.0 \
+  --max-indirect-call-ratio 1.0
+```
+
+`--focus` is a **prefix** filter, not a substring filter: names start with
+`method.`, so `--focus scanEntrant` selects nothing. The relaxed gate is required
+because the strict denominator is all 42,809 functions, while a focus run
+disassembles only the selected function; it is not evidence of failed recovery.
+Do not use `--function-scope app` with this backend until package attribution
+exists.
+
+The evaluation report is
+[`../../reports/R2FLUTTER-BACKEND-EVALUATION.md`](../../reports/R2FLUTTER-BACKEND-EVALUATION.md).
+It records 2,748/2,796 exact app start matches, 2,747/2,748 body-size matches,
+and 99.42% byte-identical ObjectPool slots (99.99% after Blutter punctuation
+escaping). Selected excerpts are under
+[`../../recovered/r2flutter/`](../../recovered/r2flutter/).
 
 ## Add synthetic owners for top-level members
 

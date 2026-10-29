@@ -1,0 +1,412 @@
+dynamic method_BaseNetworkingV2__onRequestToken_241238401(dynamic slot0, dynamic slot1, dynamic slot2, dynamic slot3, dynamic slot4, dynamic slot5) {
+  dynamic resultTmp1;
+  dynamic resultTmp2;
+  dynamic resultTmp3;
+  dynamic tmp4;
+  dynamic tmp5;
+  dynamic resultTmp6;
+  dynamic tmp7;
+
+  tmp7 = null;
+  resultTmp6 = slot0;
+  tmp5 = slot1;
+  tmp4 = slot2;
+  final t47 = method_fn_673();
+  final t48 = method_OnboardingController_getValidAccessToken(resultTmp6.f8);
+  resultTmp3 = t48;
+  final t49 = method_fn_668(t48);
+  resultTmp3 = t49;
+  final t50 = method_SharedPreferences_getInstance();
+  resultTmp2 = t50;
+  final t51 = method_fn_668(t50);
+  resultTmp2 = t51;
+  final t52 = method_SharedPreferences_getBool(t51, pool[11624]);
+  if (t52 == null) {
+    if (resultTmp3 != null) {
+      ((reg15 - 0xc8)).f0 = tmp5;
+      final t53 = poolOff[101440](reg1, reg2, reg3, poolOff[101448]); // indirect via: dispatchTarget
+      resultTmp6 = t53;
+      final t54 = method_fn_42424(null, 4);
+      t54.f16 = pool[11582];
+      t54.f20 = resultTmp3;
+      ((reg15 - 0xc8)).f0 = t54;
+      final t55 = method__StringBase_0150898__interpolate_0150898(resultTmp3);
+      ((reg15 - 0xc8)).f0 = t55;
+      final t56 = poolOff[101456](reg1, reg2, reg3, poolOff[101464]); // indirect via: dispatchTarget
+      final t57 = poolOff[101472](reg1, reg2, reg3, poolOff[101480]); // indirect via: dispatchTarget
+      return tailCall_0x82fdf0();
+    }
+    if (thread.f120.f4776 == null) {
+      final t58 = stub_Allocate_Future_5048458Stub(pool[85]);
+      resultTmp1 = t58;
+      t58.f12 = 0;
+      if (thread.f120.f1736 != thread.f144) {
+        resultTmp1.f20 = reg0;
+        final t59 = stub_Allocate_AsyncCompleter_5048458Stub(pool[85]);
+        t59.f12 = resultTmp1;
+        thread.f120.f4776 = t59;
+        final t60 = method_SharedPreferences_setBool(resultTmp2, pool[11624], true);
+        resultTmp1 = t60;
+        final t61 = method_fn_668(t60);
+        final t62 = method_BaseNetworkingV2__handleLogout_241238401(resultTmp6);
+        resultTmp1 = t62;
+        final t63 = method_fn_668(t62);
+        if (thread.f120.f4776 == null) {
+          final t64 = method_fn_42435(thread.f120.f4776);
+          final t65 = method_fn_42435();
+          final t66 = method_fn_42435();
+        }
+        else {
+          if ((thread.f120.f4776.f12.f12 & 0x1e) != 0) {
+            if (thread.f120.f4776 == null) {
+              final t67 = method_fn_42435();
+              final t68 = method_fn_42435();
+            }
+            else {
+              resultTmp6 = thread.f120.f4776.f12;
+              final t69 = method_fn_668(thread.f120.f4776.f12);
+              final t70 = poolOff[101472](reg1, reg2, reg3, poolOff[101480]); // indirect via: dispatchTarget
+              return tailCall_0x82fdf0();
+            }
+          }
+          else {
+            final t71 = method__AsyncCompleter_5048458_complete(thread.f120.f4776, thread.f120.f4776.f12.f12);
+            if (thread.f120.f4776 == null) {
+              final t72 = method_fn_42435();
+              final t73 = method_fn_42435();
+            }
+            else {
+              resultTmp6 = thread.f120.f4776.f12;
+              final t74 = method_fn_668(thread.f120.f4776.f12);
+              final t75 = poolOff[101472](reg1, reg2, reg3, poolOff[101480]); // indirect via: dispatchTarget
+              return tailCall_0x82fdf0();
+            }
+          }
+        }
+      }
+      else {
+        final t76 = method_fn_42382(reg1, pool[86]);
+        resultTmp1.f20 = reg0;
+        final t77 = stub_Allocate_AsyncCompleter_5048458Stub(pool[85]);
+        t77.f12 = resultTmp1;
+        thread.f120.f4776 = t77;
+        final t78 = method_SharedPreferences_setBool(resultTmp2, pool[11624], true);
+        resultTmp1 = t78;
+        final t79 = method_fn_668(t78);
+        final t80 = method_BaseNetworkingV2__handleLogout_241238401(resultTmp6);
+        resultTmp1 = t80;
+        final t81 = method_fn_668(t80);
+        if (thread.f120.f4776 == null) {
+          final t82 = method_fn_42435(thread.f120.f4776);
+          final t83 = method_fn_42435();
+          final t84 = method_fn_42435();
+        }
+        else {
+          if ((thread.f120.f4776.f12.f12 & 0x1e) != 0) {
+            if (thread.f120.f4776 == null) {
+              final t85 = method_fn_42435();
+              final t86 = method_fn_42435();
+            }
+            else {
+              resultTmp6 = thread.f120.f4776.f12;
+              final t87 = method_fn_668(thread.f120.f4776.f12);
+              final t88 = poolOff[101472](reg1, reg2, reg3, poolOff[101480]); // indirect via: dispatchTarget
+              return tailCall_0x82fdf0();
+            }
+          }
+          else {
+            final t89 = method__AsyncCompleter_5048458_complete(thread.f120.f4776, thread.f120.f4776.f12.f12);
+            if (thread.f120.f4776 == null) {
+              final t90 = method_fn_42435();
+            }
+            else {
+              resultTmp6 = thread.f120.f4776.f12;
+              final t91 = method_fn_668(thread.f120.f4776.f12);
+            }
+          }
+        }
+      }
+    }
+    else {
+      if ((thread.f120.f4776.f12.f12 & 0x1e) == 0) {
+        if (thread.f120.f4776 == null) {
+          final t92 = method_fn_42435();
+          final t93 = method_fn_42435();
+        }
+        else {
+          resultTmp6 = thread.f120.f4776.f12;
+          final t94 = method_fn_668(thread.f120.f4776.f12);
+          final t95 = poolOff[101472](reg1, reg2, reg3, poolOff[101480]); // indirect via: dispatchTarget
+          return tailCall_0x82fdf0();
+        }
+      }
+      else {
+        final t96 = stub_Allocate_Future_5048458Stub(pool[85]);
+        resultTmp1 = t96;
+        t96.f12 = 0;
+        if (thread.f120.f1736 != thread.f144) {
+          resultTmp1.f20 = reg0;
+          final t97 = stub_Allocate_AsyncCompleter_5048458Stub(pool[85]);
+          t97.f12 = resultTmp1;
+          thread.f120.f4776 = t97;
+          final t98 = method_SharedPreferences_setBool(resultTmp2, pool[11624], true);
+          resultTmp1 = t98;
+          final t99 = method_fn_668(t98);
+          final t100 = method_BaseNetworkingV2__handleLogout_241238401(resultTmp6);
+          resultTmp1 = t100;
+          final t101 = method_fn_668(t100);
+          if (thread.f120.f4776 == null) {
+            final t102 = method_fn_42435(thread.f120.f4776);
+            final t103 = method_fn_42435();
+            final t104 = method_fn_42435();
+          }
+          else {
+            if ((thread.f120.f4776.f12.f12 & 0x1e) != 0) {
+              if (thread.f120.f4776 == null) {
+                final t105 = method_fn_42435();
+                final t106 = method_fn_42435();
+              }
+              else {
+                resultTmp6 = thread.f120.f4776.f12;
+                final t107 = method_fn_668(thread.f120.f4776.f12);
+                final t108 = poolOff[101472](reg1, reg2, reg3, poolOff[101480]); // indirect via: dispatchTarget
+                return tailCall_0x82fdf0();
+              }
+            }
+            else {
+              final t109 = method__AsyncCompleter_5048458_complete(thread.f120.f4776, thread.f120.f4776.f12.f12);
+              if (thread.f120.f4776 == null) {
+                final t110 = method_fn_42435();
+              }
+              else {
+                resultTmp6 = thread.f120.f4776.f12;
+                final t111 = method_fn_668(thread.f120.f4776.f12);
+              }
+            }
+          }
+        }
+        else {
+          final t112 = method_fn_42382(reg1, pool[86]);
+          resultTmp1.f20 = reg0;
+          final t113 = stub_Allocate_AsyncCompleter_5048458Stub(pool[85]);
+          t113.f12 = resultTmp1;
+          thread.f120.f4776 = t113;
+          final t114 = method_SharedPreferences_setBool(resultTmp2, pool[11624], true);
+          resultTmp1 = t114;
+          final t115 = method_fn_668(t114);
+          final t116 = method_BaseNetworkingV2__handleLogout_241238401(resultTmp6);
+          resultTmp1 = t116;
+          final t117 = method_fn_668(t116);
+          if (thread.f120.f4776 == null) {
+            final t118 = method_fn_42435(thread.f120.f4776);
+            final t119 = method_fn_42435();
+            final t120 = method_fn_42435();
+          }
+          else {
+            if ((thread.f120.f4776.f12.f12 & 0x1e) != 0) {
+              if (thread.f120.f4776 == null) {
+                final t121 = method_fn_42435();
+              }
+              else {
+                resultTmp6 = thread.f120.f4776.f12;
+                final t122 = method_fn_668(thread.f120.f4776.f12);
+              }
+            }
+            else {
+              final t123 = method__AsyncCompleter_5048458_complete(thread.f120.f4776, thread.f120.f4776.f12.f12);
+              if (thread.f120.f4776 == null) {
+                final t183 = method_fn_42435();
+                final t184 = method_fn_42435();
+                return t184;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  else {
+    if (((t52 >> 4) & 1) == 0) {
+      final t124 = poolOff[101472](reg1, reg2, reg3, poolOff[101480]); // indirect via: dispatchTarget
+      return tailCall_0x82fdf0();
+    }
+    if (resultTmp3 != null) {
+      ((reg15 - 0xc8)).f0 = tmp5;
+      final t125 = poolOff[101440](reg1, reg2, reg3, poolOff[101448]); // indirect via: dispatchTarget
+      resultTmp6 = t125;
+      final t126 = method_fn_42424(null, 4);
+      t126.f16 = pool[11582];
+      t126.f20 = resultTmp3;
+      ((reg15 - 0xc8)).f0 = t126;
+      final t127 = method__StringBase_0150898__interpolate_0150898(resultTmp3);
+      ((reg15 - 0xc8)).f0 = t127;
+      final t128 = poolOff[101456](reg1, reg2, reg3, poolOff[101464]); // indirect via: dispatchTarget
+      final t129 = poolOff[101472](reg1, reg2, reg3, poolOff[101480]); // indirect via: dispatchTarget
+      return tailCall_0x82fdf0();
+    }
+    if (thread.f120.f4776 == null) {
+      final t130 = stub_Allocate_Future_5048458Stub(pool[85]);
+      resultTmp1 = t130;
+      t130.f12 = 0;
+      if (thread.f120.f1736 != thread.f144) {
+        resultTmp1.f20 = reg0;
+        final t131 = stub_Allocate_AsyncCompleter_5048458Stub(pool[85]);
+        t131.f12 = resultTmp1;
+        thread.f120.f4776 = t131;
+        final t132 = method_SharedPreferences_setBool(resultTmp2, pool[11624], true);
+        resultTmp1 = t132;
+        final t133 = method_fn_668(t132);
+        final t134 = method_BaseNetworkingV2__handleLogout_241238401(resultTmp6);
+        resultTmp1 = t134;
+        final t135 = method_fn_668(t134);
+        if (thread.f120.f4776 == null) {
+          final t136 = method_fn_42435(thread.f120.f4776);
+          final t137 = method_fn_42435();
+          final t138 = method_fn_42435();
+        }
+        else {
+          if ((thread.f120.f4776.f12.f12 & 0x1e) != 0) {
+            if (thread.f120.f4776 == null) {
+              final t139 = method_fn_42435();
+              final t140 = method_fn_42435();
+            }
+            else {
+              resultTmp6 = thread.f120.f4776.f12;
+              final t141 = method_fn_668(thread.f120.f4776.f12);
+              final t142 = poolOff[101472](reg1, reg2, reg3, poolOff[101480]); // indirect via: dispatchTarget
+              return tailCall_0x82fdf0();
+            }
+          }
+          else {
+            final t143 = method__AsyncCompleter_5048458_complete(thread.f120.f4776, thread.f120.f4776.f12.f12);
+            if (thread.f120.f4776 == null) {
+              final t144 = method_fn_42435();
+            }
+            else {
+              resultTmp6 = thread.f120.f4776.f12;
+              final t145 = method_fn_668(thread.f120.f4776.f12);
+            }
+          }
+        }
+      }
+      else {
+        final t146 = method_fn_42382(reg1, pool[86]);
+        resultTmp1.f20 = reg0;
+        final t147 = stub_Allocate_AsyncCompleter_5048458Stub(pool[85]);
+        t147.f12 = resultTmp1;
+        thread.f120.f4776 = t147;
+        final t148 = method_SharedPreferences_setBool(resultTmp2, pool[11624], true);
+        resultTmp1 = t148;
+        final t149 = method_fn_668(t148);
+        final t150 = method_BaseNetworkingV2__handleLogout_241238401(resultTmp6);
+        resultTmp1 = t150;
+        final t151 = method_fn_668(t150);
+        if (thread.f120.f4776 == null) {
+          final t152 = method_fn_42435(thread.f120.f4776);
+          final t153 = method_fn_42435();
+          final t154 = method_fn_42435();
+        }
+        else {
+          if ((thread.f120.f4776.f12.f12 & 0x1e) != 0) {
+            if (thread.f120.f4776 == null) {
+              final t155 = method_fn_42435();
+            }
+            else {
+              resultTmp6 = thread.f120.f4776.f12;
+              final t156 = method_fn_668(thread.f120.f4776.f12);
+            }
+          }
+          else {
+            final t157 = method__AsyncCompleter_5048458_complete(thread.f120.f4776, thread.f120.f4776.f12.f12);
+            if (thread.f120.f4776 == null) {
+              final t183 = method_fn_42435();
+              final t184 = method_fn_42435();
+              return t184;
+            }
+          }
+        }
+      }
+    }
+    else {
+      if ((thread.f120.f4776.f12.f12 & 0x1e) == 0) {
+        if (thread.f120.f4776 == null) {
+          final t158 = method_fn_42435();
+          final t159 = method_fn_42435();
+        }
+        else {
+          resultTmp6 = thread.f120.f4776.f12;
+          final t160 = method_fn_668(thread.f120.f4776.f12);
+          final t161 = poolOff[101472](reg1, reg2, reg3, poolOff[101480]); // indirect via: dispatchTarget
+          return tailCall_0x82fdf0();
+        }
+      }
+      else {
+        final t162 = stub_Allocate_Future_5048458Stub(pool[85]);
+        resultTmp1 = t162;
+        t162.f12 = 0;
+        if (thread.f120.f1736 != thread.f144) {
+          resultTmp1.f20 = reg0;
+          final t163 = stub_Allocate_AsyncCompleter_5048458Stub(pool[85]);
+          t163.f12 = resultTmp1;
+          thread.f120.f4776 = t163;
+          final t164 = method_SharedPreferences_setBool(resultTmp2, pool[11624], true);
+          resultTmp1 = t164;
+          final t165 = method_fn_668(t164);
+          final t166 = method_BaseNetworkingV2__handleLogout_241238401(resultTmp6);
+          resultTmp1 = t166;
+          final t167 = method_fn_668(t166);
+          if (thread.f120.f4776 == null) {
+            final t168 = method_fn_42435(thread.f120.f4776);
+            final t169 = method_fn_42435();
+            final t170 = method_fn_42435();
+          }
+          else {
+            if ((thread.f120.f4776.f12.f12 & 0x1e) != 0) {
+              if (thread.f120.f4776 == null) {
+                final t171 = method_fn_42435();
+              }
+              else {
+                resultTmp6 = thread.f120.f4776.f12;
+                final t172 = method_fn_668(thread.f120.f4776.f12);
+              }
+            }
+            else {
+              final t173 = method__AsyncCompleter_5048458_complete(thread.f120.f4776, thread.f120.f4776.f12.f12);
+              if (thread.f120.f4776 == null) {
+                final t183 = method_fn_42435();
+                final t184 = method_fn_42435();
+                return t184;
+              }
+            }
+          }
+        }
+        else {
+          final t174 = method_fn_42382(reg1, pool[86]);
+          resultTmp1.f20 = reg0;
+          final t175 = stub_Allocate_AsyncCompleter_5048458Stub(pool[85]);
+          t175.f12 = resultTmp1;
+          thread.f120.f4776 = t175;
+          final t176 = method_SharedPreferences_setBool(resultTmp2, pool[11624], true);
+          resultTmp1 = t176;
+          final t177 = method_fn_668(t176);
+          final t178 = method_BaseNetworkingV2__handleLogout_241238401(resultTmp6);
+          resultTmp1 = t178;
+          final t179 = method_fn_668(t178);
+          if (thread.f120.f4776 == null) {
+            final t180 = method_fn_42435(thread.f120.f4776);
+            final t181 = method_fn_42435();
+          }
+          else {
+            if (((thread.f120.f4776.f12.f12 & 0x1e) != 0) && (thread.f120.f4776 == null)) {
+              final t183 = method_fn_42435();
+              final t184 = method_fn_42435();
+              return t184;
+            }
+            final t182 = method__AsyncCompleter_5048458_complete(thread.f120.f4776, thread.f120.f4776.f12.f12);
+          }
+        }
+      }
+    }
+  }
+  break;
+}

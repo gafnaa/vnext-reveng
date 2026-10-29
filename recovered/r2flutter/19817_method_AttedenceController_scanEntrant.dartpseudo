@@ -1,0 +1,58 @@
+dynamic method_AttedenceController_scanEntrant(dynamic slot0, dynamic slot1, dynamic slot2, dynamic slot3, dynamic slot4, dynamic slot5) {
+  dynamic resultTmp1;
+  dynamic resultTmp2;
+  dynamic resultTmp3;
+  dynamic tmp4;
+
+  tmp4 = null;
+  resultTmp3 = slot0;
+  resultTmp2 = slot1;
+  final t1 = method_fn_673();
+  if (!(thread.f120.f4704 != thread.f144)) {
+    final t2 = method_fn_42381(reg1, pool[3889]);
+  }
+  final t3 = stub_AllocateAttendanceNetworkImplStub();
+  final t4 = method_AttendanceNetworkImpl_scanEntrant(t3, resultTmp2);
+  resultTmp1 = t4;
+  final t5 = method_fn_668(t4);
+  resultTmp1 = t5;
+  resultTmp3.f56 = null;
+  if ((!(smiUntag(resultTmp2.f8.f8) > 0x25)) && (!(t5 == null))) {
+    if (((((!(t5 == null)) && ((((t5 >> 0) & 1) != 0))) && (!(classId(t5) == 0x1dce))) && (!(thread.f1672.f24[classId(t5)].f44 == null))) && (((thread.f1672.f24[classId(t5)].f44.f16 >>> 3) != 0x1dce))) {
+      final t6 = pool[104].f8(null, null, pool[67471]); // indirect via: dispatchTarget
+      if (reg7 == null) {
+        final t7 = pool[93].f8(reg1, reg2, pool[67473]); // indirect via: dispatchTarget
+      }
+    }
+    if (((reg0 >> 4) & 1) == 0) {
+      final t8 = resultTmp1.sel696(resultTmp1, pool[67474]); // dispatch table, selector_offset: 696, args: lower bound
+      resultTmp2 = t8;
+      if (t8 != null) {
+        ((reg15 - 0xa0)).f0 = t8;
+        final t9 = sel41409(); // dispatch table, selector_offset: 41409, args: unknown, receiver: unrecovered
+      }
+      resultTmp3.f56 = reg0;
+      if (!(needsWriteBarrier((reg0._tag & (resultTmp3._tag >>> 2))) == 0)) {
+        final t10 = fn_0x13ddf94(resultTmp3);
+      }
+    }
+  }
+  if (((((!(resultTmp1 == null)) && ((((resultTmp1 >> 0) & 1) != 0))) && (!(classId(resultTmp1) == 0x1dce))) && (!(thread.f1672.f24[classId(resultTmp1)].f44 == null))) && (((thread.f1672.f24[classId(resultTmp1)].f44.f16 >>> 3) != 0x1dce))) {
+    final t11 = pool[104].f8(null, null, pool[67476]); // indirect via: dispatchTarget
+    if (reg7 == null) {
+      final t12 = pool[93].f8(reg1, reg2, pool[67478]); // indirect via: dispatchTarget
+    }
+  }
+  if (((reg0 >> 4) & 1) != 0) {
+    return tailCall_0x7f592c();
+  }
+  final t13 = resultTmp1.sel696(resultTmp1, pool[11827]); // dispatch table, selector_offset: 696, args: lower bound
+  resultTmp3 = t13;
+  if (t13 != null) {
+    ((reg15 - 0xa0)).f0 = t13;
+    final t14 = sel41409(); // dispatch table, selector_offset: 41409, args: unknown, receiver: unrecovered
+  }
+  resultTmp3 = reg1;
+  final t15 = reg1.sel4096(); // dispatch table, selector_offset: 4096, args: unknown
+  return tailCall_0x7f592c();
+}

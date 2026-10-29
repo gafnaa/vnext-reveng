@@ -1,0 +1,116 @@
+dynamic method_AuthNetworkImpl_signIn(dynamic slot0, dynamic slot1, dynamic slot2, dynamic slot3, dynamic slot4, dynamic slot5) {
+  dynamic tmp1;
+  dynamic resultTmp2;
+  dynamic resultTmp3;
+  dynamic tmp4;
+
+  tmp4 = null;
+  resultTmp3 = slot0;
+  resultTmp2 = slot1;
+  bool retryLoop1 = true;
+  while (retryLoop1) {
+    final t1 = method_fn_673();
+    if (!(thread.f120.f4712 != thread.f144)) {
+      final t2 = method_fn_42381(reg1, pool[11144]);
+    }
+    tmp1 = reg0 /* possible (non-exhaustive): thread.f120.f4712 */;
+    final t3 = method_fn_42424(null, 0xa);
+    t3.f16 = pool[17452];
+    t3.f20 = resultTmp2;
+    t3.f24 = pool[7384];
+    t3.f28 = pool[6465];
+    t3.f32 = pool[12048];
+    ((reg15 - 0x40)).f0 = t3;
+    final t4 = method__StringBase_0150898__interpolate_0150898(resultTmp2);
+    final t5 = method_BaseNetworking_post();
+    resultTmp2 = t5;
+    final t6 = method_fn_668(t5);
+    resultTmp3 = t6;
+    final t7 = method_fn_42424(null, 4);
+    t7.f16 = pool[17453];
+    t7.f20 = resultTmp3.f12;
+    ((reg15 - 0x40)).f0 = t7;
+    final t8 = method__StringBase_0150898__interpolate_0150898(resultTmp3, resultTmp3.f12);
+    if (!(thread.f120.f4704 != thread.f144)) {
+      final t9 = method_fn_42381(reg1, pool[3889]);
+    }
+    if (resultTmp3.f20 != 0x190) {
+      final t10 = stub_AllocateRequestOptionsStub();
+      resultTmp3 = t10;
+      ((reg15 - 0x40)).f0 = pool[13074];
+      final t11 = method_RequestOptions_RequestOptions_(t10);
+      final t12 = stub_AllocateDioExceptionStub();
+      resultTmp2 = t12;
+      final t13 = method_DioException_DioException_(t12, resultTmp3);
+      final t14 = method_fn_42386();
+      final t15 = method_fn_42425();
+      continue;
+    }
+    final t16 = poolOff[139648](reg0.f12, reg2, reg3, poolOff[139656]); // indirect via: dispatchTarget
+    final t17 = poolOff[139664](reg1, reg2, reg3, poolOff[139672]); // indirect via: dispatchTarget
+    ((reg15 - 0x40)).f0 = reg0;
+    final t18 = sel41409(); // dispatch table, selector_offset: 41409, args: unknown, receiver: unrecovered
+    final t19 = dispatchTable[classId(t18)](classId(t18)); // indirect via: dispatchTarget
+    if (((t19 >> 4) & 1) == 0) {
+      final t20 = stub_AllocateRequestOptionsStub();
+      resultTmp3 = t20;
+      ((reg15 - 0x40)).f0 = pool[13074];
+      final t21 = method_RequestOptions_RequestOptions_(t20);
+      final t22 = stub_AllocateDioExceptionStub();
+      resultTmp2 = t22;
+      final t23 = method_DioException_DioException_(t22, resultTmp3);
+      final t24 = method_fn_42386();
+      final t25 = stub_AllocateRequestOptionsStub();
+      resultTmp3 = t25;
+      ((reg15 - 0x40)).f0 = pool[13074];
+      final t26 = method_RequestOptions_RequestOptions_(t25);
+      final t27 = stub_AllocateDioExceptionStub();
+      resultTmp2 = t27;
+      final t28 = method_DioException_DioException_(t27, resultTmp3);
+      final t29 = method_fn_42386();
+      final t30 = stub_AllocateRequestOptionsStub();
+      resultTmp3 = t30;
+      ((reg15 - 0x40)).f0 = pool[13074];
+      final t31 = method_RequestOptions_RequestOptions_(t30);
+      final t32 = stub_AllocateDioExceptionStub();
+      resultTmp2 = t32;
+      final t33 = method_DioException_DioException_(t32, resultTmp3);
+      final t34 = method_fn_42386();
+      final t35 = method_fn_42425();
+      continue;
+    }
+    final t36 = poolOff[139680](resultTmp3.f12, reg2, reg3, poolOff[139688]); // indirect via: dispatchTarget
+    final t37 = poolOff[139696](reg1, reg2, reg3, poolOff[139704]); // indirect via: dispatchTarget
+    final t38 = poolOff[139712](reg1, reg2, reg3, poolOff[139720]); // indirect via: dispatchTarget
+    final t39 = poolOff[139728](reg1, reg2, reg3, poolOff[139736]); // indirect via: dispatchTarget
+    final t40 = dispatchTable[reg1](); // indirect via: dispatchTarget
+    if (((t40 >> 4) & 1) == 0) {
+      final t41 = stub_AllocateRequestOptionsStub();
+      resultTmp3 = t41;
+      ((reg15 - 0x40)).f0 = pool[13074];
+      final t42 = method_RequestOptions_RequestOptions_(t41);
+      final t43 = stub_AllocateDioExceptionStub();
+      resultTmp2 = t43;
+      final t44 = method_DioException_DioException_(t43, resultTmp3);
+      final t45 = method_fn_42386();
+      final t46 = stub_AllocateRequestOptionsStub();
+      resultTmp3 = t46;
+      ((reg15 - 0x40)).f0 = pool[13074];
+      final t47 = method_RequestOptions_RequestOptions_(t46);
+      final t48 = stub_AllocateDioExceptionStub();
+      resultTmp2 = t48;
+      final t49 = method_DioException_DioException_(t48, resultTmp3);
+      final t50 = method_fn_42386();
+      final t51 = method_fn_42425();
+      continue;
+    }
+    retryLoop1 = false;
+  }
+  final t52 = poolOff[139744](resultTmp3.f12, reg2, reg3, poolOff[139752]); // indirect via: dispatchTarget
+  final t53 = poolOff[139760](reg1, reg2, reg3, poolOff[139768]); // indirect via: dispatchTarget
+  final t54 = poolOff[139776](reg1, reg2, reg3, poolOff[139784]); // indirect via: dispatchTarget
+  final t55 = poolOff[139792](reg1, reg2, reg3, poolOff[139800]); // indirect via: dispatchTarget
+  resultTmp3 = t55;
+  final t56 = method_fn_42375(null, null, pool[17474]);
+  return tailCall_0x82fdf0();
+}
