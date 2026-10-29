@@ -24,6 +24,7 @@ ALLOWLIST = [
     "reports/PROGRESS.md",
     "reports/DEX-DECOMPILATION.md",
     "reports/FLUTTERDEC-APP-DECOMPILE.md",
+    "reports/R2FLUTTER-BACKEND-EVALUATION.md",
     "reports/flutterdec-quality.json",
     "analysis/flutterdec/README.md",
     "analysis/flutterdec/prepare_registry.py",
@@ -38,6 +39,13 @@ ALLOWLIST = [
     "recovered/flutterdec/simaster_ugm/20909__launchOAuth.dartpseudo",
     "recovered/flutterdec/simaster_ugm/23360_configOauth.dartpseudo",
     "recovered/flutterdec/simaster_ugm/23478_BaseNetworking__internal.dartpseudo",
+    "recovered/r2flutter/README.md",
+    "recovered/r2flutter/03933_method_F_get_configOauth.dartpseudo",
+    "recovered/r2flutter/04568_method_OAuthWebviewService_exchangeCodeForToken.dartpseudo",
+    "recovered/r2flutter/19792_method_AttedenceController_getConfirmationQRStudent.dartpseudo",
+    "recovered/r2flutter/19817_method_AttedenceController_scanEntrant.dartpseudo",
+    "recovered/r2flutter/19836_method_BaseNetworkingV2__onRequestToken_241238401.dartpseudo",
+    "recovered/r2flutter/29005_method_AuthNetworkImpl_signIn.dartpseudo",
 ]
 
 
