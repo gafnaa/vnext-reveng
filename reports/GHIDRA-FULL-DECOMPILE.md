@@ -48,7 +48,7 @@ Run lanjutan pada 2026-10-27 memakai 2.796 function header Blutter dari paket `s
 - Cakupan body function Ghidra di `.text` adalah 2.288.353 byte dari 12.782.208 byte (17,90%).
 - Gap `_kDartVmSnapshotInstructions` dan 50 indirect jump table tetap terbuka.
 
-Artinya, **paket aplikasi sudah tercakup pada level function start**, tetapi seluruh binary belum. Rincian, batas, dan perintah reproduksi ada di [`GHIDRA-APP-DECOMPILE.md`](GHIDRA-APP-DECOMPILE.md).
+Artinya, **paket aplikasi sudah tercakup pada level function start**, tetapi seluruh binary belum. Rincian, batas, dan perintah reproduksi ada di [`GHIDRA-APP-DECOMPILE.md`](GHIDRA-APP-DECOMPILE.md). Triase atas 953 function Ghidra-only, 281 body-size mismatch, dan cakupan byte ada di [`GHIDRA-FULL-TRIAGE.md`](GHIDRA-FULL-TRIAGE.md).
 
 ## Reproduksi
 
@@ -71,8 +71,10 @@ Langkah import dan seed pertama tersedia di [`analysis/ghidra/README.md`](../ana
 
 ## Langkah berikutnya
 
-1. Seed dan klasifikasikan 27.193 function non-aplikasi, atau catat secara eksplisit bahwa fokus security dibatasi ke paket `simaster_ugm`.
+1. Seed dan klasifikasikan 26.127 header non-aplikasi yang belum punya function Ghidra, atau catat secara eksplisit bahwa fokus security dibatasi ke paket `simaster_ugm`.
 2. Triase 50 indirect jump table dan tentukan apakah dapat dipulihkan melalui konfigurasi ARM64/Ghidra atau metadata Blutter.
 3. Petakan code/data di object `_kDartVmSnapshotInstructions` serta sisa executable segment ke status terminal.
-4. Cocokkan seluruh code range Blutter dengan byte/range Ghidra, termasuk overlap, 953 function Ghidra-only, dan 281 body-size mismatch.
+4. Tutup 56.760 byte rentang aplikasi yang tidak dimiliki function Ghidra mana pun: seed ulang 42 function body-24 dan 191 function multi-range.
 5. Pisahkan decompile hasil Ghidra dari klaim pemulihan source Dart; informasi yang dibuang compiler AOT tidak tersedia lagi.
+
+Klasifikasi 953 function Ghidra-only, mekanisme 281 body-size mismatch, dan rekonsiliasi cakupan byte sudah selesai dan dicatat di [`GHIDRA-FULL-TRIAGE.md`](GHIDRA-FULL-TRIAGE.md).

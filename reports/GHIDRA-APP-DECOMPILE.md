@@ -40,11 +40,11 @@ Angka 2.051/2.051 pada laporan batch sebelumnya hanya mengukur function yang **s
 
 ## 3. Batas dan anomali yang tersisa
 
-- **281 body-size mismatch** pada function aplikasi. Ukuran body Ghidra sering lebih kecil dari `size` Blutter karena decompiler berhenti pada `ret`, memecah range, atau tidak memasukkan padding. Ini bukan kegagalan pseudocode, tetapi batas ukuran tidak boleh dianggap identik dengan source.
+- **281 body-size mismatch** pada function aplikasi. Ukuran body Ghidra sering lebih kecil dari `size` Blutter karena decompiler berhenti pada `ret`, memecah range, atau tidak memasukkan padding. Ini bukan kegagalan pseudocode, tetapi batas ukuran tidak boleh dianggap identik dengan source. Rekonsiliasi lengkap ada di [`GHIDRA-FULL-TRIAGE.md`](GHIDRA-FULL-TRIAGE.md): 191 kasus multi-range (39.044 byte), 48 kasus selisih 24 byte yang identik dengan 48 header r2flutter `+0x18`, dan 42 function yang hanya terdisassembly prolog 24 byte (17.692 byte ekor tanpa function).
 - **Satu overlap batas** pada `0xd0bd2c`: closure Blutter berukuran `0x3c`, tetapi byte setelah `ret` di `0xd0bd4c` sudah menjadi awal `changeTabIndex` di `0xd0bd50`. Seed koreksi memakai `0x24` byte agar dua function tidak digabung.
 - **50 caveat indirect jump table** dari baseline masih terbuka; batch aplikasi tidak menambah caveat baru.
 - **`_kDartVmSnapshotInstructions`** selebar 92.768 byte belum dipetakan menjadi function. Range ini adalah gap eksplisit, bukan area yang sudah terbukti tidak berisi kode.
-- **953 function Ghidra tanpa padanan Blutter** dapat berasal dari alur yang ditelusuri Ghidra, stub, atau function boundary yang berbeda; belum ditriase satu per satu.
+- **953 function Ghidra tanpa padanan Blutter** sudah terklasifikasi: 926 seluruhnya di dalam celah antar-function Blutter, 344 di antaranya trampolin 12 byte `movz`/`movk`/`b` menuju dua dispatcher alokasi yang bukan function; 12 berada di dalam body Blutter; 5 sebelum header pertama dan 10 setelah header terakhir (`stub.typetest_*`). Rincian ada di [`GHIDRA-FULL-TRIAGE.md`](GHIDRA-FULL-TRIAGE.md).
 - **Object model Dart** tidak pulih utuh: variabel `undefined8`, `unaff_x*`, pointer object pool, dan dispatch tidak sama dengan source Dart.
 
 ## 4. Hubungan dengan temuan keamanan
@@ -92,8 +92,8 @@ Output pseudocode dan project Ghidra tetap berada di mesin ini, bukan di Git. Sc
 
 ## 6. Langkah berikutnya
 
-1. Seed dan klasifikasikan 27.193 function non-aplikasi, atau dokumentasikan batas bahwa fokus security hanya paket aplikasi.
-2. Triase 953 function Ghidra-only dan 281 body-size mismatch.
+1. Seed dan klasifikasikan 26.127 header non-aplikasi yang belum punya function Ghidra, atau dokumentasikan batas bahwa fokus security hanya paket aplikasi.
+2. Tutup 56.760 byte rentang aplikasi yang tidak dimiliki function Ghidra: seed ulang 42 function body-24 dan 191 function multi-range.
 3. Petakan `_kDartVmSnapshotInstructions` dan 50 indirect jump table.
 4. Bandingkan seluruh code range `.text` dengan daftar function; target akhir adalah status terminal per range, bukan hanya per function start.
 5. Pertahankan pemisahan tegas antara pseudocode, assembly Blutter, dan source Dart asli.

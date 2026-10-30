@@ -167,6 +167,132 @@
       "output_directory": "/smster/work/ghidra/decompiled-app-2026-10-27",
       "report": "reports/GHIDRA-APP-DECOMPILE.md"
     },
+    "ghidra_full_triage": {
+      "date": "2026-10-30",
+      "script": "analysis/ghidra/triage_full_binary.py",
+      "address_normalisation": "ghidra_address - 0x100000 = file address = blutter address",
+      "inputs": {
+        "ghidra_inventory": "/smster/work/ghidra/function-inventory-app.tsv",
+        "blutter_headers": "/smster/work/blutter-top-level/asm",
+        "app_function_headers": "/smster/work/flutterdec-2026-10-28/blutter-app-functions.tsv",
+        "r2flutter_instruction_table": "/smster/work/r2flutter-2026-10-29/i.json",
+        "ghidra_function_index": "/smster/work/ghidra/decompiled-all/SimasterAOT-2026-10-27-audited/function-index.tsv",
+        "binary": "/smster/artifacts/native/libapp.so"
+      },
+      "totals": {
+        "ghidra_functions": 4815,
+        "blutter_headers": 29989,
+        "matched_starts": 3862,
+        "matched_percent": 12.88,
+        "ghidra_only": 953,
+        "blutter_only": 26127
+      },
+      "ghidra_only_classification": {
+        "inside_inter_function_gap": 926,
+        "at_gap_start": 258,
+        "inside_blutter_body": 12,
+        "before_first_blutter_header": 5,
+        "after_last_blutter_header": 10,
+        "after_last_all_typetest": true,
+        "name_prefix": {
+          "method": 557,
+          "stub": 386,
+          "unnamed": 10
+        },
+        "body_bytes_total": 208777,
+        "body_size_buckets": {
+          "<=16": 350,
+          "17-64": 81,
+          "65-256": 291,
+          ">256": 231
+        }
+      },
+      "trampolines": {
+        "body_12_total": 345,
+        "decoded_movz_movk_b": 344,
+        "targets": {
+          "0x13de7a0": 292,
+          "0x13de738": 52
+        },
+        "target_is_ghidra_function": {
+          "0x13de738": false,
+          "0x13de7a0": false
+        },
+        "target_is_blutter_header": {
+          "0x13de738": false,
+          "0x13de7a0": false
+        },
+        "decoded_all_stub_allocate": true,
+        "immediate_min": "0x4829c",
+        "immediate_max": "0x20d421c"
+      },
+      "app_body_size": {
+        "functions_compared": 2796,
+        "mismatch_total": 281,
+        "ghidra_smaller": 281,
+        "ghidra_larger": 0,
+        "multi_range": 191,
+        "single_range": 90,
+        "delta_24": 48,
+        "delta_24_end_is_next_blutter_start": 47,
+        "delta_24_end_is_ghidra_function": 47,
+        "delta_24_end_body_sizes": {
+          "24": 42,
+          "76": 1,
+          "80": 1,
+          "588": 1,
+          "1160": 1,
+          "2080": 1
+        },
+        "delta_24_previous_18_is_r2flutter_entry": 48,
+        "delta_24_previous_18_is_dyn_thunk": 47,
+        "ghidra_body_24": 42,
+        "body_24_all_targets_of_delta_24": true,
+        "body_24_targeted_count": 42,
+        "multi_range_gap_bytes": 39044,
+        "crosses_next_blutter_start": 0,
+        "r2flutter_plus_18_not_entry": 48,
+        "delta_24_equals_r2flutter_plus_18": true,
+        "app_span_bytes": 1508476,
+        "app_span_covered": 1451716,
+        "app_span_uncovered": 56760,
+        "app_span_uncovered_percent": 3.76,
+        "uncovered_from_multi_range": 39044,
+        "uncovered_from_body_24_tails": 17692,
+        "uncovered_from_odd_single_range": 24,
+        "odd_single_range_addresses": [
+          "0x1020e00"
+        ]
+      },
+      "partial_control_flow": {
+        "total": 50,
+        "in_app_package": 0,
+        "with_blutter_header": 3,
+        "body_bytes_min": 12,
+        "body_bytes_max": 1492
+      },
+      "coverage": {
+        "text_bytes": 12782208,
+        "ghidra_body_bytes_in_text": 2288353,
+        "ghidra_body_percent": 17.9,
+        "disjoint_body_ranges": 1456,
+        "vm_snapshot_bytes": 92768,
+        "vm_snapshot_covered": 0,
+        "isolate_bytes": 12689408,
+        "isolate_covered": 2288353,
+        "isolate_percent": 18.03
+      },
+      "blutter_gaps": {
+        "count": 5054,
+        "bytes": 1820616,
+        "median_bytes": 24,
+        "overlapping_header_pairs": 362,
+        "overlap_bytes": 8544,
+        "containing_ghidra_only_function": 926,
+        "bytes_covered_by_ghidra_only": 206468
+      },
+      "report": "reports/GHIDRA-FULL-TRIAGE.md"
+    },
     "flutterdec_app_batch": {
       "tool": "caverav/flutterdec",
       "commit": "ccf7dfa",
