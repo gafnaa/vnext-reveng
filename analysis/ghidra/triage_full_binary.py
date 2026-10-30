@@ -17,6 +17,7 @@ Usage:
       --app-functions /smster/work/flutterdec-2026-10-28/blutter-app-functions.tsv \
       --r2flutter /smster/work/r2flutter-2026-10-29/i.json \
       --function-index /smster/work/ghidra/decompiled-all/SimasterAOT-2026-10-27-audited/function-index.tsv \
+      --function-ranges /smster/work/ghidra/function-ranges-reseed.tsv \
       --binary /smster/artifacts/native/libapp.so \
       --output /tmp/ghidra-full-triage.json
 """
@@ -107,6 +108,28 @@ def read_function_index(path):
     return rows
 
 
+def read_function_ranges(path):
+    """Return exact body ranges from the ``ExportFunctionRanges.java`` TSV.
+
+    Each ``ranges`` field is a comma-separated list of inclusive
+    ``0xSTART-0xEND`` Ghidra addresses. The returned half-open intervals are
+    normalised to file coordinates.
+    """
+    rows = {}
+    with open(path, "r", encoding="utf-8", newline="") as handle:
+        for row in csv.DictReader(handle, delimiter="\t"):
+            address = int(row["address"], 16) - IMAGE_BASE
+            intervals = []
+            for part in row["ranges"].split(","):
+                low, high = part.split("-", 1)
+                intervals.append((
+                    int(low, 16) - IMAGE_BASE,
+                    int(high, 16) - IMAGE_BASE + 1,
+                ))
+            rows[address] = intervals
+    return rows
+
+
 def merge_ranges(intervals):
     merged = []
     for start, end in sorted(intervals):
@@ -179,6 +202,10 @@ def triage(args):
     app = read_app_functions(args.app_functions)
     names = read_r2flutter_names(args.r2flutter)
     status = read_function_index(args.function_index)
+    exact_ranges = (
+        read_function_ranges(args.function_ranges)
+        if args.function_ranges else None
+    )
     with open(args.binary, "rb") as handle:
         data = handle.read()
 
@@ -268,11 +295,18 @@ def triage(args):
     partial = sorted(address for address, value in status.items()
                      if value == "partial-control-flow")
 
-    merged = merge_ranges(
-        (address, address + entry["body_bytes"])
-        for address, entry in inventory.items()
-        if entry["body_bytes"] > 0
-    )
+    if exact_ranges is None:
+        merged = merge_ranges(
+            (address, address + entry["body_bytes"])
+            for address, entry in inventory.items()
+            if entry["body_bytes"] > 0
+        )
+        range_source = "contiguous body_bytes approximation"
+    else:
+        merged = merge_ranges(
+            interval for intervals in exact_ranges.values() for interval in intervals
+        )
+        range_source = "exact body ranges"
 
     # Reconcile the bytes of the app-package span that no Ghidra body covers.
     app_span = merge_ranges(
@@ -302,6 +336,10 @@ def triage(args):
             "app_functions": os.path.abspath(args.app_functions),
             "r2flutter": os.path.abspath(args.r2flutter),
             "function_index": os.path.abspath(args.function_index),
+            "function_ranges": (
+                os.path.abspath(args.function_ranges)
+                if args.function_ranges else None
+            ),
             "binary": os.path.abspath(args.binary),
         },
         "totals": {
@@ -428,6 +466,7 @@ def triage(args):
         },
         "coverage": {
             "text_bytes": TEXT_END - TEXT_START,
+            "range_source": range_source,
             "ghidra_body_bytes_in_text": sum(end - start for start, end in merged),
             "ghidra_body_percent": round(
                 100.0 * sum(end - start for start, end in merged)
@@ -482,6 +521,7 @@ def main():
     parser.add_argument("--app-functions", required=True)
     parser.add_argument("--r2flutter", required=True)
     parser.add_argument("--function-index", required=True)
+    parser.add_argument("--function-ranges")
     parser.add_argument("--binary", required=True)
     parser.add_argument("--output")
     args = parser.parse_args()

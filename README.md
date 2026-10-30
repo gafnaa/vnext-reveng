@@ -92,7 +92,7 @@ Analisis yang tercatat memakai JADX 1.5.6, Blutter pada commit yang ditautkan di
 
 - JADX menghasilkan output parsial: 164 error pada mode auto dan 67 error pada mode simple.
 - Blutter menyelesaikan dump utama tetapi berhenti pada satu assertion.
-- Ghidra memerlukan seed alamat dari output Blutter; jumlah function yang ditemukan bukan bukti seluruh AOT telah dipulihkan. Triase full-binary menunjukkan 17,90% byte `.text` tercakup body function dan region snapshot VM 92.768 byte belum dipetakan sama sekali; 42 function aplikasi hanya terdisassembly prolog 24 byte sehingga 17.692 byte ekornya belum masuk function mana pun.
+- Ghidra memerlukan seed alamat dari output Blutter; jumlah function yang ditemukan bukan bukti seluruh AOT telah dipulihkan. Triase full-binary menunjukkan 18,04% byte `.text` tercakup body function dan region snapshot VM 92.768 byte belum dipetakan sama sekali. 42 function aplikasi yang sebelumnya hanya terdisassembly prolog 24 byte sudah di-reseed ke batas Blutter penuh, sehingga 17.692 byte ekornya masuk cakupan; sisa 39.068 byte rentang aplikasi berasal dari 191 function multi-range dan satu kasus 24 byte.
 - Flutterdec menghasilkan pseudo-Dart dengan nama heuristic. Setelah augmentasi owner top-level, 2.796/2.796 header function aplikasi terwakili; nama `__TopLevel_*` sintetis dan pemetaan `poolOff` bersifat inferensial.
 - r2flutter memberikan nama exact dan indeks ObjectPool yang tervalidasi, tetapi tidak memberikan atribusi library/package atau nama superclass. `--function-scope app` tidak dapat dipakai; run fokus memakai `--function-scope all` + `--focus` dan ambang gate eksploratif.
 - Kompilasi Flutter AOT menghilangkan komentar, nama lokal, dan sebagian struktur tipe Dart. Pseudocode bukan source asli.

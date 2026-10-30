@@ -177,6 +177,7 @@
         "app_function_headers": "/smster/work/flutterdec-2026-10-28/blutter-app-functions.tsv",
         "r2flutter_instruction_table": "/smster/work/r2flutter-2026-10-29/i.json",
         "ghidra_function_index": "/smster/work/ghidra/decompiled-all/SimasterAOT-2026-10-27-audited/function-index.tsv",
+        "ghidra_function_ranges": "/smster/work/ghidra/function-ranges-baseline.tsv",
         "binary": "/smster/artifacts/native/libapp.so"
       },
       "totals": {
@@ -273,9 +274,10 @@
       },
       "coverage": {
         "text_bytes": 12782208,
+        "range_source": "exact body ranges",
         "ghidra_body_bytes_in_text": 2288353,
         "ghidra_body_percent": 17.9,
-        "disjoint_body_ranges": 1456,
+        "disjoint_body_ranges": 1575,
         "vm_snapshot_bytes": 92768,
         "vm_snapshot_covered": 0,
         "isolate_bytes": 12689408,
@@ -292,6 +294,39 @@
         "bytes_covered_by_ghidra_only": 206468
       },
       "report": "reports/GHIDRA-FULL-TRIAGE.md"
+    },
+    "ghidra_body24_reseed": {
+      "date": "2026-10-30",
+      "script": "analysis/ghidra/ReseedBody24.java",
+      "target_count": 42,
+      "reseeded": 42,
+      "clean_pseudocode": 42,
+      "failed": 0,
+      "skipped_overlap": 0,
+      "body_bytes_before": 1008,
+      "body_bytes_after": 18700,
+      "blutter_extent_bytes": 18700,
+      "tail_bytes_recovered": 17692,
+      "json_key_occurrences": 411,
+      "json_key_unique": 252,
+      "app_span_covered": 1469408,
+      "app_span_uncovered": 39068,
+      "app_span_uncovered_percent": 2.59,
+      "text_covered": 2306045,
+      "text_percent": 18.04,
+      "disjoint_body_ranges": 1547,
+      "remaining_mismatch_total": 239,
+      "remaining_multi_range": 191,
+      "remaining_multi_range_gap_bytes": 39044,
+      "remaining_odd_single_range_bytes": 24,
+      "inputs": {
+        "targets": "/smster/work/ghidra/body24-targets.tsv",
+        "inventory": "/smster/work/ghidra/function-inventory-app-reseed.tsv",
+        "function_ranges": "/smster/work/ghidra/function-ranges-reseed.tsv",
+        "decompiled": "/smster/work/ghidra/decompiled-body24-2026-10-30"
+      },
+      "report": "reports/GHIDRA-BODY24-RESEED.md",
+      "evidence": "reports/ghidra-body24-reseed.json"
     },
     "flutterdec_app_batch": {
       "tool": "caverav/flutterdec",
