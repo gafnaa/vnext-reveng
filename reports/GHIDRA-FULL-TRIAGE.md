@@ -7,6 +7,8 @@
 - **Sifat bukti:** pembacaan byte binary, inventaris function Ghidra, dan header Blutter; bukan source Dart asli dan bukan observasi runtime.
 - **Tanggal triase:** 2026-10-30.
 
+> **Pembaruan 2026-10-30:** 42 function body-24 telah di-reseed ke batas `size` Blutter penuh. Sebanyak 17.692 byte ekor sekarang tercakup dan 42/42 pseudocode bersih. Cakupan rentang aplikasi menjadi 1.469.408 / 1.508.476 byte (97,41%), sisa 39.068 byte; cakupan `.text` menjadi 2.306.045 / 12.782.208 byte (18,04%). Angka utama di §4–§5 adalah **baseline sebelum reseed**; blok yang ditandai "setelah reseed" menunjukkan status terkini. Pemetaan field ada di [`GHIDRA-BODY24-RESEED.md`](GHIDRA-BODY24-RESEED.md).
+
 Laporan ini menutup tiga pertanyaan yang tersisa dari [`GHIDRA-APP-DECOMPILE.md`](GHIDRA-APP-DECOMPILE.md): apa isi 953 function Ghidra tanpa padanan Blutter, mengapa 281 body-size function aplikasi berbeda, dan berapa byte executable yang benar-benar tercakup.
 
 ## 1. Bahan dan normalisasi alamat
@@ -62,7 +64,7 @@ Identitas stub memperkuat pembacaan ini: seluruh 344 trampolin diberi nama `stub
 
 Konsekuensinya, 344 function ini tidak menambah permukaan analisis security: body-nya hanya 12 byte, tujuannya bukan function terdaftar, dan semuanya berada di luar paket aplikasi. Mereka artefak lowering compiler dan tidak layak menjadi target decompile manual.
 
-## 4. 281 body-size mismatch paket aplikasi
+## 4. 281 body-size mismatch paket aplikasi (baseline sebelum reseed)
 
 Dari 2.796 function aplikasi, 2.515 memiliki body Ghidra yang sama persis dengan `size` Blutter dan 281 berbeda. Seluruh 281 memiliki body Ghidra **lebih kecil**; tidak ada satu pun yang lebih besar, dan tidak ada satu pun yang melintasi start header Blutter berikutnya.
 
@@ -91,6 +93,8 @@ Satu kasus tidak mengikuti pola: `0x1020e00` (body Blutter 72, Ghidra 48). Akhir
 
 ### 4.2 Kelompok 42 body Ghidra tepat 24 byte
 
+**Status:** diselesaikan 2026-10-30. Keempat puluh dua function ini di-reseed ke `size` Blutter penuh; body total berubah dari 1.008 menjadi 18.700 byte, 17.692 byte ekor masuk cakupan, dan 42/42 pseudocode bersih. Rincian ada di [`GHIDRA-BODY24-RESEED.md`](GHIDRA-BODY24-RESEED.md).
+
 Keempat puluh dua function ini adalah **target** dari 42 kasus delta-24 di atas: wrapper-nya sudah menjadi function 48 byte, dan method aslinya hanya terdisassembly prolognya. Body Ghidra tepat 24 byte meskipun `size` Blutter berkisar 124–1.172 byte. Isi 24 byte itu adalah prolog standar AOT:
 
 ```text
@@ -106,7 +110,7 @@ Tiga puluh tujuh di antaranya memiliki 24 byte yang identik byte-per-byte. Setel
 
 Verifikasi batas menunjukkan pola yang konsisten: `start + 24` bukan function start, bukan header Blutter, dan tidak berada di dalam body function lain mana pun. Pada 28 kasus, `start + size Blutter` justru tepat berimpit dengan start function Ghidra berikutnya, sedangkan `start + size − 4` tidak pernah berada di dalam body function lain. Jadi byte antara offset 24 dan akhir body Blutter adalah **kode yang tidak dimiliki function mana pun**, bukan padding dan bukan function terpisah.
 
-Total byte yang tidak tercakup dari kelompok ini adalah 17.692 byte. Function yang terkena adalah model `toJson`/`fromJson` dan beberapa helper model, misalnya `UserModelImplToJson`, `Map_String_dynamic_toJson`, dan `PresenceConfirmationModel`. Inilah kelompok yang paling merugikan cakupan: 42 function aplikasi kehilangan hampir seluruh body-nya, dan byte itu adalah kode model data yang justru relevan untuk pemetaan payload.
+Total byte yang tidak tercakup dari kelompok ini adalah 17.692 byte. Function yang terkena adalah model `ToJson` dan beberapa helper model, misalnya `UserModelImplToJson`, `Map_String_dynamic_toJson`, dan `PresenceConfirmationModel`. Saat baseline, kelompok ini paling merugikan cakupan: 42 function aplikasi kehilangan hampir seluruh body-nya, dan byte itu adalah kode model data yang relevan untuk pemetaan payload.
 
 ### 4.3 Rekonsiliasi byte
 
@@ -121,14 +125,24 @@ Ketiga kelompok menjelaskan seluruh selisih cakupan pada rentang paket aplikasi 
 
 Rentang gabungan header aplikasi adalah 1.508.476 byte; body Ghidra menutup 1.451.716 byte (96,24%) dan menyisakan 56.760 byte (3,76%). Angka ini konsisten dengan perhitungan independen atas hole di dalam rentang aplikasi, yang menghasilkan 234 hole dengan total byte sama.
 
+Setelah reseed 42 function body-24, rekonsiliasi berubah menjadi:
+
+| Sumber byte tak tercakup | Byte |
+|---|---:|
+| Celah internal 191 function multi-range | 39.044 |
+| Kasus tunggal `0x1020e00` | 24 |
+| **Total** | **39.068** |
+
+Rentang aplikasi yang tercakup menjadi 1.469.408 byte (97,41%) dan yang tak tercakup 39.068 byte (2,59%). Jumlah mismatch turun dari 281 menjadi 239 (191 multi-range + 48 delta-24).
+
 ## 5. Cakupan `.text` dan region snapshot
 
-`.text` membentang `0x7c0000`–`0x13f0a80` (12.782.208 byte). Penggabungan seluruh body Ghidra menghasilkan 1.456 range disjoint seluas 2.288.353 byte, atau **17,90%**.
+`.text` membentang `0x7c0000`–`0x13f0a80` (12.782.208 byte). Penggabungan seluruh body Ghidra pada baseline menghasilkan 1.575 range disjoint seluas 2.288.353 byte, atau **17,90%**. Setelah reseed 42 function body-24, angkanya menjadi 1.547 range disjoint seluas 2.306.045 byte, atau **18,04%**.
 
-| Region | Rentang file | Byte | Tercakup | Persentase |
-|---|---|---:|---:|---:|
-| `_kDartVmSnapshotInstructions` | `0x7c0000`–`0x7d6a60` | 92.768 | 0 | **0,00%** |
-| Isolate snapshot | `0x7d6a80`–`0x13f0a80` | 12.689.408 | 2.288.353 | 18,03% |
+| Region | Rentang file | Byte | Tercakup baseline | Tercakup setelah reseed | Persentase setelah reseed |
+|---|---|---:|---:|---:|---:|
+| `_kDartVmSnapshotInstructions` | `0x7c0000`–`0x7d6a60` | 92.768 | 0 | 0 | **0,00%** |
+| Isolate snapshot | `0x7d6a80`–`0x13f0a80` | 12.689.408 | 2.288.353 | 2.306.045 | 18,17% |
 
 Region snapshot VM sama sekali tidak memiliki function Ghidra. Ini bukan temuan bahwa region tersebut tidak berisi kode: `readelf` menandainya sebagai ELF `OBJECT`, dan Ghidra tidak menelusuri entry ke sana. Statusnya tetap **belum dipetakan**, bukan terbukti kosong.
 
@@ -154,9 +168,10 @@ Karena tidak ada yang berada di paket aplikasi, caveat ini tidak memengaruhi tem
 
 ## 8. Batas interpretasi
 
-- Angka 12,88% mengukur **kecocokan alamat start**, bukan cakupan byte, semantik, atau perilaku. Cakupan byte adalah 17,90%.
-- Body Ghidra yang lebih kecil bukan bukti decompiler gagal. Pada 47 kasus ia memecah batas yang Blutter gabungkan dan byte sisa tetap tercakup function berikutnya; pada 42 kasus ia berhenti setelah prolog dan menyisakan kode yang tidak dimiliki function mana pun.
-- 17.692 byte ekor body-24 adalah kode yang belum didecompile. Klaim apa pun tentang isi function tersebut harus menunggu seed ulang dengan batas yang benar.
+- Angka 12,88% mengukur **kecocokan alamat start**, bukan cakupan byte, semantik, atau perilaku. Cakupan byte baseline adalah 17,90%; setelah reseed 42 function body-24 menjadi 18,04%.
+- Body Ghidra yang lebih kecil bukan bukti decompiler gagal. Pada 47 kasus ia memecah batas yang Blutter gabungkan dan byte sisa tetap tercakup function berikutnya; pada 42 kasus ia berhenti setelah prolog, tetapi kelompok itu sudah di-reseed dan 17.692 byte ekornya kini tercakup.
+- 42 function body-24 sudah didecompile penuh; klaim tentang isinya mengikuti pseudocode Ghidra dan key Blutter, bukan source Dart asli.
+- Sisa 39.068 byte rentang aplikasi terdiri dari 39.044 byte celah internal 191 function multi-range dan 24 byte kasus `0x1020e00`. Keduanya belum dipetakan.
 - 26.127 header Blutter tanpa function Ghidra tetap gap. Nama r2flutter yang tersedia untuk 25.545 di antaranya adalah metadata, bukan pseudocode.
 - Region snapshot VM 0% tercakup. Statusnya belum dipetakan, bukan terbukti tidak berisi kode.
 - Tidak ada aplikasi yang dijalankan, tidak ada instrumentasi, dan tidak ada request ke server pada triase ini.
@@ -170,16 +185,17 @@ python3 analysis/ghidra/triage_full_binary.py \
   --app-functions /smster/work/flutterdec-2026-10-28/blutter-app-functions.tsv \
   --r2flutter /smster/work/r2flutter-2026-10-29/i.json \
   --function-index /smster/work/ghidra/decompiled-all/SimasterAOT-2026-10-27-audited/function-index.tsv \
+  --function-ranges /smster/work/ghidra/function-ranges-baseline.tsv \
   --binary /smster/artifacts/native/libapp.so \
   --output /tmp/ghidra-full-triage.json
 ```
 
-Script hanya membaca artefak dan menulis JSON ringkasan. Direktori project Ghidra, dump Blutter, dan output r2flutter tetap di mesin ini, bukan di Git.
+`--function-ranges` opsional; jika diberikan, cakupan dan jumlah range dihitung dari body range aktual (`ExportFunctionRanges.java`). Tanpa opsi itu script memakai aproksimasi kontigu `body_bytes`, yang menghasilkan jumlah range lebih rendah meskipun byte coverage sama. Script hanya membaca artefak dan menulis JSON ringkasan. Direktori project Ghidra, dump Blutter, dan output r2flutter tetap di mesin ini, bukan di Git.
 
 ## 10. Langkah berikutnya
 
-1. Seed ulang 42 function body-24 dengan batas `size` Blutter penuh, lalu decompile 17.692 byte ekor yang sekarang tidak dimiliki function mana pun.
-2. Petakan 191 function multi-range agar byte di antara range ikut terdisassembly, bukan hanya dihitung sebagai selisih.
+1. ~~Seed ulang 42 function body-24 dengan batas `size` Blutter penuh, lalu decompile 17.692 byte ekor.~~ Selesai 2026-10-30; lihat [`GHIDRA-BODY24-RESEED.md`](GHIDRA-BODY24-RESEED.md).
+2. Petakan 191 function multi-range agar byte di antara range ikut terdisassembly, bukan hanya dihitung sebagai selisih. Sisa 39.044 byte.
 3. Petakan `_kDartVmSnapshotInstructions` (92.768 byte, 0% tercakup) minimal sampai status per range, termasuk kemungkinan bahwa region itu memang data.
 4. Triase celah terbesar (`0x8f6618`, `0x7e1864`, `0x801acc`) dengan nama r2flutter sebagai panduan seed.
 5. Pulihkan jump table pada 3 function `partial-control-flow` yang memiliki header Blutter, lalu putuskan apakah 47 sisanya layak.

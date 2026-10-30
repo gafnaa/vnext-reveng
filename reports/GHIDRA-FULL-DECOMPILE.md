@@ -74,7 +74,7 @@ Langkah import dan seed pertama tersedia di [`analysis/ghidra/README.md`](../ana
 1. Seed dan klasifikasikan 26.127 header non-aplikasi yang belum punya function Ghidra, atau catat secara eksplisit bahwa fokus security dibatasi ke paket `simaster_ugm`.
 2. Triase 50 indirect jump table dan tentukan apakah dapat dipulihkan melalui konfigurasi ARM64/Ghidra atau metadata Blutter.
 3. Petakan code/data di object `_kDartVmSnapshotInstructions` serta sisa executable segment ke status terminal.
-4. Tutup 56.760 byte rentang aplikasi yang tidak dimiliki function Ghidra mana pun: seed ulang 42 function body-24 dan 191 function multi-range.
+4. Tutup 39.068 byte rentang aplikasi yang tidak dimiliki function Ghidra mana pun: 39.044 byte celah internal 191 function multi-range dan 24 byte kasus `0x1020e00`. 42 function body-24 sudah di-reseed pada 2026-10-30.
 5. Pisahkan decompile hasil Ghidra dari klaim pemulihan source Dart; informasi yang dibuang compiler AOT tidak tersedia lagi.
 
-Klasifikasi 953 function Ghidra-only, mekanisme 281 body-size mismatch, dan rekonsiliasi cakupan byte sudah selesai dan dicatat di [`GHIDRA-FULL-TRIAGE.md`](GHIDRA-FULL-TRIAGE.md).
+Klasifikasi 953 function Ghidra-only, mekanisme body-size mismatch, dan rekonsiliasi cakupan byte sudah selesai dan dicatat di [`GHIDRA-FULL-TRIAGE.md`](GHIDRA-FULL-TRIAGE.md); reseed 42 function body-24 ada di [`GHIDRA-BODY24-RESEED.md`](GHIDRA-BODY24-RESEED.md).

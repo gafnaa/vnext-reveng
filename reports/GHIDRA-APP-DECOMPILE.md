@@ -40,7 +40,7 @@ Angka 2.051/2.051 pada laporan batch sebelumnya hanya mengukur function yang **s
 
 ## 3. Batas dan anomali yang tersisa
 
-- **281 body-size mismatch** pada function aplikasi. Ukuran body Ghidra sering lebih kecil dari `size` Blutter karena decompiler berhenti pada `ret`, memecah range, atau tidak memasukkan padding. Ini bukan kegagalan pseudocode, tetapi batas ukuran tidak boleh dianggap identik dengan source. Rekonsiliasi lengkap ada di [`GHIDRA-FULL-TRIAGE.md`](GHIDRA-FULL-TRIAGE.md): 191 kasus multi-range (39.044 byte), 48 kasus selisih 24 byte yang identik dengan 48 header r2flutter `+0x18`, dan 42 function yang hanya terdisassembly prolog 24 byte (17.692 byte ekor tanpa function).
+- **239 body-size mismatch** pada function aplikasi setelah 42 function body-24 di-reseed. Ukuran body Ghidra sering lebih kecil dari `size` Blutter karena decompiler berhenti pada `ret`, memecah range, atau tidak memasukkan padding. Ini bukan kegagalan pseudocode, tetapi batas ukuran tidak boleh dianggap identik dengan source. Rekonsiliasi lengkap ada di [`GHIDRA-FULL-TRIAGE.md`](GHIDRA-FULL-TRIAGE.md): 191 kasus multi-range (39.044 byte) dan 48 kasus selisih 24 byte yang identik dengan 48 header r2flutter `+0x18` (hanya 24 byte yang benar-benar tak tercakup). 42 function body-24 sudah didecompile penuh; lihat [`GHIDRA-BODY24-RESEED.md`](GHIDRA-BODY24-RESEED.md).
 - **Satu overlap batas** pada `0xd0bd2c`: closure Blutter berukuran `0x3c`, tetapi byte setelah `ret` di `0xd0bd4c` sudah menjadi awal `changeTabIndex` di `0xd0bd50`. Seed koreksi memakai `0x24` byte agar dua function tidak digabung.
 - **50 caveat indirect jump table** dari baseline masih terbuka; batch aplikasi tidak menambah caveat baru.
 - **`_kDartVmSnapshotInstructions`** selebar 92.768 byte belum dipetakan menjadi function. Range ini adalah gap eksplisit, bukan area yang sudah terbukti tidak berisi kode.
@@ -93,7 +93,7 @@ Output pseudocode dan project Ghidra tetap berada di mesin ini, bukan di Git. Sc
 ## 6. Langkah berikutnya
 
 1. Seed dan klasifikasikan 26.127 header non-aplikasi yang belum punya function Ghidra, atau dokumentasikan batas bahwa fokus security hanya paket aplikasi.
-2. Tutup 56.760 byte rentang aplikasi yang tidak dimiliki function Ghidra: seed ulang 42 function body-24 dan 191 function multi-range.
+2. Tutup 39.068 byte rentang aplikasi yang tidak dimiliki function Ghidra: 39.044 byte celah internal 191 function multi-range dan 24 byte kasus `0x1020e00`.
 3. Petakan `_kDartVmSnapshotInstructions` dan 50 indirect jump table.
 4. Bandingkan seluruh code range `.text` dengan daftar function; target akhir adalah status terminal per range, bukan hanya per function start.
 5. Pertahankan pemisahan tegas antara pseudocode, assembly Blutter, dan source Dart asli.
