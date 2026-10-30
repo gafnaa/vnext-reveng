@@ -76,3 +76,20 @@ TMPDIR=/smster/work/ghidra/tmp \
 ```
 
 Jangan menyalin project Ghidra atau pseudocode ke Git. Hash input harus cocok dengan `reports/artifact-manifest.json`; script tidak memverifikasi hash secara otomatis. Ringkasan hasil ada di [`reports/GHIDRA-APP-DECOMPILE.md`](../../reports/GHIDRA-APP-DECOMPILE.md).
+
+## Triase full binary
+
+`triage_full_binary.py` membandingkan inventaris function Ghidra dengan dump Blutter penuh, header Blutter paket aplikasi, tabel instruction r2flutter, dan status batch decompile. Script hanya membaca artefak dan menulis JSON ringkasan; tidak melakukan decompile atau eksekusi.
+
+```sh
+python3 analysis/ghidra/triage_full_binary.py \
+  --blutter-asm /smster/work/blutter-top-level/asm \
+  --inventory /smster/work/ghidra/function-inventory-app.tsv \
+  --app-functions /smster/work/flutterdec-2026-10-28/blutter-app-functions.tsv \
+  --r2flutter /smster/work/r2flutter-2026-10-29/i.json \
+  --function-index /smster/work/ghidra/decompiled-all/SimasterAOT-2026-10-27-audited/function-index.tsv \
+  --binary /smster/artifacts/native/libapp.so \
+  --output /tmp/ghidra-full-triage.json
+```
+
+Semua alamat dinormalisasi ke koordinat file (`alamat Ghidra − 0x100000`). Header Blutter dibaca dengan penelusuran direktori rekursif termasuk direktori bertitik; tanpa itu dua header di `asm/.dart_tool` terlewat. Hasil dan interpretasinya ada di [`reports/GHIDRA-FULL-TRIAGE.md`](../../reports/GHIDRA-FULL-TRIAGE.md).

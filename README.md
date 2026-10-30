@@ -30,7 +30,7 @@ Diagram memetakan containment artefak, wrapper Android, Flutter/Dart AOT, model 
 | Ghidra app-level | 2.796/2.796 function start aplikasi terwakili; 2.763 pseudocode baru | Selesai untuk paket `simaster_ugm` |
 | Flutterdec app-level | 2.796/2.796 header function aplikasi setelah augmentasi owner top-level; canonical 2.628 record | Cakupan alamat app-level lengkap; pseudo-Dart parsial |
 | Backend r2flutter | 42.809 entri instruction table; 2.748/2.796 start aplikasi sama persis; 67.048/67.440 slot pool identik | Evaluasi selesai; pembanding, bukan pengganti |
-| Ghidra full binary | 4.815 function; 3.862/29.989 header Blutter (12,88%) | Parsial; 50 jump table, VM snapshot, dan function non-aplikasi belum selesai |
+| Ghidra full binary | 4.815 function; 3.862/29.989 header Blutter (12,88%); body 17,90% `.text` | Parsial; 953 Ghidra-only dan 281 mismatch sudah ditriase, 50 jump table dan VM snapshot terbuka |
 | Feature map | 43 modul; 49 route; 36 caller/service | Statis; belum diuji runtime |
 | Endpoint inventory | 8 URL production + 2 OAuth dev; 29 label service | Statis; belum diuji runtime |
 | Runtime | 0 sesi aplikasi; 0 request backend | Belum terverifikasi |
@@ -59,6 +59,7 @@ Rincian, batas interpretasi, dan rencana uji ada di [SECURITY-FINDINGS.md](repor
 - [Inventaris dan mode decompile DEX](reports/DEX-DECOMPILATION.md) — hitungan per DEX, perbandingan JADX auto/simple/fallback, dan gap crosswalk.
 - [Analisis Ghidra](reports/GHIDRA-ANALYSIS.md) — metode seeding, alamat, fungsi prioritas, dan keterbatasan.
 - [Decompile AOT paket aplikasi](reports/GHIDRA-APP-DECOMPILE.md) — cakupan function start `simaster_ugm` dan audit full binary.
+- [Triase full-binary Ghidra](reports/GHIDRA-FULL-TRIAGE.md) — klasifikasi 953 function Ghidra-only, rekonsiliasi 281 body-size mismatch, trampolin 12 byte, dan cakupan byte `.text`/snapshot.
 - [Decompile Flutterdec paket aplikasi](reports/FLUTTERDEC-APP-DECOMPILE.md) — pipeline sekunder, 2.628 record canonical dan 2.796 record augmented, rekonsiliasi, kualitas, dan batasnya.
 - [Evaluasi backend r2flutter](reports/R2FLUTTER-BACKEND-EVALUATION.md) — pembanding independen untuk nama exact, batas function, dan resolusi ObjectPool; 2.748/2.796 start sama persis dan 99,42% slot pool identik.
 - [Batch decompile Ghidra](reports/GHIDRA-FULL-DECOMPILE.md) — hasil baseline, caveat control-flow, dan lokasi output lokal.
@@ -91,7 +92,7 @@ Analisis yang tercatat memakai JADX 1.5.6, Blutter pada commit yang ditautkan di
 
 - JADX menghasilkan output parsial: 164 error pada mode auto dan 67 error pada mode simple.
 - Blutter menyelesaikan dump utama tetapi berhenti pada satu assertion.
-- Ghidra memerlukan seed alamat dari output Blutter; jumlah function yang ditemukan bukan bukti seluruh AOT telah dipulihkan.
+- Ghidra memerlukan seed alamat dari output Blutter; jumlah function yang ditemukan bukan bukti seluruh AOT telah dipulihkan. Triase full-binary menunjukkan 17,90% byte `.text` tercakup body function dan region snapshot VM 92.768 byte belum dipetakan sama sekali; 42 function aplikasi hanya terdisassembly prolog 24 byte sehingga 17.692 byte ekornya belum masuk function mana pun.
 - Flutterdec menghasilkan pseudo-Dart dengan nama heuristic. Setelah augmentasi owner top-level, 2.796/2.796 header function aplikasi terwakili; nama `__TopLevel_*` sintetis dan pemetaan `poolOff` bersifat inferensial.
 - r2flutter memberikan nama exact dan indeks ObjectPool yang tervalidasi, tetapi tidak memberikan atribusi library/package atau nama superclass. `--function-scope app` tidak dapat dipakai; run fokus memakai `--function-scope all` + `--focus` dan ambang gate eksploratif.
 - Kompilasi Flutter AOT menghilangkan komentar, nama lokal, dan sebagian struktur tipe Dart. Pseudocode bukan source asli.
