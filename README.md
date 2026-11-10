@@ -56,6 +56,7 @@ Rincian, batas interpretasi, dan rencana uji ada di [SECURITY-FINDINGS.md](repor
 - [Hasil static reverse engineering](reports/ANALYSIS.md) — identitas paket, izin, konfigurasi, metode, dan batasan.
 - [Feature map](reports/FEATURE-MAP.md) — route, middleware sesi, modul, dan caller/service statis.
 - [Inventaris endpoint dan operasi gateway](reports/API-ENDPOINT-INVENTORY.md) — 8 URL production + 2 URL OAuth dev, 29 label service, envelope, kredensial, dan matriks risiko.
+- [Referensi API](reports/API-REFERENCE.md) — draf referensi API per endpoint: keputusan "publik atau tidak", 4 stack klien, gateway, REST `vnext/v1/*` (kendaraan, transgama, feeds, banner, parents, checkpoint, bimbingan), layanan web `simaster.ugm.ac.id`, WSS armada, dan peta bukti call-site.
 - [Inventaris dan mode decompile DEX](reports/DEX-DECOMPILATION.md) — hitungan per DEX, perbandingan JADX auto/simple/fallback, dan gap crosswalk.
 - [Analisis Ghidra](reports/GHIDRA-ANALYSIS.md) — metode seeding, alamat, fungsi prioritas, dan keterbatasan.
 - [Decompile AOT paket aplikasi](reports/GHIDRA-APP-DECOMPILE.md) — cakupan function start `simaster_ugm` dan audit full binary.
