@@ -9,12 +9,13 @@
 
 ## 1. Apakah ada API "publik"?
 
-Jawaban singkat dari bukti statis: **tidak ada endpoint REST data yang anonim** — setiap klien HTTP di aplikasi selalu melampirkan header `Authorization: Bearer ...`, termasuk saat belum login (karena header dibangun dari interpolasi `"Bearer " + token`, token kosong tetap menghasilkan `Bearer `). Yang berstatus **tanpa sesi** dan **tanpa password UGM** hanya:
+Jawaban singkat dari bukti statis: **tidak ada endpoint REST data akademik yang anonim**. Hampir semua klien HTTP melampirkan `Authorization: Bearer ...`, termasuk saat belum login (header dibangun dari interpolasi `"Bearer " + token`, sehingga token kosong tetap menghasilkan `Bearer `). Ada dua pengecualian yang benar-benar tanpa header auth, plus beberapa permukaan tanpa sesi aplikasi. Yang berstatus **tanpa sesi** dan **tanpa password UGM**:
 
 | Permukaan | Endpoint | Login aplikasi? | Password UGM? | Catatan |
 |---|---|---|---|---|
 | OAuth authorize | `GET /oauth/authorize` | ✅ tidak | ✅ tidak | Publik *by design*; otentikasi terjadi di halaman SSO di browser |
 | Banner intro (splash) | `GET /vnext/v1/banners/get_intro?banner_app=1` | ✅ dipanggil **sebelum** login (splash) | ✅ tidak | Header menjadi `Bearer ` kosong bila belum login |
+| Cek fitur/update | `GET /vnext/v1/fitur/1/android` | ✅ dipanggil splash (`_proceedToUpdateCheck`) | ✅ tidak | **`package:http` langsung tanpa argumen `headers`** — tidak ada Authorization sama sekali |
 | ToS banner | `GET /vnext/v1/banners/get_dynamic?banner_key=tosparent&banner_app=1` | ⚠️ jalur `tos_service.getToS` | ✅ tidak | Tidak ada pemeriksaan sesi di caller; konsumsi pre-login perlu konfirmasi capture |
 | GPS shuttle (WebSocket) | `wss://armada.smartcampus.ugm.ac.id/gps/ws?room=room2` | ✅ tidak | ✅ tidak | Koneksi dibentuk dari URI saja; **tidak ada argumen headers/token** di call site |
 | Presensi legacy | `POST /presensivnext/api/signin` | ✅ tidak | ❌ butuh password **turunan** | Kandidat F-01: password dapat dihitung offline dari username + tanggal |
@@ -54,6 +55,7 @@ Base URL dipilih per flavor (`flavors.dart`):
 | BaseNetworkingV2 | `utils.dart` | `doscanent`, vehicles/parking (`get/put/delete`) | `FormData.fromMap` (`application/form-data`) | `access_token` langsung + interceptor `_onRequestToken` |
 | APIService (madzab) | `base_networking_madzab_baru.dart` | splash/ToS/banner, transgama, feeds, parents, `simaster_core` | JSON (`application/json`) + `headerMultipart` bila FormData | `access_token`; **401 → `refreshOAuth` + retry 1x** |
 | APIService (v3) | `base_networking_v3.dart` | checkpoint (`apiProvider2`) | JSON | `access_token` |
+| `package:http` langsung | `utils/app_update_notif.dart` | cek fitur/update `vnext/v1/fitur/1/android` | — | **tidak ada header auth** |
 
 ### 3.2 Envelope madzab/v3
 
@@ -159,7 +161,7 @@ Semua POST dan memakai Bearer OAuth; jalur V1 menambah `UGMFWSERVICE: 1`, sedang
 
 ### 5.2 `POST /v1/student/micro/services` — gateway student
 
-Body selalu `{"micro":"student","service":"<label>","query":<...>,"param":<...>}`. Katalog label yang teramati (29; detail caller: [FEATURE-MAP.md](FEATURE-MAP.md)):
+Body selalu `{"micro":"student","service":"<label>","query":<...>,"param":<...>}`. Katalog label gateway student yang teramati (27; detail caller: [FEATURE-MAP.md](FEATURE-MAP.md)):
 
 | # | Label service | Caller utama | Area |
 |---:|---|---|---|
@@ -190,10 +192,13 @@ Body selalu `{"micro":"student","service":"<label>","query":<...>,"param":<...>}
 | 25 | `get_studi_kehadiran_rinci` | `study_schedule_service.getStudyAttendanceDetail` | Kehadiran |
 | 26 | `get_studi_krs` | `study_plan_services`, `study_schedule_service` | KRS |
 | 27 | `get_studi_max_sks` | `study_result_service.getStudiMaxSks` | SKS |
-| 28 | `get_periode` | (label literal di ASM; caller belum dipetakan) | Periode |
-| 29 | `presensi_status` | (literal tabel jadwal; bukan label service terkonfirmasi) | kehadiran |
 
-Catatan #28–29: string `"get_periode"` dan `"presensi_status"` teramati di pool ASM; kedudukannya (label service vs key model) belum pasti. `presensi_status` muncul berdekatan dengan key model (`is_hitung`, `ke`, `kode`, `mulai`) sehingga lebih mungkin key model jadwal.
+Katalog berhenti di 27 label untuk gateway student, konsisten dengan hitungan 29 label unik pada [`API-ENDPOINT-INVENTORY.md`](API-ENDPOINT-INVENTORY.md) (27 student + 1 gateway staff + 1 lookup `/staff`).
+
+Dua string yang sempat tampak seperti label tambahan ternyata bukan label service:
+
+- **`get_periode`** (`study_schedule_service.dart` `0xe6d9dc`) adalah argumen `path` pada `RequestOptions` di dalam `DioException` yang dilempar `getPeriodSchedule` saat respons bukan 400 — bukan nama service. Label sebenarnya pada fungsi itu adalah `get_studi_jadwal_periode` (#23), dibentuk lewat interpolasi `{"micro":"student","service":"get_studi_jadwal_periode",...}` (`0xe6d7a0`). Ini **memperluas** pola "status 400 sebagai kontrak baca, non-400 → `DioException` berisi `"401"`" ke luar F-05.
+- **`presensi_status`** (`recap_presence_agenda_detail_model.dart` `0x1060cd4`, `study_attendance_detail_model.dart` `0x1063228`) adalah key field model, berdampingan dengan `is_hitung`, `ke`, `kode`, `mulai`.
 
 Beberapa caller membandingkan **status 400** sebelum membaca `res` — pola yang sama dengan F-05; tidak boleh digeneralisasi ke semua label tanpa capture.
 
@@ -233,6 +238,7 @@ Keluarga endpoint ini tidak dieksplorasi penuh pada [`API-ENDPOINT-INVENTORY.md`
 | GET | `/vnext/v1/vehicles` | `limit=20&skip=0` (literal) | `vehicle_service.getAllVehicle` |
 | GET | `/vnext/v1/vehicles/<id>` | — | `vehicle_details_service.getVehicleById` |
 | GET | `/vnext/v1/vehicles/<id>/users` | — | `vehicle_details_service.getVehicleUserById` |
+| GET | `/vnext/v1/vehicles/<id>/logs/<...>` | — | `getVehicleLog` (via madzab `apiProvider`, `12bd511` = `get`) |
 | DELETE | `/vnext/v1/vehicles/<id>` | — | `deleteVehicle` |
 | DELETE | `/vnext/v1/vehicles/<id>/users/<uid>` | — | `deleteVehicleUsers` |
 | PUT | `/vnext/v1/vehicles/<id>/users/<uid>` | body `{is_active}` | `changeUserStatus` |
@@ -270,7 +276,7 @@ Operasi **DELETE/PUT** memakai header Bearer dari `access_token` langsung; tidak
 | GET | `/vnext/v1/banners/get_intro?banner_app=1` | dipanggil dari **splash view sebelum login** dijalankan; kandidat endpoint konsumsi pre-auth |
 | GET | `/vnext/v1/banners/get_dynamic?banner_key=tosparent&banner_app=1` | jalur `tos_service.getToS` |
 | GET | `/vnext/v1/banners/get_dynamic?banner_key=pengumuman_home&banner_app=<n>` | `pop_up_pengumunan` |
-| GET | `/vnext/v1/fitur/1/<...>` | cek versi/fitur untuk notifikasi update (`app_update_notif`, key `android`) |
+| GET | `/vnext/v1/fitur/1/<platform>` | cek versi/fitur untuk notifikasi update; **`package:http` langsung tanpa header auth**, dipanggil `_proceedToUpdateCheck` di splash (`android` sebagai argumen) |
 
 ### 6.5 Portal (orang tua), checkpoint, bimbingan
 
@@ -282,7 +288,7 @@ Operasi **DELETE/PUT** memakai header Bearer dari `access_token` langsung; tidak
 | GET | `/vnext/v1/checkpoint/get_active_session/<...>` | — | `checkpoint_service.getActiveCheckpointSession` (v3) |
 | POST | `/vnext/v1/checkpoint/checkin/<id>/?lat=<lat>&long=<lon>` | — | `checkInWithQRCode` (v3) |
 | POST | `/vnext/v1/checkpoint/checkout/<id>/?lat=<lat>&long=<lon>` | — | `checkOut` (v3) |
-| GET/PUT | `/vnext/v1/students/<nomor>/tugas-akhir/bimbingan/<...>` | — | `bimbingan_service._listBimbinganRaw` (PUT dipakai untuk simpan, "Hasil Save Bimbingan Data") |
+| GET / PUT / POST | `/vnext/v1/students/<nomor>/tugas-akhir/bimbingan/<...>` | — | `bimbingan_service._listBimbinganRaw` — tiga varian method teramati: `12bd511` (`get`, `0x9e9d60`), `12bd551` (`put`, `0xe65efc`), `12bd531` (`post`, `0xe66980`); keduanya yang non-GET mencatat `"Hasil Save Bimbingan Data: "` |
 
 Jalur `/vnext/v1/students/<...>` menyentuh data bimbingan akademik mahasiswa; risiko akses data lintas mahasiswa bila otorisasi server longgar. Status: **kandidat**.
 
@@ -295,11 +301,13 @@ Jalur `/vnext/v1/students/<...>` menyentuh data bimbingan akademik mahasiswa; ri
 - Header: `UGMFWSERVICE: 1`, `Content-Type: multipart/form-data` (+ Bearer dari `access_token`), via madzab `apiProvider` (`HttpMethod.post`).
 - Klien membaca field `token`, `deviceID`, `refDevice`, `deviceNama` sebelum memanggil; asal nilai tiap field perlu konfirmasi capture.
 
-### 7.2 `GET /get_menu_vnext?sesId=<sesId>&groupMenu=<groupMenu>`
+### 7.2 `POST /get_menu_vnext?sesId=<sesId>&groupMenu=<groupMenu>`
 
-- Ambil konfigurasi menu web vNext; konstanta `token`, `sesId`, `groupMenu` juga teramati dipakai di sekitar pemanggilan (`getMenuService response: `).
+- Ambil konfigurasi menu web vNext. Meskipun path memuat query string, panggilan memakai **`HttpMethod.post`** (`Obj!HttpMethod@12bd531` → `"post"` di `objs.txt`) dan field `token`, `sesId`, `groupMenu` juga dibungkus `FormData.fromMap` sebagai body (`0x11f9f90`). Jadi query string dan body kemungkinan membawa nilai yang sama; bentuk final di wire perlu capture.
 - Host dibangun dari konstanta global yang sama dengan `service_login_vnext` (static field ASM `0x1874`) — konsisten dengan `simaster.ugm.ac.id`.
 - Alur pakai: `service_login_vnext` → dapat `sesId` → `get_menu_vnext` per grup menu.
+
+> Catatan verifikasi: dua endpoint ini memakai dua varian enum berbeda untuk method yang sama — `service_login_vnext` memakai `Obj!HttpMethod@12bd531` (`post`) dan `get_menu_vnext` juga `12bd531`. Enum `12bd511`/`12bd4d1` (`get`) dipakai jalur lain (mis. `apiProvider2` checkpoint/transgama).
 
 ### 7.3 Presensi legacy
 
@@ -340,7 +348,7 @@ Negosiasi terlihat memakai URI saja — **tidak ada headers/auth** di call site 
 ## 10. Batas interpretasi
 
 - Semua dari rekonstruksi statis Flutter AOT 1.11.1; string dapat dibangun dinamis dan sebagian control flow belum pulih.
-- Label gateway 29 dalam tabel adalah **macro yang teramata**, bukan denominator semua operasi API backend.
+- Katalog 27 label gateway student + 1 gateway staff + 1 lookup `/staff` adalah **macro yang teramati** (29 label unik), bukan denominator semua operasi API backend.
 - URL REST `vnext/v1/*` adalah tambahan pemetaan ini atas inventaris sebelumnya, dari call-site `BaseNetworkingV2`/madzab/v3; sebagian tail path dibangun interpolasi sehingga format parameternya perlu konfirmasi capture.
 - Alamat adalah alamat Blutter; Ghidra = Blutter + `0x100000` (lihat [`GHIDRA-ANALYSIS.md`](GHIDRA-ANALYSIS.md)).
 - **Tidak ada klaim server**: dokumen ini tidak membuktikan bahwa endpoint berfungsi, bahwa token mahasiswa diterima, ataupun perilaku otorisasi, rate limit, dan TTL di server.
@@ -354,7 +362,7 @@ Negosiasi terlihat memakai URI saja — **tidak ada headers/auth** di call site 
 | transgama paths | literal per fungsi | `transgama_service.dart` `0xeab364`, `0xeafb0c`, `0x10cafa0`, `0xeaaed8`, `0x11fc960`, `0x11fd654`, `0x11fd980` |
 | feeds/krisis/news/kontak | literal + `accept` | `rsa_service.dart` `0x1044bc4`, `0x1047ea0`; `home_controller.dart` `0xe87aac`; `crisis_center_service.dart` `0x11f2984` |
 | banners intro/ToS/pengumuman | literal | `splash_service.dart` `0xd54d34`; `tos_service.dart` `0x11fbd88`; `pop_up_pengumunan.dart` `0x11f412c` |
-| fitur update | literal + key `android` | `app_update_notif.dart` `0xf80564` |
+| fitur update | literal + `package:http` `get()` tanpa headers | `app_update_notif.dart` `0xf80564`–`0xf80594`; caller `splash_view_v2.dart` `0xf7e918` |
 | parents | literal segmen | `parent_service.dart` `0xe867a0`, `0x103dce4`, `0x10a8dc8` |
 | checkpoint | literal + v3 `apiProvider2` | `checkpoint_service.dart` `0xbab428`, `0xd79dec`, `0x106e510` |
 | bimbingan | literal segmen + PUT | `bimbingan_service.dart` `0x9e9ce0`, `0xe65e44`, `0xe66910` |
@@ -362,6 +370,8 @@ Negosiasi terlihat memakai URI saja — **tidak ada headers/auth** di call site 
 | `get_menu_vnext` | URL template | `simaster_core_service.dart` `0x11f9e78`–`0x11f9e9c` |
 | WSS GPS tanpa headers | `Uri.parse` tanpa headers arg | `parking_wss_service.dart` `0x11e90dc`–`0x11e90f4` |
 | Madzab 401 refresh+retry | `cmp #0x322` (Smi 401) + `refreshOAuth` | `base_networking_madzab_baru.dart` `0x91b664`, `0x91b6c0` |
+| `get_periode` = `DioException` path, bukan label | `RequestOptions` + `"401"` throw di `getPeriodSchedule`; label asli `get_studi_jadwal_periode` | `study_schedule_service.dart` `0xe6d7a0`, `0xe6d9dc` |
+| `presensi_status` = key model | berdampingan dengan `is_hitung`, `ke`, `kode`, `mulai` | `recap_presence_agenda_detail_model.dart` `0x1060cd4`; `study_attendance_detail_model.dart` `0x1063228` |
 | Empty-Bearer quirk | interpolasi `"Bearer "` | `base_networking_madzab_baru.dart` `0x91bdc8`; `utils.dart` (V2) `0xd513c4` |
 | `HttpMethod` enum mapping | `objs.txt`: `12bd4d1`=get, `12bd4f1`=post, `12bd511`=get, `12bd531`=post, `12bd551`=put | `blutter-output/objs.txt` |
 
