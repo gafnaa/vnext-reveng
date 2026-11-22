@@ -18,6 +18,7 @@ FORBIDDEN_SUFFIXES = {
 TEXT_SUFFIXES = {
     ".md", ".json", ".svg", ".java", ".xml", ".yaml", ".yml", ".txt",
     ".dart", ".dartpseudo", ".kt", ".c", ".h", ".smali", ".properties",
+    ".html", ".css", ".js",
 }
 SECRET_PATTERNS = [
     (
@@ -41,6 +42,7 @@ SECRET_PATTERNS = [
     ),
 ]
 MARKDOWN_LINK = re.compile(r"(?<!!)\[[^\]]*\]\(([^)]+)\)")
+HTML_LINK = re.compile(r"""\b(?:href|src)\s*=\s*["']([^"'#][^"']*)["']""")
 REQUIRED_FILES = [
     "README.md",
     "docs/PRD-REVERSE-ENGINEERING.md",
@@ -66,6 +68,24 @@ def local_links(path, content, errors):
         if target_path.is_absolute():
             continue
         target = (path.parent / target_path).resolve()
+        try:
+            target.relative_to(ROOT)
+        except ValueError:
+            errors.append("{}: link escapes repository: {}".format(path.relative_to(ROOT), destination))
+            continue
+        if not target.exists():
+            errors.append("{}: broken local link: {}".format(path.relative_to(ROOT), destination))
+
+
+def html_links(path, content, errors):
+    for match in HTML_LINK.finditer(content):
+        destination = match.group(1).strip()
+        if not destination or destination.startswith("data:"):
+            continue
+        parsed = urlsplit(destination)
+        if parsed.scheme or destination.startswith("//") or not parsed.path:
+            continue
+        target = (path.parent / unquote(parsed.path)).resolve()
         try:
             target.relative_to(ROOT)
         except ValueError:
@@ -144,6 +164,8 @@ def main():
                 errors.append("invalid JSON {}:{}:{}: {}".format(path.relative_to(ROOT), exc.lineno, exc.colno, exc.msg))
         if path.suffix.lower() == ".md":
             local_links(path, content, errors)
+        if path.suffix.lower() == ".html":
+            html_links(path, content, errors)
         if path.suffix.lower() != ".txt":
             for label, pattern in SECRET_PATTERNS:
                 if pattern.search(content):
