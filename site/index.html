@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simaster UGM — Peta API &amp; Analisis Statis</title>
+<meta name="description" content="Landing page analisis statis APK Simaster UGM 1.11.1: peta endpoint API, temuan keamanan kandidat, dan metodologi reverse engineering. Tanpa request ke server.">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔍</text></svg>">
+</head>
+<body>
+
+<a class="skip" href="#main">Lompat ke konten</a>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#top">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-text">simaster<span class="dim">/reveng</span></span>
+    </a>
+    <nav class="nav-links" aria-label="Navigasi utama">
+      <a href="#ringkasan">Ringkasan</a>
+      <a href="#publik">API publik?</a>
+      <a href="#explorer">Endpoint</a>
+      <a href="#temuan">Temuan</a>
+      <a href="#metode">Metode</a>
+      <a href="#koreksi">Koreksi</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navMenu">Menu</button>
+  </div>
+  <div class="nav-mobile" id="navMenu" hidden>
+    <a href="#ringkasan">Ringkasan</a>
+    <a href="#publik">API publik?</a>
+    <a href="#explorer">Endpoint</a>
+    <a href="#temuan">Temuan</a>
+    <a href="#metode">Metode</a>
+    <a href="#koreksi">Koreksi</a>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ── HERO ─────────────────────────────────────────── -->
+  <section class="hero" id="top">
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="wrap hero-inner">
+      <p class="eyebrow">Analisis statis · Android · Flutter AOT</p>
+      <h1>Peta API Simaster UGM,<br><span class="grad">tanpa menyentuh server.</span></h1>
+      <p class="lede">
+        Referensi kontrak API <strong>id.ac.ugm.student.vnext.simaster 1.11.1</strong> yang direkonstruksi
+        dari <code>libapp.so</code> ARM64 — endpoint, envelope, kredensial, dan kandidat temuan
+        keamanan. Semua dari binary; <strong>nol request</strong> ke sistem produksi.
+      </p>
+      <div class="badges">
+        <span class="badge badge-ok">0 request jaringan</span>
+        <span class="badge badge-warn">Semua status: kandidat</span>
+        <span class="badge">Bukan dokumentasi resmi UGM</span>
+      </div>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#explorer">Jelajahi endpoint</a>
+        <a class="btn" href="#publik">Apakah ada API publik?</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── RINGKASAN ────────────────────────────────────── -->
+  <section class="section" id="ringkasan">
+    <div class="wrap">
+      <h2 class="h2"><span class="h2-num">01</span> Ringkasan angka</h2>
+      <p class="sub">Angka di bawah adalah <em>hasil pemulihan statis</em>, bukan denominator seluruh permukaan backend.</p>
+
+      <div class="stats" id="stats"></div>
+
+      <div class="callout callout-info">
+        <strong>Baca angka dengan hati-hati.</strong>
+        “29 label service” adalah total label unik: <strong>27</strong> operasi gateway student,
+        <strong>1</strong> operasi gateway staff, dan <strong>1</strong> lookup langsung ke <code>/staff</code>.
+        Label adalah operasi di dalam body request, <em>bukan</em> URL terpisah.
+      </div>
+    </div>
+  </section>
+
+  <!-- ── API PUBLIK ───────────────────────────────────── -->
+  <section class="section section-alt" id="publik">
+    <div class="wrap">
+      <h2 class="h2"><span class="h2-num">02</span> Apakah ada API publik?</h2>
+      <p class="sub">
+        Jawaban dari bukti statis: <strong>tidak ada endpoint REST data akademik yang anonim.</strong>
+        Hampir semua klien HTTP melampirkan header <code>Authorization</code> — bahkan saat belum login,
+        karena header dibangun dari interpolasi <code>"Bearer " + token</code>, sehingga token kosong
+        tetap menghasilkan <code>Bearer</code> kosong.
+      </p>
+
+      <div class="answer-grid">
+        <div class="answer-card answer-yes">
+          <h3>Benar-benar tanpa header auth</h3>
+          <ul>
+            <li><code>GET /vnext/v1/fitur/1/android</code> — memakai <code>package:http</code> langsung tanpa argumen <code>headers</code>, dipanggil <code>_proceedToUpdateCheck</code> di splash.</li>
+            <li><code>wss://armada.smartcampus.ugm.ac.id/gps/ws?room=room2</code> — koneksi dibentuk dari URI saja.</li>
+          </ul>
+        </div>
+        <div class="answer-card">
+          <h3>Tanpa sesi aplikasi</h3>
+          <ul>
+            <li><code>GET /oauth/authorize</code> — publik <em>by design</em>; otentikasi terjadi di SSO browser.</li>
+            <li><code>GET /vnext/v1/banners/get_intro?banner_app=1</code> — dipanggil splash sebelum login (header jadi <code>Bearer</code> kosong).</li>
+            <li><code>POST /presensivnext/api/signin</code> — tanpa login aplikasi, tetapi memakai password <em>turunan</em> (kandidat F-01).</li>
+            <li><code>POST /oauth/token</code> — butuh <code>code</code> valid + client secret tertanam.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout callout-warn">
+        <strong>Konsekuensi praktis.</strong>
+        “Bearer kosong” bukan bukti server menerima request tanpa token. Yang bisa dikatakan hanya:
+        klien <em>mengirim</em> header itu. Apakah server menolak, menerima, atau mengabaikannya
+        <strong>belum diketahui</strong> dan hanya bisa dijawab lewat staging berizin.
+      </div>
+    </div>
+  </section>
+
+  <!-- ── EXPLORER ─────────────────────────────────────── -->
+  <section class="section" id="explorer">
+    <div class="wrap">
+      <h2 class="h2"><span class="h2-num">03</span> Penjelajah endpoint</h2>
+      <p class="sub">Filter per keluarga, atau cari path, method, dan keterangan.</p>
+
+      <div class="explorer-controls">
+        <div class="filters" id="filters" role="group" aria-label="Filter keluarga endpoint"></div>
+        <label class="search">
+          <span class="sr-only">Cari endpoint</span>
+          <input type="search" id="search" placeholder="Cari path, method, label…" autocomplete="off">
+        </label>
+      </div>
+
+      <p class="result-count" id="count" aria-live="polite"></p>
+      <div class="endpoint-list" id="endpoints"></div>
+      <p class="empty" id="empty" hidden>Tidak ada endpoint yang cocok.</p>
+
+      <details class="labels-box">
+        <summary>Lihat 27 label gateway student</summary>
+        <div class="table-scroll">
+          <table class="labels-table">
+            <thead><tr><th>#</th><th>Label service</th><th>Area</th></tr></thead>
+            <tbody id="labels"></tbody>
+          </table>
+        </div>
+        <p class="tiny">
+          Label adalah nilai <code>service</code> di dalam body request ke
+          <code>/v1/student/micro/services</code> — bukan URL terpisah.
+        </p>
+      </details>
+    </div>
+  </section>
+
+  <!-- ── TEMUAN ───────────────────────────────────────── -->
+  <section class="section section-alt" id="temuan">
+    <div class="wrap">
+      <h2 class="h2"><span class="h2-num">04</span> Temuan keamanan</h2>
+      <p class="sub">
+        Enam kandidat dari analisis statis. <strong>Tidak satu pun</strong> boleh disebut “exploitable”
+        tanpa membuktikan perilaku server pada staging berizin.
+      </p>
+      <div class="findings" id="findings"></div>
+      <div class="callout callout-warn">
+        <strong>Batas klaim.</strong>
+        Semua entri berstatus <em>kandidat</em>. Tidak ada eksploitasi, tidak ada data pengguna,
+        tidak ada pengujian ke produksi. Dampak yang ditulis bersifat <em>kondisional</em> —
+        “jika kontrol server lemah”, bukan “terbukti”.
+      </div>
+    </div>
+  </section>
+
+  <!-- ── METODE ───────────────────────────────────────── -->
+  <section class="section" id="metode">
+    <div class="wrap">
+      <h2 class="h2"><span class="h2-num">05</span> Metodologi &amp; batas</h2>
+      <p class="sub">Empat lapisan alat, satu prinsip: baca binary, jangan jalankan serangan.</p>
+
+      <div class="method-grid">
+        <article class="method">
+          <h3>Blutter / ASM</h3>
+          <p>Pemulihan AOT Dart ke pseudo-assembly. Sumber utama nama fungsi, literal string, dan call-site.</p>
+          <p class="metric">2.312 file · 418 file aplikasi · 29.989 alamat fungsi</p>
+        </article>
+        <article class="method">
+          <h3>Ghidra</h3>
+          <p>Seeding function aplikasi lalu dekompilasi selektif; dipakai untuk verifikasi control-flow.</p>
+          <p class="metric">2.796/2.796 function start · 42 body-24 di-reseed</p>
+        </article>
+        <article class="method">
+          <h3>flutterdec</h3>
+          <p>Pipeline sekunder untuk pseudo-Dart dan crosswalk nama; pembanding independen.</p>
+          <p class="metric">2.628 record canonical · 2.796 augmented</p>
+        </article>
+        <article class="method">
+          <h3>r2flutter</h3>
+          <p>Evaluasi backend alternatif: pembanding nama dan slot ObjectPool, bukan pengganti.</p>
+          <p class="metric">2.748/2.796 start identik · 99,42% slot pool sama</p>
+        </article>
+      </div>
+
+      <div class="limits">
+        <h3>Yang tidak bisa disimpulkan dari dokumen ini</h3>
+        <ul>
+          <li>Apakah server <em>menerima</em> token, peran, atau identitas yang dikirim klien.</li>
+          <li>Rate limit, idempotensi, TTL token, dan skema pagination penuh.</li>
+          <li>Perilaku respons nyata — termasuk makna status <code>400</code> dan pembuangan body pada <code>doscanent</code>.</li>
+          <li>“Tidak ditemukan” berarti tidak teramati pada code path yang dipulihkan; AOT dapat membangun string secara dinamis.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── KOREKSI ──────────────────────────────────────── -->
+  <section class="section section-alt" id="koreksi">
+    <div class="wrap">
+      <h2 class="h2"><span class="h2-num">06</span> Catatan koreksi</h2>
+      <p class="sub">
+        Draf pertama dokumen ini memuat tiga kesalahan klasifikasi. Semuanya sudah diperbaiki
+        dan diverifikasi ulang terhadap dump ASM.
+      </p>
+      <div class="table-scroll">
+        <table class="corrections">
+          <thead><tr><th>Klaim awal (salah)</th><th>Temuan verifikasi</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><code>get_periode</code> = label service ke-28</td>
+              <td>Argumen <code>path</code> pada <code>RequestOptions</code> di dalam <code>DioException</code> yang dilempar <code>getPeriodSchedule</code>. Label aslinya <code>get_studi_jadwal_periode</code>.</td>
+            </tr>
+            <tr>
+              <td><code>presensi_status</code> = label service ke-29</td>
+              <td>Key field model, berdampingan dengan <code>is_hitung</code>, <code>ke</code>, <code>kode</code>, <code>mulai</code>.</td>
+            </tr>
+            <tr>
+              <td><code>GET /get_menu_vnext</code></td>
+              <td>Memakai <code>HttpMethod.post</code> dan membungkus <code>token</code>/<code>sesId</code>/<code>groupMenu</code> ke <code>FormData</code> body.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="tiny">
+        Efek samping yang berguna: pola “status 400 = kontrak baca, non-400 → <code>DioException</code>
+        berisi literal <code>"401"</code>” kini terkonfirmasi juga di <code>getPeriodSchedule</code>,
+        memperluas temuan F-05 ke luar jalur lookup akun.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── DOKUMEN ──────────────────────────────────────── -->
+  <section class="section" id="dokumen">
+    <div class="wrap">
+      <h2 class="h2"><span class="h2-num">07</span> Dokumen sumber</h2>
+      <p class="sub">Landing page ini adalah ringkasan. Bukti lengkap ada di laporan Markdown.</p>
+      <div class="docs" id="docs"></div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <p class="footer-brand">simaster<span class="dim">/reveng</span></p>
+        <p class="tiny">Analisis statis independen. Tidak berafiliasi dengan Universitas Gadjah Mada.</p>
+      </div>
+      <div>
+        <h4>Peringatan</h4>
+        <p class="tiny">
+          Jangan menguji endpoint ini ke sistem produksi UGM tanpa izin tertulis.
+          Validasi hanya pada staging, dengan akun sintetis dan audit log.
+        </p>
+      </div>
+      <div>
+        <h4>Privasi</h4>
+        <p class="tiny">
+          Tidak memuat token, secret, salt, atau data pengguna. Nilai sensitif tetap berada
+          di artefak privat yang tidak dipublikasikan.
+        </p>
+      </div>
+    </div>
+    <p class="footer-note">
+      Dibangun dari bukti statis APK 1.11.1 · Semua temuan berstatus kandidat · 0 request ke server.
+    </p>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

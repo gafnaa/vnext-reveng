@@ -47,7 +47,7 @@ Base URL dipilih per flavor (`flavors.dart`):
 
 ## 3. Konvensi umum
 
-### 3.1 Empat stack klien
+### 3.1 Lima stack klien
 
 | Stack | File | Dipakai oleh | Body default | Token |
 |---|---|---|---|---|
